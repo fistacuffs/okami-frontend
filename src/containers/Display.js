@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const Display = () => (
-  <section>empty</section>
+  <section>empty display</section>
 );
 
 export default Display;
