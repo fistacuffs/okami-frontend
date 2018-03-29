@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Login } from './components/Login';
+import { Login } from '../components/Login';
 import './Containers.css';
 
 export const Display = () => (
