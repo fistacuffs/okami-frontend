@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-const backendLoginUrl = 'https://mighty-fortress-28903.herokuapp.com/login';
+import { backendUrl, loginRoute /* , coinListRoute */ } from '../constants';
 
 export class Login extends React.Component {
   constructor(props) {
@@ -13,20 +13,64 @@ export class Login extends React.Component {
 
   handleClick() {
     let newId;
-    axios.post(backendLoginUrl, { username: 'guest', password: 'blahblah' })
+
+    /* axios.get(backendUrl + coinListRoute)
       .then((response) => {
+        // eslint-disable-next-line no-console
+        console.log(`coin list response properties: ${Object.keys(response)}`);
+        // eslint-disable-next-line no-console
+        console.log(`coin list response.status: ${response.status}`);
+        // eslint-disable-next-line no-console
+        console.log(`coin list response.statusText: ${response.statusText}`);
+        // eslint-disable-next-line no-console
+        console.log(`coin list response.headers properties: ${Object.keys(response.headers)}`);
+        // eslint-disable-next-line no-console
+        console.log(`coin list response.headers.content-type: ${response.headers['content-type']}`);
+        // eslint-disable-next-line no-console
+        console.log(`coin list response.config properties: ${Object.keys(response.config)}`);
+        // eslint-disable-next-line no-console
+        console.log(`coin list response.request: ${response.request}`);
+        // eslint-disable-next-line no-console
+        console.log(`coin list response.data[0] properties: ${Object.keys(response.data[0])}`);
+
+        response.data.forEach((coin) => {
+          // eslint-disable-next-line no-console
+          console.log(`id: ${coin.id} symbol: ${coin.symbol}  name: ${coin.name}`);
+        });
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(`coin list error: ${error.response}`);
+      }); */
+
+    axios.post(backendUrl + loginRoute, {
+      username: 'guest',
+      password: 'blahblah',
+    })
+      .then((response) => {
+        // eslint-disable-next-line no-console
+        console.log(`login response is: ${response}`);
+        // eslint-disable-next-line no-console
+        console.log(`login response properties: ${Object.keys(response)}`);
+
         newId = response;
+
+        this.setState({
+          id: newId,
+        }); // end setState()
+
+        if (this.state.id !== null) {
+          // eslint-disable-next-line no-console
+          console.log(`Got ID!!!!: ${this.state.id}`);
+        } else {
+          // eslint-disable-next-line no-console
+          console.log('id still null');
+        } // end if/else
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(`login error is: ${error.response}`);
       }); // end post()
-
-    this.setState({
-      id: newId,
-    }); // end setState()
-
-    if (this.state.id !== null) {
-      console.log(this.state.id);
-    } else {
-      console.log('still null');
-    } // end if/else
   } // end handleClick()
 
   render() {
