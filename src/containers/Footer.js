@@ -1,7 +1,11 @@
 import React from 'react';
 
+import './Containers.css';
+
 export const Footer = () => (
-  <footer>empty footer</footer>
+  <footer className="footer">
+    empty footer
+  </footer>
 );
 
 export default Footer;

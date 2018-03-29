@@ -1,0 +1,23 @@
+.display {
+  background-color: #E8E8E8;
+  color: #52658F;
+  height: 500px;
+}
+
+.footer {
+  background-color: #52658F;
+  color: #F7F5E6;
+  height: 300px;
+}
+
+.header {
+  background-color: #F7F5E6;
+  color: #333A56;
+  height: 150px;
+}
+
+.nav-bar {
+  background-color: #333A56;
+  color: #F7F5E6;
+  height: 50px;
+}

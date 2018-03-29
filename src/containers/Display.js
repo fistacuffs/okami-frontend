@@ -1,7 +1,11 @@
 import React from 'react';
 
+import './Containers.css';
+
 export const Display = () => (
-  <section>empty display</section>
+  <section className="display">
+    empty display
+  </section>
 );
 
 export default Display;
