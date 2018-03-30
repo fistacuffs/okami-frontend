@@ -25,7 +25,7 @@ export class LoginForm extends React.Component {
 
   render() {
     return (
-      <form>
+      <div className="login-form">
         <div>
           <span className="login-label">username</span>
           <input
@@ -42,7 +42,7 @@ export class LoginForm extends React.Component {
             onChange={this.handlePasswordChange}
           />
         </div>
-      </form>
+      </div>
     );
   } // end render()
 } // end class LoginField

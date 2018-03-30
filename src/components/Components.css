@@ -1,7 +1,17 @@
+.login {
+  border: 1px solid #fff;
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  justify-content: center;
+  width: 500px;
+}
+
 .login-button {
   background-color: #333A56;
   color: #F7F5E6;
   height: 50px;
+  margin: auto;
   width: 300px;
 }
 
@@ -20,4 +30,12 @@
   font-size: 32px;
   height: 50px;
   width: 300px;
+}
+
+.login-form {
+  display: flex;
+  flex-wrap: wrap;
+  height: 200px;
+  justify-content: space-around;
+  margin: auto;
 }

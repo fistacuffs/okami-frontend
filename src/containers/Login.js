@@ -36,10 +36,6 @@ export class Login extends React.Component {
     let newId;
 
     if (!this.state.username || !this.state.password) {
-      // eslint-disable-next-line no-console
-      console.log(`!${this.state.username} is ${!this.state.username}`);
-      // eslint-disable-next-line no-console
-      console.log(`!${this.state.password} is ${!this.state.password}`);
       // eslint-disable-next-line no-alert
       alert('Username and password required for login');
       return;
@@ -79,7 +75,7 @@ export class Login extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="login">
         <LoginForm
           onUsernameChange={this.changeUsername}
           onPasswordChange={this.changePassword}
