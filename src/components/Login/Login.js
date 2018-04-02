@@ -1,17 +1,36 @@
+/**
+ * Login.js
+ *
+ * This is the parent component of the login module. It incorporates the login
+ * button and login form and implements the logic for capturing the username
+ * and password from the user and sending them to the backend in order to
+ * request a user id.
+ */
 import React from 'react';
 import axios from 'axios';
 
-import { LoginButton } from '../components/LoginButton';
-import { LoginForm } from '../components/LoginForm';
-import { backendUrl, loginRoute } from '../constants';
+import { LoginButton } from './LoginButton';
+import { LoginForm } from './LoginForm';
+import { backendUrl, loginRoute } from '../../constants';
+import { globalvars } from '../../globalvars';
+
 
 export class Login extends React.Component {
+  /**
+   * Login constructor
+   * -iniitializes state properties for username, password, and userId
+   * -binds methods changeUsername, changePassword, and sendLogin to this
+   *  component
+   *
+   * @param: to pass any props to React components
+   */
   constructor(props) {
     super(props);
 
     this.state = {
       username: '',
       password: '',
+      message: '',
       userId: null,
     };
 
@@ -20,24 +39,51 @@ export class Login extends React.Component {
     this.sendLogin = this.sendLogin.bind(this);
   } // end constructor
 
+
+  /**
+   * changeUsername:
+   * method changes the state property username of this component
+   *
+   * @param: the new string value for username
+   */
   changeUsername(newUsername) {
     this.setState({
       username: newUsername,
     });
   } // end changeUsername()
 
+
+  /**
+   * changePassword:
+   * method changes the state property password of this component
+   *
+   * @param: the new string value for password
+   */
   changePassword(newPassword) {
     this.setState({
       password: newPassword,
     });
-  } // end changeLoginInfo()
+  } // end changePassword()
 
+
+  /**
+   * sendLogin:
+   * method uses the state properties username and password to send a POST
+   * request to the backend to get a userId. Alerts user if username/password
+   * combination is invalid or either field is empty (should implement with
+   * something besides alerts())
+   */
   sendLogin() {
     let newId;
 
     if (!this.state.username || !this.state.password) {
+      /**
+       * CHANGE ME TO SOMETHING BESIDES alert()
+       */
       // eslint-disable-next-line no-alert
-      alert('Username and password required for login');
+      this.setState({
+        message: 'Login failed. Enter new username and password.',
+      });
       return;
     }
 
@@ -51,8 +97,12 @@ export class Login extends React.Component {
 
         this.setState({
           userId: newId,
+          message: 'Successful login.',
         }); // end setState()
 
+        globalvars.userId = newId;
+
+        /* THIS SHOULD BE REMOVED FROM FINAL PRODUCT */
         if (this.state.userId !== null) {
           // eslint-disable-next-line no-console
           console.log(`userId: ${this.state.userId}`);
@@ -63,7 +113,10 @@ export class Login extends React.Component {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.log(`login error is: ${error.response}`);
+        console.log(error);
+        this.setState({
+          message: 'Login failed. Enter new username and password.',
+        });
       })
       .finally(() => {
         this.setState({
@@ -73,6 +126,11 @@ export class Login extends React.Component {
       }); // end axios.post()
   } // end handleClick()
 
+
+  /**
+   * render:
+   * Required method of React components to create JFX element.
+   */
   render() {
     return (
       <div className="login">
@@ -81,6 +139,7 @@ export class Login extends React.Component {
           onPasswordChange={this.changePassword}
         />
         <LoginButton onClick={this.sendLogin} />
+        <h3>{this.state.message}</h3>
       </div>
     ); // end Login
   } // end render()
