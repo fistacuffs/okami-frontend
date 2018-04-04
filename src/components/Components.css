@@ -1,5 +1,4 @@
 .login {
-  border: 1px solid #fff;
   display: flex;
   flex-direction: column;
   height: 300px;
@@ -16,7 +15,7 @@
   width: 300px;
 }
 
-.login-label {
+.user-form-label {
   color: #52658F;
   font-size: 32px;
   height: 50px;
@@ -24,7 +23,7 @@
   width: 150px;
 }
 
-.login-field {
+.user-form-field {
   background-color: #F7F5E6;
   border-color: #333A56;
   color: #333A56;
@@ -33,7 +32,7 @@
   width: 300px;
 }
 
-.login-form {
+.user-form {
   display: flex;
   flex-wrap: wrap;
   height: 200px;

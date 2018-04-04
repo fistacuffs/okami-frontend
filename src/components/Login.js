@@ -7,12 +7,13 @@
  * request a user id.
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import { LoginButton } from './LoginButton';
-import { LoginForm } from './LoginForm';
-import { backendUrl, loginRoute } from '../../constants';
-import { globalvars } from '../../globalvars';
+import { Button } from './Button';
+import { UserForm } from './UserForm';
+import { backendUrl, loginRoute } from '../constants';
+import { globalvars } from '../globalvars';
 
 
 export class Login extends React.Component {
@@ -133,16 +134,26 @@ export class Login extends React.Component {
    */
   render() {
     return (
-      <div className="login">
-        <LoginForm
+      <div className={this.props.className}>
+        <UserForm
+          className="user-form"
           onUsernameChange={this.changeUsername}
           onPasswordChange={this.changePassword}
         />
-        <LoginButton onClick={this.sendLogin} />
+        <Button
+          name="LOGIN"
+          className="login-button"
+          onClick={this.sendLogin}
+        />
         <h3>{this.state.message}</h3>
       </div>
     ); // end Login
   } // end render()
 } // end class Login
+
+
+Login.propTypes = {
+  className: PropTypes.string.isRequired,
+};
 
 export default Login;

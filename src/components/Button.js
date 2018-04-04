@@ -7,9 +7,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import '../Components.css';
+import './Components.css';
 
-export class LoginButton extends React.Component {
+export class Button extends React.Component {
   /**
    * LoginButton constructor
    * -binds method handleClick
@@ -40,10 +40,10 @@ export class LoginButton extends React.Component {
   render() {
     return (
       <button
-        className="login-button"
+        className={this.props.className}
         onClick={this.handleClick}
       >
-        LOGIN
+        {this.props.name}
       </button>
     );
   } // end render()
@@ -54,10 +54,14 @@ export class LoginButton extends React.Component {
  * props:
  *
  * Required:
+ * name - string to be printed on button
+ * className - string name used for css styling
  * onClick - method of parent component to handle button clicks
  */
-LoginButton.propTypes = {
+Button.propTypes = {
+  name: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
-export default LoginButton;
+export default Button;

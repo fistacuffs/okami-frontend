@@ -7,9 +7,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import '../Components.css';
+import './Components.css';
 
-export class LoginForm extends React.Component {
+export class UserForm extends React.Component {
   /**
    * LoginForm constructor
    * -binds methods handleUsernameChange and handlePasswordChange
@@ -50,19 +50,19 @@ export class LoginForm extends React.Component {
    */
   render() {
     return (
-      <div className="login-form">
+      <div className={this.props.className}>
         <div>
-          <span className="login-label">username</span>
+          <span className="user-form-label">username</span>
           <input
-            className="login-field"
+            className="user-form-field"
             type="text"
             onChange={this.handleUsernameChange}
           />
         </div>
         <div>
-          <span className="login-label">password</span>
+          <span className="user-form-label">password</span>
           <input
-            className="login-field"
+            className="user-form-field"
             type="password"
             onChange={this.handlePasswordChange}
           />
@@ -77,12 +77,14 @@ export class LoginForm extends React.Component {
  * props:
  *
  * Required:
+ * className - string name used for css styling
  * onUsernameChange - username state modifying method of the parent component
  * onPasswordChange - password state modifying method of the parent component
  */
-LoginForm.propTypes = {
+UserForm.propTypes = {
+  className: PropTypes.string.isRequired,
   onUsernameChange: PropTypes.func.isRequired,
   onPasswordChange: PropTypes.func.isRequired,
 };
 
-export default LoginForm;
+export default UserForm;
