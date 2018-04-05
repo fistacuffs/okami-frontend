@@ -1,0 +1,41 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  justify-content: center;
+  width: 500px;
+}
+
+.login-button {
+  background-color: #333A56;
+  color: #F7F5E6;
+  font-size: 24px;
+  height: 50px;
+  margin: auto;
+  width: 300px;
+}
+
+.user-form-label {
+  color: #52658F;
+  font-size: 32px;
+  height: 50px;
+  padding-right: 40px;
+  width: 150px;
+}
+
+.user-form-field {
+  background-color: #F7F5E6;
+  border-color: #333A56;
+  color: #333A56;
+  font-size: 32px;
+  height: 50px;
+  width: 300px;
+}
+
+.user-form {
+  display: flex;
+  flex-wrap: wrap;
+  height: 200px;
+  justify-content: space-around;
+  margin: auto;
+}
