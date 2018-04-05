@@ -7,4 +7,6 @@ export const userCoinsRoute = 'user/coins';
 export const addUserCoinRoute = 'user/addcoin/';
 export const removeUserCoinRoute = 'user/removecoin/';
 
-/* Crypto-compart API URL and routes */
+/* Crypto-compare API URL and routes */
+export const ccApiUrl = 'https://min-api.cryptocompare.com/data/';
+export const priceRoute = '/price';
