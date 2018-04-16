@@ -4,93 +4,83 @@
  * This
  */
 import React from 'react';
+import axios from 'axios';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 
-// import { ccApiUrl, priceRoute } from '../constants';
+import { ccApiUrl, priceRoute, dailyHistoryRoute } from '../constants';
 // import { globalvars } from '../globalvars';
 
 export class Chart extends React.Component {
+  static getCoinData() {
+    return (
+      axios.get(
+        ccApiUrl + priceRoute,
+        { params: { fsym: 'BTC', tsyms: 'USD' } },
+      )
+        .then((response) => {
+          console.log(`response: ${Object.keys(response)}`);
+          console.log(`status: ${response.status}`);
+          console.log(`data: ${Object.keys(response.data)}`);
+          console.log(`BTC in USD: ${response.data.USD}`);
+        })
+        .catch((error) => {
+          console.log(`response: ${error}`);
+        })
+    );
+  } // end getCoinData
+
+
   constructor(props) {
     super(props);
 
     this.state = {
-      data:
-      [
-        {
-          name: 'Jan 17',
-          uv: 4000,
-          pv: 2400,
-          amt: 2400,
-        },
-        {
-          name: 'Feb 17',
-          uv: 3000,
-          pv: 1398,
-          amt: 2210,
-        },
-        {
-          name: 'Mar 17',
-          uv: 2000,
-          pv: 9800,
-          amt: 2290,
-        },
-        {
-          name: 'Apr 17',
-          uv: 2780,
-          pv: 3908,
-          amt: 2000,
-        },
-        {
-          name: 'May 17',
-          uv: 1890,
-          pv: 4800,
-          amt: 2181,
-        },
-        {
-          name: 'Jun 17',
-          uv: 2390,
-          pv: 3800,
-          amt: 2500,
-        },
-        {
-          name: 'Jul 17',
-          uv: 3490,
-          pv: 4300,
-          amt: 2100,
-        },
-        {
-          name: 'Aug 17',
-          uv: 2490,
-          pv: 4300,
-          amt: 2100,
-        },
-        {
-          name: 'Sep 17',
-          uv: 1490,
-          pv: 4300,
-          amt: 2100,
-        },
-        {
-          name: 'Oct 17',
-          uv: 2790,
-          pv: 4300,
-          amt: 2100,
-        },
-        {
-          name: 'Nov 17',
-          uv: 3908,
-          pv: 4300,
-          amt: 2100,
-        },
-        {
-          name: 'Dec 17',
-          uv: 3456,
-          pv: 4300,
-          amt: 2100,
-        },
-      ],
+      data: [],
     };
   } // end constructor
+
+
+  componentWillMount() {
+    const cp = Chart.getCoinData();
+    cp.then(
+      () => console.log('coin get complete'),
+      () => console.log('coin get failed'),
+    );
+
+    const cptoo = this.getAMonthOfCoinData();
+    cptoo.then(
+      () => console.log('hist coin get complete'),
+      () => console.log('hist coin get failed'),
+    );
+  }// end componentWillMount()
+
+
+  getAMonthOfCoinData() {
+    return (
+      axios.get(
+        ccApiUrl + dailyHistoryRoute,
+        { params: { fsym: 'BTC', tsym: 'USD' } },
+      )
+        .then((response) => {
+          console.log(`hist response: ${Object.keys(response)}`);
+          console.log(`hist status: ${response.status}`);
+          console.log(`hist data: ${Object.keys(response.data)}`);
+          console.log(`day 0: ${response.data.Data[0].time}`);
+          console.log(`day 30: ${response.data.Data[30].time}`);
+
+          for (let i = 0; i < response.data.Data.length; i += 1) {
+            response.data.Data[i].date =
+              (new Date(response.data.Data[i].time * 1000)).toString();
+          }
+          this.setState({
+            data: response.data.Data,
+          });
+        })
+        .catch((error) => {
+          console.log(`response: ${error}`);
+        })
+    );
+  } // end getCoinData
+
 
   render() {
     return (
@@ -102,14 +92,14 @@ export class Chart extends React.Component {
       >
         <Line
           type="monotone"
-          dataKey="uv"
+          dataKey="high"
           stroke="#8884d8"
         />
         <CartesianGrid
           stroke="#ccc"
           strokeDasharray="5 5"
         />
-        <XAxis dataKey="name" />
+        <XAxis dataKey="date" />
         <YAxis />
         <Tooltip />
       </LineChart>

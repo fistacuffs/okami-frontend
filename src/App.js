@@ -11,12 +11,13 @@ import { globalvars } from './globalvars';
 export class App extends React.Component {
   static getCoinList() {
     // will return a Promise
-    return (axios.get(backendUrl + coinListRoute)
-      .then((response) => {
-        globalvars.coinList = response.data;
-      }).catch((error) => {
-        console.log(`error = ${error}`);
-      })); // end axios.get()
+    return (
+      axios.get(backendUrl + coinListRoute)
+        .then((response) => {
+          globalvars.coinList = response.data;
+        }).catch((error) => {
+          console.log(`error = ${error}`);
+        })); // end axios.get()
   } // end getCoinList
 
 
