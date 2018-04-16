@@ -6,6 +6,8 @@ import { Display } from './Display';
 import { Footer } from './Footer';
 import { Chart } from '../components/Chart';
 
+// import globalvars from '../globalvars';
+
 export const LandingPage = () => (
   <div>
     <NavBar />

@@ -9,32 +9,30 @@ import { globalvars } from './globalvars';
 /* import { LoginPage } from './containers/LoginPage'; */
 
 export class App extends React.Component {
+  static getCoinList() {
+    // will return a Promise
+    return (axios.get(backendUrl + coinListRoute)
+      .then((response) => {
+        globalvars.coinList = response.data;
+      }).catch((error) => {
+        console.log(`error = ${error}`);
+      })); // end axios.get()
+  } // end getCoinList
+
+
   constructor(props) {
     super(props);
 
     this.state = {
       currentView: (<LandingPage />),
-      coinListLoaded: false,
     };
   } // end constructor
 
 
-  componentDidMount() {
-    axios.get(backendUrl + coinListRoute)
-      .then((response) => {
-        if (!this.state.coinListLoaded) {
-          this.setState({ coinListLoaded: true });
-        } // end if
-        globalvars.coinList = response.data;
-        globalvars.coinList.forEach((coin) => {
-          console.log(coin);
-        });
-      }).catch((error) => {
-        if (this.state.coinListLoaded) {
-          this.setState({ coinListLoaded: false });
-        } // end if
-        console.log(`error = ${error}`);
-      }); // end axios.get()
+  componentWillMount() {
+    // loads coinList from backend when App starts
+    // coinListPromise used to ensure coinList is loaded
+    globalvars.coinListPromise = App.getCoinList();
   } // end componentDidMount()
 
 

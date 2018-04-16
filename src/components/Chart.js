@@ -6,6 +6,9 @@
 import React from 'react';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 
+// import { ccApiUrl, priceRoute } from '../constants';
+// import { globalvars } from '../globalvars';
+
 export class Chart extends React.Component {
   constructor(props) {
     super(props);
