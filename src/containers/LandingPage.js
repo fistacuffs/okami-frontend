@@ -4,12 +4,15 @@ import { NavBar } from './NavBar';
 import { Header } from './Header';
 import { Display } from './Display';
 import { Footer } from './Footer';
+import { Chart } from '../components/Chart';
 
 export const LandingPage = () => (
   <div>
     <NavBar />
     <Header />
-    <Display />
+    <Display>
+      <Chart />
+    </Display>
     <Footer />
   </div>
 );

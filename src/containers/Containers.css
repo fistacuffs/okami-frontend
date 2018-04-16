@@ -15,10 +15,12 @@
   color: #333A56;
   height: 145px;
 }
+
 .header-container {
   padding-top:10px;
   padding-left:10px;
 }
+
 .header-text {
   text-align: center;
   position: absolute;
@@ -26,6 +28,7 @@
   left: 140px;
   width: 200px;
 }
+
 .header-paw-print-container {
   background-size: contain;
   background-repeat: repeat-x;

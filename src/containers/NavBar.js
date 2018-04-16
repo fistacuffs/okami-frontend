@@ -12,11 +12,15 @@ export class NavBar extends React.Component {
       isOpen: false,
     };
   }
+
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen,
     });
   }
+
+
   render() {
     return (
       <Navbar color="dark" dark className="navbar" toggleable>
@@ -37,4 +41,3 @@ export class NavBar extends React.Component {
 }
 
 export default NavBar;
-
