@@ -102,6 +102,7 @@ export class Login extends React.Component {
         }); // end setState()
 
         globalvars.userId = newId;
+        globalvars.userTimeStamp = new Date();
 
         /* THIS SHOULD BE REMOVED FROM FINAL PRODUCT */
         if (this.state.userId !== null) {
