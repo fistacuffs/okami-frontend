@@ -78,10 +78,6 @@ export class Login extends React.Component {
     let newId;
 
     if (!this.state.username || !this.state.password) {
-      /**
-       * CHANGE ME TO SOMETHING BESIDES alert()
-       */
-      // eslint-disable-next-line no-alert
       this.setState({
         message: 'Login failed. Enter new username and password.',
       });
@@ -106,15 +102,12 @@ export class Login extends React.Component {
 
         /* THIS SHOULD BE REMOVED FROM FINAL PRODUCT */
         if (this.state.userId !== null) {
-          // eslint-disable-next-line no-console
           console.log(`userId: ${this.state.userId}`);
         } else {
-          // eslint-disable-next-line no-console
           console.log('userId is still null');
         } // end if/else
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
         console.log(error);
         this.setState({
           message: 'Login failed. Enter new username and password.',

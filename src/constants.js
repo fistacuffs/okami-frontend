@@ -10,3 +10,6 @@ export const removeUserCoinRoute = 'user/removecoin/';
 /* Crypto-compare API URL and routes */
 export const ccApiUrl = 'https://min-api.cryptocompare.com/data/';
 export const priceRoute = '/price';
+
+/* Hour in milliseconds for timestamp calculations */
+export const HOUR = 3600000;
