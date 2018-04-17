@@ -22,4 +22,5 @@ export const YEAR = 365;
 export const viewEnum = {
   LANDINGPAGE: 1,
   LOGINPAGE: 2,
+  REGISTRATIONPAGE: 3,
 };

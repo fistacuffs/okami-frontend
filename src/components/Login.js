@@ -9,8 +9,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { Button } from 'reactstrap';
 
-import { Button } from './Button';
 import { UserForm } from './UserForm';
 import { backendUrl, loginRoute } from '../constants';
 import { globalvars } from '../globalvars';
@@ -138,11 +138,11 @@ export class Login extends React.Component {
           onPasswordChange={this.changePassword}
         />
         <Button
-          name="LOGIN"
-          color="primary"
           className="login-button"
           onClick={this.sendLogin}
-        />
+        >
+          LOGIN
+        </Button>
         <h3>{this.state.message}</h3>
       </div>
     ); // end Login

@@ -6,9 +6,9 @@ import axios from 'axios';
 
 import { LandingPage } from './containers/LandingPage';
 import { LoginPage } from './containers/LoginPage';
+import { RegistrationPage } from './containers/RegistrationPage';
 import { backendUrl, coinListRoute, viewEnum } from './constants';
 import { globalvars } from './globalvars';
-/* import { LoginPage } from './containers/LoginPage'; */
 
 
 export class App extends React.Component {
@@ -39,8 +39,12 @@ export class App extends React.Component {
       currentView: viewEnum.LANDINGPAGE,
     };
 
-    this.changeViewToLandingPage = this.changeViewToLandingPage.bind(this);
-    this.changeViewToLoginPage = this.changeViewToLoginPage.bind(this);
+    this.changeViewToLandingPage =
+      this.changeViewToLandingPage.bind(this);
+    this.changeViewToLoginPage =
+      this.changeViewToLoginPage.bind(this);
+    this.changeViewToRegistrationPage =
+      this.changeViewToRegistrationPage.bind(this);
   } // end constructor
 
 
@@ -75,6 +79,16 @@ export class App extends React.Component {
 
 
   /**
+   * changeViewToLoginPage:
+   */
+  changeViewToRegistrationPage() {
+    this.setState({
+      currentView: viewEnum.REGISTRATIONPAGE,
+    }); // end setState()
+  } // end changeView()
+
+
+  /**
    * render:
    */
   render() {
@@ -83,12 +97,21 @@ export class App extends React.Component {
         return (
           <LandingPage
             changeViewToLoginPage={this.changeViewToLoginPage}
+            changeViewToRegistrationPage={this.changeViewToRegistrationPage}
           />);
       case viewEnum.LOGINPAGE:
         return (
           <LoginPage
             changeViewToLandingPage={this.changeViewToLandingPage}
+            changeViewToRegistrationPage={this.changeViewToRegistrationPage}
           />);
+      case viewEnum.REGISTRATIONPAGE:
+        return (
+          <RegistrationPage
+            changeViewToLandingPage={this.changeViewToLandingPage}
+            changeViewToLoginPage={this.changeViewToLoginPage}
+          />
+        );
       default:
         return (
           <LandingPage

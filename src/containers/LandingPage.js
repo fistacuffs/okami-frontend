@@ -24,6 +24,9 @@ export const LandingPage = props => (
       <Button onClick={props.changeViewToLoginPage}>
         LOGIN
       </Button>
+      <Button onClick={props.changeViewToRegistrationPage}>
+        SIGN UP
+      </Button>
     </Footer>
   </div>
 );
@@ -31,6 +34,7 @@ export const LandingPage = props => (
 
 LandingPage.propTypes = {
   changeViewToLoginPage: PropTypes.func.isRequired,
+  changeViewToRegistrationPage: PropTypes.func.isRequired,
 };
 
 
