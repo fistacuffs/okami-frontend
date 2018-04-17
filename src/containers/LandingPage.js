@@ -3,36 +3,34 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'reactstrap';
 
 import { NavBar } from './NavBar';
 import { Header } from './Header';
 import { Display } from './Display';
 import { Footer } from './Footer';
 import { ChartTerminal } from '../components/ChartTerminal';
-// import globalvars from '../globalvars';
 
 
 export const LandingPage = props => (
   <div>
-    <NavBar />
+    <NavBar
+      changeViewToLandingPage={props.changeViewToLandingPage}
+      changeViewToLoginPage={props.changeViewToLoginPage}
+      changeViewToRegistrationPage={props.changeViewToRegistrationPage}
+    />
     <Header />
     <Display>
       <ChartTerminal />
     </Display>
     <Footer>
-      <Button onClick={props.changeViewToLoginPage}>
-        LOGIN
-      </Button>
-      <Button onClick={props.changeViewToRegistrationPage}>
-        SIGN UP
-      </Button>
+      empty footer
     </Footer>
   </div>
 );
 
 
 LandingPage.propTypes = {
+  changeViewToLandingPage: PropTypes.func.isRequired,
   changeViewToLoginPage: PropTypes.func.isRequired,
   changeViewToRegistrationPage: PropTypes.func.isRequired,
 };

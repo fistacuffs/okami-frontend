@@ -96,6 +96,7 @@ export class App extends React.Component {
       case viewEnum.LANDINGPAGE:
         return (
           <LandingPage
+            changeViewToLandingPage={this.changeViewToLandingPage}
             changeViewToLoginPage={this.changeViewToLoginPage}
             changeViewToRegistrationPage={this.changeViewToRegistrationPage}
           />);
@@ -103,6 +104,7 @@ export class App extends React.Component {
         return (
           <LoginPage
             changeViewToLandingPage={this.changeViewToLandingPage}
+            changeViewToLoginPage={this.changeViewToLoginPage}
             changeViewToRegistrationPage={this.changeViewToRegistrationPage}
           />);
       case viewEnum.REGISTRATIONPAGE:
@@ -110,6 +112,7 @@ export class App extends React.Component {
           <RegistrationPage
             changeViewToLandingPage={this.changeViewToLandingPage}
             changeViewToLoginPage={this.changeViewToLoginPage}
+            changeViewToRegistrationPage={this.changeViewToRegistrationPage}
           />
         );
       default:

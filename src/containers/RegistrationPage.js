@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'reactstrap';
 
 import { NavBar } from './NavBar';
 import { Header } from './Header';
@@ -13,18 +12,17 @@ import { Footer } from './Footer';
 
 export const RegistrationPage = props => (
   <div>
-    <NavBar />
+    <NavBar
+      changeViewToLandingPage={props.changeViewToLandingPage}
+      changeViewToLoginPage={props.changeViewToLoginPage}
+      changeViewToRegistrationPage={props.changeViewToRegistrationPage}
+    />
     <Header />
     <Display>
       Registration Component to be added
     </Display>
     <Footer>
-      <Button onClick={props.changeViewToLandingPage}>
-        HOME
-      </Button>
-      <Button onClick={props.changeViewToLoginPage}>
-        LOGIN
-      </Button>
+      empty footer
     </Footer>
   </div>
 );
@@ -33,6 +31,7 @@ export const RegistrationPage = props => (
 RegistrationPage.propTypes = {
   changeViewToLandingPage: PropTypes.func.isRequired,
   changeViewToLoginPage: PropTypes.func.isRequired,
+  changeViewToRegistrationPage: PropTypes.func.isRequired,
 };
 
 
