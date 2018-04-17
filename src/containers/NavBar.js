@@ -1,5 +1,5 @@
 import React from 'react';
-import { Collapse, Navbar, NavbarToggler, Nav, NavItem, Button } from 'reactstrap';
+import { Button, Collapse, Navbar, NavbarToggler, Nav, NavItem } from 'reactstrap';
 
 import './Containers.css';
 
@@ -23,18 +23,17 @@ export class NavBar extends React.Component {
 
   render() {
     return (
-      <Navbar color="dark" dark className="navbar" toggleable>
-        <NavbarToggler onClick={this.toggle} left />
+      <Navbar color="dark" dark className="navbar" expand="false">
+        <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
-          <Nav className="ml-auto" navbar>
-            <NavItem>
-              <Button color="primary" className="navbar-button">Sign Up</Button>
-            </NavItem>
-            <NavItem>
-              <Button color="primary" className="navbar-button">Login</Button>
-            </NavItem>
-          </Nav>
+          <Nav className="ml-auto" navbar />
         </Collapse>
+        <NavItem>
+          <Button color="primary" className="navbar-button">Sign Up</Button>
+        </NavItem>
+        <NavItem>
+          <Button color="primary" className="navbar-button">Login</Button>
+        </NavItem>
       </Navbar>
     );
   }

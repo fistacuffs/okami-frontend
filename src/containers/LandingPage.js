@@ -4,7 +4,7 @@ import { NavBar } from './NavBar';
 import { Header } from './Header';
 import { Display } from './Display';
 import { Footer } from './Footer';
-import { Chart } from '../components/Chart';
+import { ChartTerminal } from '../components/ChartTerminal';
 
 // import globalvars from '../globalvars';
 
@@ -13,7 +13,7 @@ export const LandingPage = () => (
     <NavBar />
     <Header />
     <Display>
-      <Chart />
+      <ChartTerminal />
     </Display>
     <Footer />
   </div>

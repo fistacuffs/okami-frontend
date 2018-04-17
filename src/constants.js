@@ -12,5 +12,8 @@ export const ccApiUrl = 'https://min-api.cryptocompare.com/data/';
 export const priceRoute = 'price';
 export const dailyHistoryRoute = 'histoday';
 
-/* Hour in milliseconds for timestamp calculations */
+/* time constants */
 export const HOUR = 3600000;
+export const WEEK = 7;
+export const MONTH = 30;
+export const YEAR = 365;

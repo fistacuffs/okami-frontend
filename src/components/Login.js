@@ -147,8 +147,14 @@ export class Login extends React.Component {
 } // end class Login
 
 
+/**
+ * props:
+ *
+ * Required:
+ * className - string name used for css styling
+ */
 Login.propTypes = {
   className: PropTypes.string.isRequired,
-};
+}; // end propTypes
 
 export default Login;
