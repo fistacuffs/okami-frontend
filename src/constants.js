@@ -11,6 +11,7 @@ export const removeUserCoinRoute = 'user/removecoin/';
 export const ccApiUrl = 'https://min-api.cryptocompare.com/data/';
 export const priceRoute = 'price';
 export const dailyHistoryRoute = 'histoday';
+export const multiplePriceRoute = 'pricemulti';
 
 /* time constants */
 export const HOUR = 3600000;

@@ -3,12 +3,14 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Col, Row } from 'reactstrap';
 
 import { NavBar } from './NavBar';
 import { Header } from './Header';
 import { Display } from './Display';
 import { Footer } from './Footer';
 import { ChartTerminal } from '../components/ChartTerminal';
+import { CoinSelection } from '../components/CoinSelection';
 
 
 export const LandingPage = props => (
@@ -20,7 +22,10 @@ export const LandingPage = props => (
     />
     <Header />
     <Display>
-      <ChartTerminal />
+      <Row>
+        <Col><ChartTerminal /></Col>
+        <Col><CoinSelection /></Col>
+      </Row>
     </Display>
     <Footer>
       empty footer

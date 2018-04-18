@@ -41,6 +41,7 @@ export class ChartTerminal extends React.Component {
    */
   componentWillMount() {
     const promise = this.getCoinData();
+    // eslint-disable-next-line no-console
     promise.catch(error => console.log(`Error with Crypto Compare: ${error}`));
   } //  end componentWillMount()
 
@@ -73,9 +74,11 @@ export class ChartTerminal extends React.Component {
           }); // end setState()
         })
         .catch((error) => {
+          // eslint-disable-next-line no-console
           console.log(`Error with get from Crypto Compare: ${error}`);
         }), // end axios.get()
       // end promise.onSuccessful()
+      // eslint-disable-next-line no-console
       () => console.log('Error with coin list'),
       // end promise.onRejected()
     );
