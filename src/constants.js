@@ -24,4 +24,5 @@ export const viewEnum = {
   LANDINGPAGE: 1,
   LOGINPAGE: 2,
   REGISTRATIONPAGE: 3,
+  COINPAGE: 4,
 };
