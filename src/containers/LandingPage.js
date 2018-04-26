@@ -9,6 +9,7 @@ import { NavBar } from './NavBar';
 import { Header } from './Header';
 import { Display } from './Display';
 import { Footer } from './Footer';
+import { SearchBar } from '../components/SearchBar';
 import { ChartTerminal } from '../components/ChartTerminal';
 import { CoinSelection } from '../components/CoinSelection';
 
@@ -22,6 +23,7 @@ export const LandingPage = props => (
     />
     <Header />
     <Display>
+      <Row><Col /><Col><SearchBar /></Col><Col /></Row>
       <Row>
         <Col><ChartTerminal coinSymbol="BTC" /></Col>
         <Col>

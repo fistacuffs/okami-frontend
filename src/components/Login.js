@@ -90,6 +90,13 @@ export class Login extends React.Component {
       password: this.state.password,
     })
       .then((response) => {
+        console.log(`login response: ${Object.keys(response)}`);
+        console.log(`login response.headers.content-type: ${Object.keys(response.headers['content-type'])}`);
+        console.log(`login response.headers.content-type: ${response.headers['content-type']}`);
+        console.log(`login response.config: ${Object.keys(response.config)}`);
+        console.log(`login response.config.headers: ${Object.keys(response.config.headers)}`);
+        console.log(JSON.stringify(response));
+
         newId = response.data.userId;
 
         this.setState({
@@ -115,7 +122,7 @@ export class Login extends React.Component {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.log(error);
+        console.log(`error: ${error.response.data.error}`);
         this.setState({
           message: 'Login failed. Enter new username and password.',
         });

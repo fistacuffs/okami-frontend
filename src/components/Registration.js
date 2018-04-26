@@ -93,9 +93,9 @@ export class Registration extends React.Component {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.log(error);
+        console.log(`error: ${error.response.data.error}`);
         this.setState({
-          message: `Registration failed: ${error.message}`,
+          message: `Registration failed: ${error.response.data.error}`,
         });
       })
       .finally(() => {
