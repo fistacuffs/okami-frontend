@@ -6,6 +6,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button as RButton } from 'reactstrap';
 
 import './Components.css';
 
@@ -39,12 +40,13 @@ export class Button extends React.Component {
    */
   render() {
     return (
-      <button
+      <RButton
+        color={this.props.color}
         className={this.props.className}
         onClick={this.handleClick}
       >
         {this.props.name}
-      </button>
+      </RButton>
     );
   } // end render()
 } // end class Login
@@ -55,11 +57,13 @@ export class Button extends React.Component {
  *
  * Required:
  * name - string to be printed on button
+ * color - the bootstrap color class for the button
  * className - string name used for css styling
  * onClick - method of parent component to handle button clicks
  */
 Button.propTypes = {
   name: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
   className: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 };

@@ -142,6 +142,7 @@ export class Login extends React.Component {
         />
         <Button
           name="LOGIN"
+          color="primary"
           className="login-button"
           onClick={this.sendLogin}
         />
