@@ -82,13 +82,12 @@ export class Login extends React.Component {
         message: 'Login failed. Enter new username and password.',
       });
       return;
-    }
+    } // end if
 
     // send request to backend with login information
     axios.post(backendUrl + loginRoute, {
       username: this.state.username,
       password: this.state.password,
-      withCredentials: true,
     })
       .then((response) => {
         console.log(JSON.stringify(response));

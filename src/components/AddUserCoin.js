@@ -37,7 +37,9 @@ export class AddUserCoin extends React.Component {
           console.log(`error.response.status: ${error.response.status}`);
           console.log(`error.response.statusText: ${error.response.statusText}`);
         });
-    } // end if
+    } else {
+      alert('Must log in to add coin');
+    }// end if
   } // end sendCoinId()
 
 

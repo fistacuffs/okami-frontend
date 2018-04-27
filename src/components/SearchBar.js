@@ -1,63 +1,8 @@
-/* const languages = [
-  {
-    name: 'C',
-    year: 1972
-  },
-  {
-    name: 'C#',
-    year: 2000
-  },
-  {
-    name: 'C++',
-    year: 1983
-  },
-  {
-    name: 'Clojure',
-    year: 2007
-  },
-  {
-    name: 'Elm',
-    year: 2012
-  },
-  {
-    name: 'Go',
-    year: 2009
-  },
-  {
-    name: 'Haskell',
-    year: 1990
-  },
-  {
-    name: 'Java',
-    year: 1995
-  },
-  {
-    name: 'Javascript',
-    year: 1995
-  },
-  {
-    name: 'Perl',
-    year: 1987
-  },
-  {
-    name: 'PHP',
-    year: 1995
-  },
-  {
-    name: 'Python',
-    year: 1991
-  },
-  {
-    name: 'Ruby',
-    year: 1995
-  },
-  {
-    name: 'Scala',
-    year: 2003
-  }
-];
-*/
+/**
+ * SearchBar.js
+ */
 import React from 'react';
+import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
 import { Button, Col, Row } from 'reactstrap';
 
@@ -130,6 +75,21 @@ export class SearchBar extends React.Component {
   }; // end onSuggestionsClearRequested()
 
 
+  findCoin = () => {
+    let coinSymbol;
+    globalvars.coinListPromise.then(() => {
+      coinSymbol = globalvars.coinList
+        .find(coin => coin.name === this.state.value).symbol;
+      if (coinSymbol === undefined) {
+        alert(`${this.state.value} was not found`);
+      } else {
+        console.log(`coinsymbol: ${coinSymbol}`);
+        this.props.changeViewToCoinPage(coinSymbol);
+      } // end if/else
+    });
+  } // end findCoin()
+
+
   render() {
     const { value, suggestions } = this.state;
     const inputProps = {
@@ -152,7 +112,10 @@ export class SearchBar extends React.Component {
           />
         </Col>
         <Col>
-          <Button className="search-button">
+          <Button
+            className="search-button"
+            onClick={this.findCoin}
+          >
             FIND COIN
           </Button>
         </Col>
@@ -160,6 +123,11 @@ export class SearchBar extends React.Component {
     );
   } // end render()
 } // end class SearchBar
+
+
+SearchBar.propTypes = {
+  changeViewToCoinPage: PropTypes.func.isRequired,
+};
 
 
 export default SearchBar;
