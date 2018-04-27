@@ -8,6 +8,7 @@ import { NavBar } from './NavBar';
 import { Header } from './Header';
 import { Display } from './Display';
 import { Footer } from './Footer';
+import { Registration } from '../components/Registration';
 
 
 export const RegistrationPage = props => (
@@ -19,7 +20,9 @@ export const RegistrationPage = props => (
     />
     <Header />
     <Display>
-      Registration Component to be added
+      <Registration
+        className="login"
+      />
     </Display>
     <Footer>
       empty footer
