@@ -85,6 +85,6 @@ UserForm.propTypes = {
   className: PropTypes.string.isRequired,
   onUsernameChange: PropTypes.func.isRequired,
   onPasswordChange: PropTypes.func.isRequired,
-};
+}; // end propTypes
 
 export default UserForm;

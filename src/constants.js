@@ -7,4 +7,13 @@ export const userCoinsRoute = 'user/coins';
 export const addUserCoinRoute = 'user/addcoin/';
 export const removeUserCoinRoute = 'user/removecoin/';
 
-/* Crypto-compart API URL and routes */
+/* Crypto-compare API URL and routes */
+export const ccApiUrl = 'https://min-api.cryptocompare.com/data/';
+export const priceRoute = 'price';
+export const dailyHistoryRoute = 'histoday';
+
+/* time constants */
+export const HOUR = 3600000;
+export const WEEK = 7;
+export const MONTH = 30;
+export const YEAR = 365;
