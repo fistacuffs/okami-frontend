@@ -1,5 +1,5 @@
 /**
- * LoginPage.js
+ * RegistrationPage.js
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -8,9 +8,9 @@ import { NavBar } from './NavBar';
 import { Header } from './Header';
 import { Display } from './Display';
 import { Footer } from './Footer';
-import { Login } from '../components/Login';
 
-export const LoginPage = props => (
+
+export const RegistrationPage = props => (
   <div>
     <NavBar
       changeViewToLandingPage={props.changeViewToLandingPage}
@@ -19,10 +19,7 @@ export const LoginPage = props => (
     />
     <Header />
     <Display>
-      <Login
-        className="login"
-        changeViewToLandingPage={props.changeViewToLandingPage}
-      />
+      Registration Component to be added
     </Display>
     <Footer>
       empty footer
@@ -31,11 +28,11 @@ export const LoginPage = props => (
 );
 
 
-LoginPage.propTypes = {
+RegistrationPage.propTypes = {
   changeViewToLandingPage: PropTypes.func.isRequired,
   changeViewToLoginPage: PropTypes.func.isRequired,
   changeViewToRegistrationPage: PropTypes.func.isRequired,
 };
 
 
-export default LoginPage;
+export default RegistrationPage;

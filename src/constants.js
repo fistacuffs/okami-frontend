@@ -17,3 +17,10 @@ export const HOUR = 3600000;
 export const WEEK = 7;
 export const MONTH = 30;
 export const YEAR = 365;
+
+/* view constants */
+export const viewEnum = {
+  LANDINGPAGE: 1,
+  LOGINPAGE: 2,
+  REGISTRATIONPAGE: 3,
+};

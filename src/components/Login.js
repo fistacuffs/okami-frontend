@@ -9,8 +9,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { Button } from 'reactstrap';
 
-import { Button } from './Button';
 import { UserForm } from './UserForm';
 import { backendUrl, loginRoute } from '../constants';
 import { globalvars } from '../globalvars';
@@ -100,9 +100,12 @@ export class Login extends React.Component {
         globalvars.userId = newId;
         globalvars.userTimeStamp = new Date();
 
+        // this.props.changeViewToLandingPage();
+
         /* THIS SHOULD BE REMOVED FROM FINAL PRODUCT */
         if (this.state.userId !== null) {
           console.log(`userId: ${this.state.userId}`);
+          console.log(`login timestamp: ${globalvars.userTimeStamp}`);
         } else {
           console.log('userId is still null');
         } // end if/else
@@ -135,11 +138,11 @@ export class Login extends React.Component {
           onPasswordChange={this.changePassword}
         />
         <Button
-          name="LOGIN"
-          color="primary"
           className="login-button"
           onClick={this.sendLogin}
-        />
+        >
+          LOGIN
+        </Button>
         <h3>{this.state.message}</h3>
       </div>
     ); // end Login
@@ -155,6 +158,7 @@ export class Login extends React.Component {
  */
 Login.propTypes = {
   className: PropTypes.string.isRequired,
+  // changeViewToLandingPage: PropTypes.func.isRequired,
 }; // end propTypes
 
 export default Login;

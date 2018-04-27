@@ -1,14 +1,20 @@
+/**
+ * App.js
+ */
 import React from 'react';
 import axios from 'axios';
 
 import { LandingPage } from './containers/LandingPage';
-import { backendUrl, coinListRoute } from './constants';
+import { LoginPage } from './containers/LoginPage';
+import { RegistrationPage } from './containers/RegistrationPage';
+import { backendUrl, coinListRoute, viewEnum } from './constants';
 import { globalvars } from './globalvars';
 
 
-/* import { LoginPage } from './containers/LoginPage'; */
-
 export class App extends React.Component {
+  /**
+   * getCoinList:
+   */
   static getCoinList() {
     // will return a Promise
     return (
@@ -21,15 +27,30 @@ export class App extends React.Component {
   } // end getCoinList
 
 
+  /**
+   * App constructor:
+   *
+   * @param
+   */
   constructor(props) {
     super(props);
 
     this.state = {
-      currentView: (<LandingPage />),
+      currentView: viewEnum.LANDINGPAGE,
     };
+
+    this.changeViewToLandingPage =
+      this.changeViewToLandingPage.bind(this);
+    this.changeViewToLoginPage =
+      this.changeViewToLoginPage.bind(this);
+    this.changeViewToRegistrationPage =
+      this.changeViewToRegistrationPage.bind(this);
   } // end constructor
 
 
+  /**
+   * componentWillMount:
+   */
   componentWillMount() {
     // loads coinList from backend when App starts
     // coinListPromise used to ensure coinList is loaded
@@ -37,12 +58,69 @@ export class App extends React.Component {
   } // end componentDidMount()
 
 
+  /**
+   * changeViewToLandingPage:
+   */
+  changeViewToLandingPage() {
+    this.setState({
+      currentView: viewEnum.LANDINGPAGE,
+    }); // end setState()
+  } // end changeView()
+
+
+  /**
+   * changeViewToLoginPage:
+   */
+  changeViewToLoginPage() {
+    this.setState({
+      currentView: viewEnum.LOGINPAGE,
+    }); // end setState()
+  } // end changeView()
+
+
+  /**
+   * changeViewToLoginPage:
+   */
+  changeViewToRegistrationPage() {
+    this.setState({
+      currentView: viewEnum.REGISTRATIONPAGE,
+    }); // end setState()
+  } // end changeView()
+
+
+  /**
+   * render:
+   */
   render() {
-    return (
-      <div>
-        {this.state.currentView}
-      </div>
-    );
+    switch (this.state.currentView) {
+      case viewEnum.LANDINGPAGE:
+        return (
+          <LandingPage
+            changeViewToLandingPage={this.changeViewToLandingPage}
+            changeViewToLoginPage={this.changeViewToLoginPage}
+            changeViewToRegistrationPage={this.changeViewToRegistrationPage}
+          />);
+      case viewEnum.LOGINPAGE:
+        return (
+          <LoginPage
+            changeViewToLandingPage={this.changeViewToLandingPage}
+            changeViewToLoginPage={this.changeViewToLoginPage}
+            changeViewToRegistrationPage={this.changeViewToRegistrationPage}
+          />);
+      case viewEnum.REGISTRATIONPAGE:
+        return (
+          <RegistrationPage
+            changeViewToLandingPage={this.changeViewToLandingPage}
+            changeViewToLoginPage={this.changeViewToLoginPage}
+            changeViewToRegistrationPage={this.changeViewToRegistrationPage}
+          />
+        );
+      default:
+        return (
+          <LandingPage
+            changeViewToLoginPage={this.changeViewToLoginPage}
+          />);
+    } // end switch()
   } // end render()
 } // end class App
 

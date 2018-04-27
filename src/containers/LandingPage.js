@@ -1,4 +1,8 @@
+/**
+ * LandingPage.js
+ */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { NavBar } from './NavBar';
 import { Header } from './Header';
@@ -6,17 +10,30 @@ import { Display } from './Display';
 import { Footer } from './Footer';
 import { ChartTerminal } from '../components/ChartTerminal';
 
-// import globalvars from '../globalvars';
 
-export const LandingPage = () => (
+export const LandingPage = props => (
   <div>
-    <NavBar />
+    <NavBar
+      changeViewToLandingPage={props.changeViewToLandingPage}
+      changeViewToLoginPage={props.changeViewToLoginPage}
+      changeViewToRegistrationPage={props.changeViewToRegistrationPage}
+    />
     <Header />
     <Display>
       <ChartTerminal />
     </Display>
-    <Footer />
+    <Footer>
+      empty footer
+    </Footer>
   </div>
 );
+
+
+LandingPage.propTypes = {
+  changeViewToLandingPage: PropTypes.func.isRequired,
+  changeViewToLoginPage: PropTypes.func.isRequired,
+  changeViewToRegistrationPage: PropTypes.func.isRequired,
+};
+
 
 export default LandingPage;
