@@ -7,7 +7,7 @@ import axios from 'axios';
 import { Button, Row } from 'reactstrap';
 
 import { globalvars } from '../globalvars';
-import { ccApiUrl, multiplePriceRoute, backendUrl, userCoinsRoute, addUserCoinRoute } from '../constants';
+import { ccApiUrl, multiplePriceRoute } from '../constants';
 
 
 export class CoinSelection extends React.Component {
@@ -28,36 +28,6 @@ export class CoinSelection extends React.Component {
   componentWillMount() {
     const promise = this.getCoinData();
     promise.catch(error => `Error with Crypto Compare: ${error}`);
-
-    if (globalvars.userId !== null) {
-      axios.get(backendUrl + userCoinsRoute)
-        .then((response) => {
-          console.log(`add coin response: ${Object.keys(response)}`);
-        })
-        .catch((error) => {
-          console.log(`error: ${Object.keys(error)}`);
-          console.log(`error.request: ${error.request}`);
-          console.log(`error.response: ${Object.keys(error.response)}`);
-          console.log(`error.response.data: ${Object.keys(error.response.data)}`);
-          console.log(`error.response.data.error: ${error.response.data.error}`);
-          console.log(`error.response.sgittatus: ${error.response.status}`);
-          console.log(`error.response.statusText: ${error.response.statusText}`);
-        });
-
-      axios.get(`${backendUrl + addUserCoinRoute}3808`)
-        .then((response) => {
-          console.log(`add coin response: ${Object.keys(response)}`);
-        })
-        .catch((error) => {
-          console.log(`error: ${Object.keys(error)}`);
-          console.log(`error.request: ${error.request}`);
-          console.log(`error.response: ${Object.keys(error.response)}`);
-          console.log(`error.response.data: ${Object.keys(error.response.data)}`);
-          console.log(`error.response.data.error: ${error.response.data.error}`);
-          console.log(`error.response.sgittatus: ${error.response.status}`);
-          console.log(`error.response.statusText: ${error.response.statusText}`);
-        });
-    }
   } //  end componentWillMount()
 
 

@@ -88,13 +88,9 @@ export class Login extends React.Component {
     axios.post(backendUrl + loginRoute, {
       username: this.state.username,
       password: this.state.password,
+      withCredentials: true,
     })
       .then((response) => {
-        console.log(`login response: ${Object.keys(response)}`);
-        console.log(`login response.headers.content-type: ${Object.keys(response.headers['content-type'])}`);
-        console.log(`login response.headers.content-type: ${response.headers['content-type']}`);
-        console.log(`login response.config: ${Object.keys(response.config)}`);
-        console.log(`login response.config.headers: ${Object.keys(response.config.headers)}`);
         console.log(JSON.stringify(response));
 
         newId = response.data.userId;

@@ -77,14 +77,9 @@ function getSuggestions(value) {
     return [];
   }
 
-  const regex = new RegExp(`^${escapedValue}i`);
+  const regex = new RegExp(`^${escapedValue}`, 'i');
 
-  return globalvars.coinListPromise
-    .then(
-      () => globalvars.coinList.filter(coin => regex.test(coin.name)),
-      () => console.log('Error with coin list'),
-    )
-    .catch(() => []);
+  return globalvars.coinList.filter(coin => regex.test(coin.name));
 } // end getSuggestions()
 
 
@@ -119,9 +114,12 @@ export class SearchBar extends React.Component {
 
 
   onSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: getSuggestions(value),
-    });
+    globalvars.coinListPromise
+      .then(() => {
+        this.setState({
+          suggestions: getSuggestions(value),
+        });
+      });
   }; // end onSuggestionsFetchRequested()
 
 
