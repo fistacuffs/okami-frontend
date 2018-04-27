@@ -83,7 +83,6 @@ export class SearchBar extends React.Component {
       if (coinSymbol === undefined) {
         alert(`${this.state.value} was not found`);
       } else {
-        console.log(`coinsymbol: ${coinSymbol}`);
         this.props.changeViewToCoinPage(coinSymbol);
       } // end if/else
     });
