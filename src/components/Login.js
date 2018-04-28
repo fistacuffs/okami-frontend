@@ -82,14 +82,18 @@ export class Login extends React.Component {
         message: 'Login failed. Enter new username and password.',
       });
       return;
-    }
+    } // end if
 
     // send request to backend with login information
     axios.post(backendUrl + loginRoute, {
       username: this.state.username,
       password: this.state.password,
+    }, {
+      withCredentials: true,
     })
       .then((response) => {
+        console.log(JSON.stringify(response));
+
         newId = response.data.userId;
 
         this.setState({
@@ -115,7 +119,9 @@ export class Login extends React.Component {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.log(error);
+        // console.log(`error: ${error.response.data.error}`);
+        console.log('Error logging in');
+        console.log(JSON.stringify(error));
         this.setState({
           message: 'Login failed. Enter new username and password.',
         });

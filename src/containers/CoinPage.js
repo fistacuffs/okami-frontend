@@ -11,6 +11,7 @@ import { Header } from './Header';
 import { Display } from './Display';
 import { Footer } from './Footer';
 import { ChartTerminal } from '../components/ChartTerminal';
+import { AddUserCoin } from '../components/AddUserCoin';
 
 
 export const CoinPage = props => (
@@ -25,6 +26,13 @@ export const CoinPage = props => (
       <Row><Col /><Col>{props.coinSymbol}</Col><Col /></Row>
       <Row>
         <Col><ChartTerminal coinSymbol={props.coinSymbol} /></Col>
+      </Row>
+      <Row>
+        <Col />
+        <Col>
+          <AddUserCoin coinSymbol={props.coinSymbol} />
+        </Col>
+        <Col />
       </Row>
     </Display>
     <Footer>
