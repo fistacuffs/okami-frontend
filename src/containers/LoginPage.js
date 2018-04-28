@@ -17,7 +17,9 @@ export const LoginPage = props => (
       changeViewToLoginPage={props.changeViewToLoginPage}
       changeViewToRegistrationPage={props.changeViewToRegistrationPage}
     />
-    <Header />
+    <Header
+      changeViewToLandingPage={props.changeViewToLandingPage}
+    />
     <Display>
       <Login
         className="login"

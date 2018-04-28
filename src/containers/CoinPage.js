@@ -21,7 +21,9 @@ export const CoinPage = props => (
       changeViewToLoginPage={props.changeViewToLoginPage}
       changeViewToRegistrationPage={props.changeViewToRegistrationPage}
     />
-    <Header />
+    <Header
+      changeViewToLandingPage={props.changeViewToLandingPage}
+    />
     <Display>
       <Row><Col /><Col>{props.coinSymbol}</Col><Col /></Row>
       <Row>
