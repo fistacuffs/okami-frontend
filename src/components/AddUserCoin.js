@@ -28,7 +28,7 @@ export class AddUserCoin extends React.Component {
         .find(coin => coin.symbol === this.props.coinSymbol).id;
 
     if (globalvars.userId !== null) {
-      axios.get(`${backendUrl + addUserCoinRoute + coinId}`)
+      axios.get(`${backendUrl + addUserCoinRoute + coinId}`, { withCredentials: true })
         .then((response) => {
           console.log(`add coin response: ${Object.keys(response)}`);
         })
