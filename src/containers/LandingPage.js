@@ -4,6 +4,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Col, Row } from 'reactstrap';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faDollarSign from '@fortawesome/fontawesome-free-solid/faDollarSign';
+import faCheckCircle from '@fortawesome/fontawesome-free-solid/faCheckCircle';
+import faBan from '@fortawesome/fontawesome-free-solid/faBan';
 
 import { NavBar } from './NavBar';
 import { Header } from './Header';
@@ -12,6 +16,7 @@ import { Footer } from './Footer';
 import { SearchBar } from '../components/SearchBar';
 import { ChartTerminal } from '../components/ChartTerminal';
 import { CoinSelection } from '../components/CoinSelection';
+import './Containers.css';
 
 
 export const LandingPage = props => (
@@ -38,7 +43,32 @@ export const LandingPage = props => (
       </Row>
     </Display>
     <Footer>
-      empty footer
+      <Row>
+        <Col>
+          <FontAwesomeIcon
+            className="footer-icon"
+            size="10x"
+            icon={faDollarSign}
+          />
+          {'see currency values'}
+        </Col>
+        <Col>
+          <FontAwesomeIcon
+            className="footer-icon"
+            size="10x"
+            icon={faCheckCircle}
+          />
+          {'updated in real time'}
+        </Col>
+        <Col>
+          <FontAwesomeIcon
+            className="footer-icon"
+            size="10x"
+            icon={faBan}
+          />
+          {'no need to sign up'}
+        </Col>
+      </Row>
     </Footer>
   </div>
 );
