@@ -1,5 +1,6 @@
 /**
- * LandingPage.js
+ * CoinPage.js
+ *
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -10,10 +11,9 @@ import { Header } from './Header';
 import { Display } from './Display';
 import { Footer } from './Footer';
 import { ChartTerminal } from '../components/ChartTerminal';
-import { CoinSelection } from '../components/CoinSelection';
 
 
-export const LandingPage = props => (
+export const CoinPage = props => (
   <div>
     <NavBar
       changeViewToLandingPage={props.changeViewToLandingPage}
@@ -22,11 +22,9 @@ export const LandingPage = props => (
     />
     <Header />
     <Display>
+      <Row><Col /><Col>{props.coinSymbol}</Col><Col /></Row>
       <Row>
-        <Col><ChartTerminal coinSymbol="BTC" /></Col>
-        <Col>
-          <CoinSelection changeViewToCoinPage={props.changeViewToCoinPage} />
-        </Col>
+        <Col><ChartTerminal coinSymbol={props.coinSymbol} /></Col>
       </Row>
     </Display>
     <Footer>
@@ -36,12 +34,12 @@ export const LandingPage = props => (
 );
 
 
-LandingPage.propTypes = {
+CoinPage.propTypes = {
+  coinSymbol: PropTypes.string.isRequired,
   changeViewToLandingPage: PropTypes.func.isRequired,
-  changeViewToCoinPage: PropTypes.func.isRequired,
   changeViewToLoginPage: PropTypes.func.isRequired,
   changeViewToRegistrationPage: PropTypes.func.isRequired,
 };
 
 
-export default LandingPage;
+export default CoinPage;

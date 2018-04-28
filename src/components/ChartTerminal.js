@@ -3,6 +3,7 @@
  *
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Button, Col, Container, Row } from 'reactstrap';
 
@@ -56,7 +57,7 @@ export class ChartTerminal extends React.Component {
         ccApiUrl + dailyHistoryRoute,
         {
           params: {
-            fsym: globalvars.coinList[0].symbol,
+            fsym: this.props.coinSymbol,
             tsym: 'USD',
             limit: YEAR,
           },
@@ -169,5 +170,10 @@ export class ChartTerminal extends React.Component {
     );
   } // end render()
 } // end class ChartDisplayer
+
+
+ChartTerminal.propTypes = {
+  coinSymbol: PropTypes.string.isRequired,
+};
 
 export default ChartTerminal;

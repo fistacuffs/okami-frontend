@@ -2,12 +2,12 @@
  * CoinSelection.js
  */
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Button, Row } from 'reactstrap';
 
 import { globalvars } from '../globalvars';
-import { ccApiUrl, multiplePriceRoute } from '../constants';
+import { ccApiUrl, multiplePriceRoute, backendUrl, userCoinsRoute, addUserCoinRoute } from '../constants';
 
 
 export class CoinSelection extends React.Component {
@@ -28,6 +28,36 @@ export class CoinSelection extends React.Component {
   componentWillMount() {
     const promise = this.getCoinData();
     promise.catch(error => `Error with Crypto Compare: ${error}`);
+
+    if (globalvars.userId !== null) {
+      axios.get(backendUrl + userCoinsRoute)
+        .then((response) => {
+          console.log(`add coin response: ${Object.keys(response)}`);
+        })
+        .catch((error) => {
+          console.log(`error: ${Object.keys(error)}`);
+          console.log(`error.request: ${error.request}`);
+          console.log(`error.response: ${Object.keys(error.response)}`);
+          console.log(`error.response.data: ${Object.keys(error.response.data)}`);
+          console.log(`error.response.data.error: ${error.response.data.error}`);
+          console.log(`error.response.sgittatus: ${error.response.status}`);
+          console.log(`error.response.statusText: ${error.response.statusText}`);
+        });
+
+      axios.get(`${backendUrl + addUserCoinRoute}3808`)
+        .then((response) => {
+          console.log(`add coin response: ${Object.keys(response)}`);
+        })
+        .catch((error) => {
+          console.log(`error: ${Object.keys(error)}`);
+          console.log(`error.request: ${error.request}`);
+          console.log(`error.response: ${Object.keys(error.response)}`);
+          console.log(`error.response.data: ${Object.keys(error.response.data)}`);
+          console.log(`error.response.data.error: ${error.response.data.error}`);
+          console.log(`error.response.sgittatus: ${error.response.status}`);
+          console.log(`error.response.statusText: ${error.response.statusText}`);
+        });
+    }
   } //  end componentWillMount()
 
 
@@ -93,46 +123,43 @@ export class CoinSelection extends React.Component {
   } // end getCoinData
 
 
+  renderButtons() {
+    const buttons = [];
+
+    for (let i = 0; i < this.state.buttonStrings.length; i += 1) {
+      buttons.push((
+        <Row key={i}>
+          <Button
+            className="coin-button"
+            onClick={() => this.props.changeViewToCoinPage(this.state.coinData[i].symbol)}
+            key={i}
+          >
+            {this.state.buttonStrings[i]}
+          </Button>
+        </Row>
+      ));
+    } // end for
+
+    return buttons;
+  } // end makeButtons()
+
+
   render() {
     return (
       <div className="coin-selection">
         <h3>POPULAR CURRENCIES</h3>
-        <Row>
-          <Button className="coin-button">
-            {this.state.buttonStrings[0]}
-          </Button>
-        </Row>
-        <Row>
-          <Button className="coin-button">
-            {this.state.buttonStrings[1]}
-          </Button>
-        </Row>
-        <Row>
-          <Button className="coin-button">
-            {this.state.buttonStrings[2]}
-          </Button>
-        </Row>
-        <Row>
-          <Button className="coin-button">
-            {this.state.buttonStrings[3]}
-          </Button>
-        </Row>
-        <Row>
-          <Button className="coin-button">
-            {this.state.buttonStrings[4]}
-          </Button>
-        </Row>
+        {this.renderButtons()}
       </div>
     );
   } // end render()
 } // end class CoinSelection
 
 
-/* CoinSelection.propTypes = {
-  coins: PropTypes.arrayOf(PropTypes.object),
+CoinSelection.propTypes = {
+  changeViewToCoinPage: PropTypes.func.isRequired,
 };
 
-
+/*
 CoinSelection.defaultProps = {
   coins: [],
 }; */

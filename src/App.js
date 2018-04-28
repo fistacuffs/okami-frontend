@@ -5,6 +5,7 @@ import React from 'react';
 import axios from 'axios';
 
 import { LandingPage } from './containers/LandingPage';
+import { CoinPage } from './containers/CoinPage';
 import { LoginPage } from './containers/LoginPage';
 import { RegistrationPage } from './containers/RegistrationPage';
 import { backendUrl, coinListRoute, viewEnum } from './constants';
@@ -38,6 +39,7 @@ export class App extends React.Component {
 
     this.state = {
       currentView: viewEnum.LANDINGPAGE,
+      coinSymbol: null,
     };
 
     this.changeViewToLandingPage =
@@ -46,6 +48,8 @@ export class App extends React.Component {
       this.changeViewToLoginPage.bind(this);
     this.changeViewToRegistrationPage =
       this.changeViewToRegistrationPage.bind(this);
+    this.changeViewToCoinPage =
+      this.changeViewToCoinPage.bind(this);
   } // end constructor
 
 
@@ -66,6 +70,17 @@ export class App extends React.Component {
     this.setState({
       currentView: viewEnum.LANDINGPAGE,
     }); // end setState()
+  } // end changeView()
+
+
+  /**
+   * changeViewToCoinPage:
+   */
+  changeViewToCoinPage(newCoinSymbol) {
+    this.setState({
+      currentView: viewEnum.COINPAGE,
+      coinSymbol: newCoinSymbol,
+    });
   } // end changeView()
 
 
@@ -100,6 +115,7 @@ export class App extends React.Component {
             changeViewToLandingPage={this.changeViewToLandingPage}
             changeViewToLoginPage={this.changeViewToLoginPage}
             changeViewToRegistrationPage={this.changeViewToRegistrationPage}
+            changeViewToCoinPage={this.changeViewToCoinPage}
           />);
       case viewEnum.LOGINPAGE:
         return (
@@ -116,6 +132,14 @@ export class App extends React.Component {
             changeViewToRegistrationPage={this.changeViewToRegistrationPage}
           />
         );
+      case viewEnum.COINPAGE:
+        return (
+          <CoinPage
+            coinSymbol={this.state.coinSymbol}
+            changeViewToLandingPage={this.changeViewToLandingPage}
+            changeViewToLoginPage={this.changeViewToLoginPage}
+            changeViewToRegistrationPage={this.changeViewToRegistrationPage}
+          />);
       default:
         return (
           <LandingPage
