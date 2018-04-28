@@ -104,13 +104,17 @@ export class Login extends React.Component {
 
         /* THIS SHOULD BE REMOVED FROM FINAL PRODUCT */
         if (this.state.userId !== null) {
+          // eslint-disable-next-line no-console
           console.log(`userId: ${this.state.userId}`);
+          // eslint-disable-next-line no-console
           console.log(`login timestamp: ${globalvars.userTimeStamp}`);
         } else {
+          // eslint-disable-next-line no-console
           console.log('userId is still null');
         } // end if/else
       })
       .catch((error) => {
+        // eslint-disable-next-line no-console
         console.log(error);
         this.setState({
           message: 'Login failed. Enter new username and password.',

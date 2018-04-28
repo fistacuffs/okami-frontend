@@ -83,6 +83,7 @@ export class Registration extends React.Component {
       password: this.state.password,
     })
       .then((response) => {
+        // eslint-disable-next-line no-console
         console.log(`reg response: ${response}`);
         this.setState({
           message: 'Registration complete!',
@@ -91,6 +92,7 @@ export class Registration extends React.Component {
         // this.props.changeViewToLandingPage();
       })
       .catch((error) => {
+        // eslint-disable-next-line no-console
         console.log(error);
         this.setState({
           message: `Registration failed: ${error.message}`,

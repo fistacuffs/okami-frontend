@@ -22,6 +22,7 @@ export class App extends React.Component {
         .then((response) => {
           globalvars.coinList = response.data;
         }).catch((error) => {
+          // eslint-disable-next-line no-console
           console.log(`Error with get from backend: ${error}`);
         })); // end axios.get()
   } // end getCoinList

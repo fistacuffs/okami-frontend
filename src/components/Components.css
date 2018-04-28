@@ -3,6 +3,18 @@
   color: #F7F5E6;
 }
 
+.coin-button {
+  background-color: #52658F;
+  color: #F7F5E6;
+  height: 50px;
+  margin: 5px;
+  width: 300px;
+}
+
+.coin-selection {
+  color: #52658F;
+}
+
 .login {
   display: flex;
   flex-direction: column;
