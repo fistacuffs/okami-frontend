@@ -1,5 +1,8 @@
 /**
  * LoginPage.js
+ *
+ * This is the login page view container. The main function is to display the
+ * login form for the user to login to the backend server.
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -10,34 +13,37 @@ import { Display } from './Display';
 import { Footer } from './Footer';
 import { Login } from '../components/Login';
 
+
 export const LoginPage = props => (
   <div>
     <NavBar
-      changeViewToLandingPage={props.changeViewToLandingPage}
-      changeViewToLoginPage={props.changeViewToLoginPage}
-      changeViewToRegistrationPage={props.changeViewToRegistrationPage}
+      changePageView={props.changePageView}
     />
     <Header
-      changeViewToLandingPage={props.changeViewToLandingPage}
+      changePageView={props.changePageView}
     />
     <Display>
       <Login
         className="login"
-        changeViewToLandingPage={props.changeViewToLandingPage}
+        changePageView={props.changePageView}
       />
     </Display>
     <Footer>
-      empty footer
+      CMSC 495 (7982) Group 1
     </Footer>
   </div>
-);
+); // end LoginPage
 
 
+/**
+ * props:
+ *
+ * Required:
+ * changePageView - function to change App state currentView
+ */
 LoginPage.propTypes = {
-  changeViewToLandingPage: PropTypes.func.isRequired,
-  changeViewToLoginPage: PropTypes.func.isRequired,
-  changeViewToRegistrationPage: PropTypes.func.isRequired,
-};
+  changePageView: PropTypes.func.isRequired,
+}; // end propTypes
 
 
 export default LoginPage;

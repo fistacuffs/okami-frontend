@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Col, Row } from 'reactstrap';
 
+import { viewEnum } from '../constants';
 import './Containers.css';
 import logo from '../assets/imgs/logo.png';
 import pawPrintBg from '../assets/imgs/paw-print-background.png';
@@ -11,8 +12,8 @@ export const Header = props => (
     <Row className="header-container">
       <Col xs="4">
         <div
-          onClick={props.changeViewToLandingPage}
-          onKeyDown={props.changeViewToLandingPage}
+          onClick={() => props.changePageView(viewEnum.LANDINGPAGE)}
+          onKeyDown={() => props.changePageView(viewEnum.LANDINGPAGE)}
           role="button"
           tabIndex={0}
         >
@@ -38,7 +39,7 @@ export const Header = props => (
 );
 
 Header.propTypes = {
-  changeViewToLandingPage: PropTypes.func.isRequired,
+  changePageView: PropTypes.func.isRequired,
 };
 
 export default Header;

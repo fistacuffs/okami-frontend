@@ -22,25 +22,23 @@ import './Containers.css';
 export const LandingPage = props => (
   <div>
     <NavBar
-      changeViewToLandingPage={props.changeViewToLandingPage}
-      changeViewToLoginPage={props.changeViewToLoginPage}
-      changeViewToRegistrationPage={props.changeViewToRegistrationPage}
+      changePageView={props.changePageView}
     />
     <Header
-      changeViewToLandingPage={props.changeViewToLandingPage}
+      changePageView={props.changePageView}
     />
     <Display>
       <Row>
         <Col />
         <Col>
-          <SearchBar changeViewToCoinPage={props.changeViewToCoinPage} />
+          <SearchBar changePageView={props.changePageView} />
         </Col>
         <Col />
       </Row>
       <Row>
         <Col><ChartTerminal coinSymbol="BTC" /></Col>
         <Col>
-          <CoinSelection changeViewToCoinPage={props.changeViewToCoinPage} />
+          <CoinSelection changePageView={props.changePageView} />
         </Col>
       </Row>
     </Display>
@@ -77,10 +75,7 @@ export const LandingPage = props => (
 
 
 LandingPage.propTypes = {
-  changeViewToLandingPage: PropTypes.func.isRequired,
-  changeViewToCoinPage: PropTypes.func.isRequired,
-  changeViewToLoginPage: PropTypes.func.isRequired,
-  changeViewToRegistrationPage: PropTypes.func.isRequired,
+  changePageView: PropTypes.func.isRequired,
 };
 
 

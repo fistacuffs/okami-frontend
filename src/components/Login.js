@@ -1,29 +1,59 @@
 /**
  * Login.js
  *
- * This is the parent component of the login module. It incorporates the login
- * button and login form and implements the logic for capturing the username
- * and password from the user and sending them to the backend in order to
- * request a user id.
+ * This is the login component of the application. It incorporates a form form
+ * username and password information. A function is included that sends the
+ * information to the backend for validation and if acceptible a one hour user
+ * session begins with the backend server.
  */
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Button } from 'reactstrap';
+import {
+  Col,
+  Container,
+  Row } from 'reactstrap';
 
 import { UserForm } from './UserForm';
-import { backendUrl, loginRoute } from '../constants';
+import {
+  backendUrl,
+  loginRoute,
+  viewEnum } from '../constants';
 import { globalvars } from '../globalvars';
 
 
 export class Login extends React.Component {
   /**
+   * formatMessage:
+   * method to format error messages into JFX objects
+   *
+   * @param message: string containing error message
+   */
+  static formatMessage(message) {
+    return (
+      <Container>
+        <Row>
+          <Col>
+            <h4>Unsuccessful Login: {message}</h4>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <h6>Enter a new username and password to login.</h6>
+          </Col>
+        </Row>
+      </Container>); // end return()
+  } // end formatMessage
+
+
+  /**
+   * @constructor
    * Login constructor
-   * -iniitializes state properties for username, password, and userId
-   * -binds methods changeUsername, changePassword, and sendLogin to this
+   * -iniitializes state properties for username, password, and message
+   * -binds methods changeUsername, changePassword, and sendLogin to 'this'
    *  component
    *
-   * @param: to pass any props to React components
+   * @param props: to pass any props to React components
    */
   constructor(props) {
     super(props);
@@ -32,8 +62,7 @@ export class Login extends React.Component {
       username: '',
       password: '',
       message: '',
-      userId: null,
-    };
+    }; // end state
 
     this.changeUsername = this.changeUsername.bind(this);
     this.changePassword = this.changePassword.bind(this);
@@ -43,44 +72,43 @@ export class Login extends React.Component {
 
   /**
    * changeUsername:
-   * method changes the state property username of this component
+   * method changes the state property username of 'this' component
    *
    * @param: the new string value for username
    */
   changeUsername(newUsername) {
     this.setState({
       username: newUsername,
-    });
+    }); // end setState()
   } // end changeUsername()
 
 
   /**
    * changePassword:
-   * method changes the state property password of this component
+   * method changes the state property password of 'this' component
    *
    * @param: the new string value for password
    */
   changePassword(newPassword) {
     this.setState({
       password: newPassword,
-    });
+    }); // end setState()
   } // end changePassword()
 
 
   /**
    * sendLogin:
    * method uses the state properties username and password to send a POST
-   * request to the backend to get a userId. Alerts user if username/password
-   * combination is invalid or either field is empty (should implement with
-   * something besides alerts())
+   * request to the backend to attempt to get a userId and begin a user session
+   * with the backend server. If successful, they will be routed to the landing
+   * page. Otherwise an error message is displayed.
    */
   sendLogin() {
-    let newId;
-
+    // test for empty, null, or undefined fields
     if (!this.state.username || !this.state.password) {
       this.setState({
-        message: 'Login failed. Enter new username and password.',
-      });
+        message: Login.formatMessage('empty field(s)'),
+      }); // end setState()
       return;
     } // end if
 
@@ -90,48 +118,20 @@ export class Login extends React.Component {
       password: this.state.password,
     }, {
       withCredentials: true,
-    })
+    }) // end post()
       .then((response) => {
-        console.log(JSON.stringify(response));
-
-        newId = response.data.userId;
-
-        this.setState({
-          userId: newId,
-          message: 'Successful login.',
-        }); // end setState()
-
-        globalvars.userId = newId;
+        globalvars.userId = response.data.userId;
+        globalvars.username = this.state.username;
         globalvars.userTimeStamp = new Date();
 
-        // this.props.changeViewToLandingPage();
-
-        /* THIS SHOULD BE REMOVED FROM FINAL PRODUCT */
-        if (this.state.userId !== null) {
-          // eslint-disable-next-line no-console
-          console.log(`userId: ${this.state.userId}`);
-          // eslint-disable-next-line no-console
-          console.log(`login timestamp: ${globalvars.userTimeStamp}`);
-        } else {
-          // eslint-disable-next-line no-console
-          console.log('userId is still null');
-        } // end if/else
-      })
+        // change view to landing page after successful login
+        this.props.changePageView(viewEnum.LANDINGPAGE);
+      }) // end then()
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        // console.log(`error: ${error.response.data.error}`);
-        console.log('Error logging in');
-        console.log(JSON.stringify(error));
         this.setState({
-          message: 'Login failed. Enter new username and password.',
-        });
-      })
-      .finally(() => {
-        this.setState({
-          // erase password from this component after login request
-          password: null,
-        });
-      }); // end axios.post()
+          message: Login.formatMessage(error.response.data.error),
+        }); // end setState()
+      }); // end catch()
   } // end handleClick()
 
 
@@ -146,16 +146,13 @@ export class Login extends React.Component {
           className="user-form"
           onUsernameChange={this.changeUsername}
           onPasswordChange={this.changePassword}
-        />
-        <Button
-          className="login-button"
           onClick={this.sendLogin}
         >
           LOGIN
-        </Button>
-        <h3>{this.state.message}</h3>
+        </UserForm>
+        {this.state.message}
       </div>
-    ); // end Login
+    ); // end return()
   } // end render()
 } // end class Login
 
@@ -165,10 +162,12 @@ export class Login extends React.Component {
  *
  * Required:
  * className - string name used for css styling
+ * changePageView - function to change App state currentView
  */
 Login.propTypes = {
   className: PropTypes.string.isRequired,
-  // changeViewToLandingPage: PropTypes.func.isRequired,
+  changePageView: PropTypes.func.isRequired,
 }; // end propTypes
+
 
 export default Login;

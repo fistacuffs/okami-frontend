@@ -7,7 +7,10 @@ import axios from 'axios';
 import { Button, Row } from 'reactstrap';
 
 import { globalvars } from '../globalvars';
-import { ccApiUrl, multiplePriceRoute } from '../constants';
+import {
+  ccApiUrl,
+  multiplePriceRoute,
+  viewEnum } from '../constants';
 
 
 export class CoinSelection extends React.Component {
@@ -101,7 +104,10 @@ export class CoinSelection extends React.Component {
         <Row key={i}>
           <Button
             className="coin-button"
-            onClick={() => this.props.changeViewToCoinPage(this.state.coinData[i].symbol)}
+            onClick={
+              () => this.props
+              .changePageView(viewEnum.COINPAGE, this.state.coinData[i].symbol)
+            } // end onClick function
             key={i}
           >
             {this.state.buttonStrings[i]}
@@ -126,7 +132,7 @@ export class CoinSelection extends React.Component {
 
 
 CoinSelection.propTypes = {
-  changeViewToCoinPage: PropTypes.func.isRequired,
+  changePageView: PropTypes.func.isRequired,
 };
 
 /*

@@ -7,6 +7,7 @@ import Autosuggest from 'react-autosuggest';
 import { Button, Col, Row } from 'reactstrap';
 
 import { globalvars } from '../globalvars';
+import { viewEnum } from '../constants';
 import './Components.css';
 
 
@@ -83,7 +84,7 @@ export class SearchBar extends React.Component {
       if (coinSymbol === undefined) {
         alert(`${this.state.value} was not found`);
       } else {
-        this.props.changeViewToCoinPage(coinSymbol);
+        this.props.changePageView(viewEnum.COINPAGE, coinSymbol);
       } // end if/else
     });
   } // end findCoin()
@@ -125,7 +126,7 @@ export class SearchBar extends React.Component {
 
 
 SearchBar.propTypes = {
-  changeViewToCoinPage: PropTypes.func.isRequired,
+  changePageView: PropTypes.func.isRequired,
 };
 
 

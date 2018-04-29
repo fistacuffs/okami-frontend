@@ -17,12 +17,10 @@ import { AddUserCoin } from '../components/AddUserCoin';
 export const CoinPage = props => (
   <div>
     <NavBar
-      changeViewToLandingPage={props.changeViewToLandingPage}
-      changeViewToLoginPage={props.changeViewToLoginPage}
-      changeViewToRegistrationPage={props.changeViewToRegistrationPage}
+      changePageView={props.changePageView}
     />
     <Header
-      changeViewToLandingPage={props.changeViewToLandingPage}
+      changePageView={props.changePageView}
     />
     <Display>
       <Row><Col /><Col>{props.coinSymbol}</Col><Col /></Row>
@@ -46,9 +44,7 @@ export const CoinPage = props => (
 
 CoinPage.propTypes = {
   coinSymbol: PropTypes.string.isRequired,
-  changeViewToLandingPage: PropTypes.func.isRequired,
-  changeViewToLoginPage: PropTypes.func.isRequired,
-  changeViewToRegistrationPage: PropTypes.func.isRequired,
+  changePageView: PropTypes.func.isRequired,
 };
 
 

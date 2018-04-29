@@ -1,11 +1,20 @@
 /* Variables required by all components */
-// eslint-disable-next-line
-export let globalvars = {
+import { HOUR } from './constants';
+
+export const globalvars = {
   userId: null,
+  username: null,
   userTimeStamp: null,
   coinList: null,
   coinListPromise: null,
   currentView: 'LandingPage',
-};
+  isLoggedIn: () => {
+    if (globalvars.userId === null
+      || ((new Date()).getTime() - HOUR > globalvars.userTimeStamp.getTime())) {
+      return false;
+    } // end if
+    return true;
+  }, // end isLoggedIn()
+}; // end globalvars
 
 export default globalvars;

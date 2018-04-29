@@ -30,6 +30,7 @@ export class App extends React.Component {
 
 
   /**
+   * @constructor
    * App constructor:
    *
    * @param
@@ -42,14 +43,7 @@ export class App extends React.Component {
       coinSymbol: null,
     };
 
-    this.changeViewToLandingPage =
-      this.changeViewToLandingPage.bind(this);
-    this.changeViewToLoginPage =
-      this.changeViewToLoginPage.bind(this);
-    this.changeViewToRegistrationPage =
-      this.changeViewToRegistrationPage.bind(this);
-    this.changeViewToCoinPage =
-      this.changeViewToCoinPage.bind(this);
+    this.changePageView = this.changePageView.bind(this);
   } // end constructor
 
 
@@ -64,44 +58,14 @@ export class App extends React.Component {
 
 
   /**
-   * changeViewToLandingPage:
+   * changePageView
    */
-  changeViewToLandingPage() {
+  changePageView(newPageView, newCoinSymbol) {
     this.setState({
-      currentView: viewEnum.LANDINGPAGE,
-    }); // end setState()
-  } // end changeView()
-
-
-  /**
-   * changeViewToCoinPage:
-   */
-  changeViewToCoinPage(newCoinSymbol) {
-    this.setState({
-      currentView: viewEnum.COINPAGE,
+      currentView: newPageView,
       coinSymbol: newCoinSymbol,
     });
-  } // end changeView()
-
-
-  /**
-   * changeViewToLoginPage:
-   */
-  changeViewToLoginPage() {
-    this.setState({
-      currentView: viewEnum.LOGINPAGE,
-    }); // end setState()
-  } // end changeView()
-
-
-  /**
-   * changeViewToLoginPage:
-   */
-  changeViewToRegistrationPage() {
-    this.setState({
-      currentView: viewEnum.REGISTRATIONPAGE,
-    }); // end setState()
-  } // end changeView()
+  }
 
 
   /**
@@ -112,41 +76,33 @@ export class App extends React.Component {
       case viewEnum.LANDINGPAGE:
         return (
           <LandingPage
-            changeViewToLandingPage={this.changeViewToLandingPage}
-            changeViewToLoginPage={this.changeViewToLoginPage}
-            changeViewToRegistrationPage={this.changeViewToRegistrationPage}
-            changeViewToCoinPage={this.changeViewToCoinPage}
+            changePageView={this.changePageView}
           />);
       case viewEnum.LOGINPAGE:
         return (
           <LoginPage
-            changeViewToLandingPage={this.changeViewToLandingPage}
-            changeViewToLoginPage={this.changeViewToLoginPage}
-            changeViewToRegistrationPage={this.changeViewToRegistrationPage}
+            changePageView={this.changePageView}
           />);
       case viewEnum.REGISTRATIONPAGE:
         return (
           <RegistrationPage
-            changeViewToLandingPage={this.changeViewToLandingPage}
-            changeViewToLoginPage={this.changeViewToLoginPage}
-            changeViewToRegistrationPage={this.changeViewToRegistrationPage}
+            changePageView={this.changePageView}
           />
         );
       case viewEnum.COINPAGE:
         return (
           <CoinPage
             coinSymbol={this.state.coinSymbol}
-            changeViewToLandingPage={this.changeViewToLandingPage}
-            changeViewToLoginPage={this.changeViewToLoginPage}
-            changeViewToRegistrationPage={this.changeViewToRegistrationPage}
+            changePageView={this.changePageView}
           />);
       default:
         return (
           <LandingPage
-            changeViewToLoginPage={this.changeViewToLoginPage}
+            changePageView={this.changePageView}
           />);
     } // end switch()
   } // end render()
 } // end class App
+
 
 export default App;

@@ -14,12 +14,10 @@ import { Registration } from '../components/Registration';
 export const RegistrationPage = props => (
   <div>
     <NavBar
-      changeViewToLandingPage={props.changeViewToLandingPage}
-      changeViewToLoginPage={props.changeViewToLoginPage}
-      changeViewToRegistrationPage={props.changeViewToRegistrationPage}
+      changePageView={props.changePageView}
     />
     <Header
-      changeViewToLandingPage={props.changeViewToLandingPage}
+      changePageView={props.changePageView}
     />
     <Display>
       <Registration
@@ -34,9 +32,7 @@ export const RegistrationPage = props => (
 
 
 RegistrationPage.propTypes = {
-  changeViewToLandingPage: PropTypes.func.isRequired,
-  changeViewToLoginPage: PropTypes.func.isRequired,
-  changeViewToRegistrationPage: PropTypes.func.isRequired,
+  changePageView: PropTypes.func.isRequired,
 };
 
 
