@@ -74,7 +74,7 @@ export class Login extends React.Component {
    * changeUsername:
    * method changes the state property username of 'this' component
    *
-   * @param: the new string value for username
+   * @param newUsername: the new string value for username
    */
   changeUsername(newUsername) {
     this.setState({
@@ -87,7 +87,7 @@ export class Login extends React.Component {
    * changePassword:
    * method changes the state property password of 'this' component
    *
-   * @param: the new string value for password
+   * @param newPassword: the new string value for password
    */
   changePassword(newPassword) {
     this.setState({
@@ -137,7 +137,8 @@ export class Login extends React.Component {
 
   /**
    * render:
-   * Required method of React components to create JFX element.
+   * Required method of React components to display components called when
+   * component is constructed or state is changed.
    */
   render() {
     return (

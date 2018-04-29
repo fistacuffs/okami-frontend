@@ -6,20 +6,49 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Button } from 'reactstrap';
+import {
+  Col,
+  Container,
+  Row } from 'reactstrap';
 
 import { UserForm } from './UserForm';
-import { backendUrl, registrationRoute } from '../constants';
+import {
+  backendUrl,
+  registrationRoute,
+  viewEnum } from '../constants';
 
 
 export class Registration extends React.Component {
   /**
-   * Registration constructor
-   * -iniitializes state properties for username, password, and userId
-   * -binds methods changeUsername, changePassword, and sendLogin to this
-   *  component
+   * formatMessage:
+   * method to format error messages into JFX objects
    *
-   * @param: to pass any props to React components
+   * @param message: string containing error message
+   */
+  static formatMessage(message) {
+    return (
+      <Container>
+        <Row>
+          <Col>
+            <h4>Unsuccessful Registration: {message}</h4>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <h6>Enter a new username and password to register.</h6>
+          </Col>
+        </Row>
+      </Container>); // end return()
+  } // end formatMessage
+
+
+  /**
+   * Registration constructor
+   * -iniitializes state properties for username, password, and message
+   * -binds methods changeUsername, changePassword, and sendRegistration to
+   * 'this' component
+   *
+   * @param props: to pass any props to React components
    */
   constructor(props) {
     super(props);
@@ -28,7 +57,7 @@ export class Registration extends React.Component {
       username: '',
       password: '',
       message: '',
-    };
+    }; // end state
 
     this.changeUsername = this.changeUsername.bind(this);
     this.changePassword = this.changePassword.bind(this);
@@ -40,12 +69,12 @@ export class Registration extends React.Component {
    * changeUsername:
    * method changes the state property username of this component
    *
-   * @param: the new string value for username
+   * @param newUsername: the new string value for username
    */
   changeUsername(newUsername) {
     this.setState({
       username: newUsername,
-    });
+    }); // end setState()
   } // end changeUsername()
 
 
@@ -53,27 +82,27 @@ export class Registration extends React.Component {
    * changePassword:
    * method changes the state property password of this component
    *
-   * @param: the new string value for password
+   * @param newPassword: the new string value for password
    */
   changePassword(newPassword) {
     this.setState({
       password: newPassword,
-    });
+    }); // end setState()
   } // end changePassword()
 
 
   /**
    * sendRegistration:
    * method uses the state properties username and password to send a POST
-   * request to the backend to get a userId. Alerts user if username/password
-   * combination is invalid or either field is empty (should implement with
-   * something besides alerts())
+   * request to the backend to create login credentials. If successful, they
+   * will be routed to the login page. Otherwise an error message is displayed.
    */
   sendRegistration() {
+    // test for empty, null, or undefined fields
     if (!this.state.username || !this.state.password) {
       this.setState({
-        message: 'Registration failed: Username or Password cannot be empty',
-      });
+        message: Registration.formatMessage('empty field(s)'),
+      }); // end setState
       return;
     } // end if
 
@@ -81,35 +110,28 @@ export class Registration extends React.Component {
     axios.post(backendUrl + registrationRoute, {
       username: this.state.username,
       password: this.state.password,
-    })
+    }) // end post()
       .then((response) => {
-        // eslint-disable-next-line no-console
-        console.log(`reg response: ${response}`);
-        this.setState({
-          message: 'Registration complete!',
-        }); // end setState()
-
-        // this.props.changeViewToLandingPage();
-      })
+        if (response.statusText === 'Created') {
+          this.props.changePageView(viewEnum.LOGINPAGE);
+        } else {
+          this.setState({
+            message: Registration.formatMessage(response.statusText),
+          }); // end setState()
+        } // end if/else
+      }) // end then()
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(`error: ${error.response.data.error}`);
         this.setState({
-          message: `Registration failed: ${error.response.data.error}`,
-        });
-      })
-      .finally(() => {
-        this.setState({
-          // erase password from this component after login request
-          password: null,
-        });
-      }); // end axios.post()
-  } // end handleClick()
+          message: Registration.formatMessage(error.response.data.error),
+        }); // end setState()
+      }); // end catch()
+  } // end sendRegistration()
 
 
   /**
    * render:
-   * Required method of React components to create JFX element.
+   * Required method of React components to display components called when
+   * component is constructed or state is changed.
    */
   render() {
     return (
@@ -118,14 +140,11 @@ export class Registration extends React.Component {
           className="user-form"
           onUsernameChange={this.changeUsername}
           onPasswordChange={this.changePassword}
-        />
-        <Button
-          className="login-button"
           onClick={this.sendRegistration}
         >
           SIGN UP
-        </Button>
-        <h3>{this.state.message}</h3>
+        </UserForm>
+        {this.state.message}
       </div>
     ); // end Login
   } // end render()
@@ -137,10 +156,12 @@ export class Registration extends React.Component {
  *
  * Required:
  * className - string name used for css styling
+ * changePageView - function to change App state currentView
  */
 Registration.propTypes = {
   className: PropTypes.string.isRequired,
-  // changeViewToLandingPage: PropTypes.func.isRequired,
+  changePageView: PropTypes.func.isRequired,
 }; // end propTypes
+
 
 export default Registration;

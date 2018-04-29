@@ -1,5 +1,9 @@
 /**
  * RegistrationPage.js
+ *
+ * This is the registration page view container. The main function is to display
+ * the registration form for the user to create login information in the backend
+ * server.
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -22,18 +26,25 @@ export const RegistrationPage = props => (
     <Display>
       <Registration
         className="login"
+        changePageView={props.changePageView}
       />
     </Display>
     <Footer>
-      empty footer
+      CMSC 495 (7982) Group 1
     </Footer>
   </div>
-);
+); // end RegistrationPage
 
 
+/**
+ * props:
+ *
+ * Required:
+ * changePageView - function to change App state currentView
+ */
 RegistrationPage.propTypes = {
   changePageView: PropTypes.func.isRequired,
-};
+}; // end propTypes
 
 
 export default RegistrationPage;
