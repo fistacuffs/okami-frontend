@@ -5,6 +5,8 @@ export const globalvars = {
   userId: null,
   username: null,
   userTimeStamp: null,
+  userCoinList: null,
+  userCoinListPromise: null,
   coinList: null,
   coinListPromise: null,
   currentView: 'LandingPage',

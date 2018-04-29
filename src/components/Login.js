@@ -18,6 +18,7 @@ import { UserForm } from './UserForm';
 import {
   backendUrl,
   loginRoute,
+  userCoinsRoute,
   viewEnum } from '../constants';
 import { globalvars } from '../globalvars';
 
@@ -123,6 +124,18 @@ export class Login extends React.Component {
         globalvars.userId = response.data.userId;
         globalvars.username = this.state.username;
         globalvars.userTimeStamp = new Date();
+
+        // load users coin list
+        globalvars.userCoinListPromise =
+          axios.get(backendUrl + userCoinsRoute, { withCredentials: true })
+            .then((newResponse) => {
+              globalvars.userCoinList = newResponse.data;
+            }) // end then()
+            .catch((error) => {
+              this.setState({
+                message: Login.formatMessage(error.response.data.error),
+              }); // end setState()
+            }); // end catch()
 
         // change view to landing page after successful login
         this.props.changePageView(viewEnum.LANDINGPAGE);

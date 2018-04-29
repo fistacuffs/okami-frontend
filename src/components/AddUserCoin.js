@@ -16,7 +16,7 @@ export class AddUserCoin extends React.Component {
 
     this.state = {
       coinAdded: false,
-    };
+    }; // end state
 
     this.sendCoinId = this.sendCoinId.bind(this);
   } // end constructor
