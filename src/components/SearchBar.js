@@ -89,6 +89,13 @@ export class SearchBar extends React.Component {
       suggestions: [],
       message: '',
     }; // end state
+
+    this.onChange = this.onChange.bind(this);
+    this.onSuggestionsFetchRequested
+      = this.onSuggestionsFetchRequested.bind(this);
+    this.onSuggestionsClearRequested
+      = this.onSuggestionsClearRequested.bind(this);
+    this.findCoin = this.findCoin.bind(this);
   } // end constructor
 
 
@@ -99,12 +106,12 @@ export class SearchBar extends React.Component {
    * @param event: event that triggers change
    * @param newValue: the new string value for value
    */
-  onChange = (event, { newValue }) => {
+  onChange(event, { newValue }) {
     this.setState({
       value: newValue,
       message: '',
     }); // end setState()
-  }; // end onChange()
+  } // end onChange()
 
 
   /**
@@ -113,7 +120,7 @@ export class SearchBar extends React.Component {
    *
    * @param value: the value to test against possible suggestions
    */
-  onSuggestionsFetchRequested = ({ value }) => {
+  onSuggestionsFetchRequested({ value }) {
     // use promise to make sure coin list has loaded
     globalvars.coinListPromise
       .then(() => {
@@ -121,18 +128,18 @@ export class SearchBar extends React.Component {
           suggestions: getSuggestions(value),
         }); // end setState()
       }); // end then()
-  }; // end onSuggestionsFetchRequested()
+  } // end onSuggestionsFetchRequested()
 
 
   /**
    * onSuggestionsClearRequested:
    * method required by Autosuggest component
    */
-  onSuggestionsClearRequested = () => {
+  onSuggestionsClearRequested() {
     this.setState({
       suggestions: [],
     }); // end setState()
-  }; // end onSuggestionsClearRequested()
+  } // end onSuggestionsClearRequested()
 
 
   /**
@@ -140,7 +147,7 @@ export class SearchBar extends React.Component {
    * method to redirect user to the page view for the coin searched when the
    * button is clicked or to notify them it was not found
    */
-  findCoin = () => {
+  findCoin() {
     // use promise to make sure coin list has loaded
     globalvars.coinListPromise.then(() => {
       const foundCoin =

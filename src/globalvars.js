@@ -5,7 +5,7 @@ export const globalvars = {
   userId: null,
   username: null,
   userTimeStamp: null,
-  userCoinList: null,
+  userCoinList: [],
   userCoinListPromise: null,
   coinList: null,
   coinListPromise: null,

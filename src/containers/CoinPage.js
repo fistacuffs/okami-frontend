@@ -13,7 +13,25 @@ import { Header } from './Header';
 import { Display } from './Display';
 import { Footer } from './Footer';
 import { ChartTerminal } from '../components/ChartTerminal';
-import { AddUserCoin } from '../components/AddUserCoin';
+import { AddRemoveUserCoin } from '../components/AddRemoveUserCoin';
+import { globalvars } from '../globalvars';
+
+
+export const hasCoin = (coinSymbol) => {
+  if (!globalvars.isLoggedIn()) {
+    return false;
+  } // end if
+
+  globalvars.userCoinListPromise.then(() => {
+    if (globalvars.userCoinList
+      .find(coin => coinSymbol === coin.symbol)) {
+      return true;
+    } // end if
+    return false;
+  }); // end then()
+
+  return false;
+}; // end hasCoin()
 
 
 export const CoinPage = props => (
@@ -25,16 +43,22 @@ export const CoinPage = props => (
       changePageView={props.changePageView}
     />
     <Display>
-      <Row><Col /><Col>{props.coinSymbol}</Col><Col /></Row>
+      <Row><Col /><Col><h1>{props.coinSymbol}</h1></Col><Col /></Row>
       <Row>
         <Col><ChartTerminal coinSymbol={props.coinSymbol} /></Col>
       </Row>
+      <Row />
       <Row>
-        <Col />
+        <Col /><Col />
         <Col>
-          <AddUserCoin coinSymbol={props.coinSymbol} />
+          <AddRemoveUserCoin
+            coinSymbol={props.coinSymbol}
+            changePageView={props.changePageView}
+            isLoggedIn={globalvars.isLoggedIn()}
+            hasCoin={hasCoin(props.coinSymbol)}
+          />
         </Col>
-        <Col />
+        <Col /><Col />
       </Row>
     </Display>
     <Footer>
