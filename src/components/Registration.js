@@ -21,7 +21,7 @@ import {
 export class Registration extends React.Component {
   /**
    * formatMessage:
-   * method to format error messages into JFX objects
+   * method to format error messages into JSX objects
    *
    * @param message: string containing error message
    */
