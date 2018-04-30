@@ -1,6 +1,6 @@
 /* Backend URL and routes */
-/* export const backendUrl = 'http://localhost:8080/'; */
-export const backendUrl = 'https://mighty-fortress-28903.herokuapp.com/';
+export const backendUrl = 'http://localhost:8080/';
+/* export const backendUrl = 'https://mighty-fortress-28903.herokuapp.com/'; */
 export const coinListRoute = 'coinlist';
 export const loginRoute = 'login';
 export const registrationRoute = 'register';
@@ -26,4 +26,6 @@ export const viewEnum = {
   LOGINPAGE: 2,
   REGISTRATIONPAGE: 3,
   COINPAGE: 4,
-};
+  ERRORPAGE: 5,
+  LOADINGPAGE: 6,
+}; // end viewEnum

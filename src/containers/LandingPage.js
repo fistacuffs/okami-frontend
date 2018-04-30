@@ -14,8 +14,7 @@ import { Header } from './Header';
 import { Display } from './Display';
 import { Footer } from './Footer';
 import { SearchBar } from '../components/SearchBar';
-import { ChartTerminal } from '../components/ChartTerminal';
-import { CoinSelection } from '../components/CoinSelection';
+import { MultiCoinGroup } from '../components/MultiCoinGroup';
 import './Containers.css';
 
 
@@ -35,12 +34,7 @@ export const LandingPage = props => (
         </Col>
         <Col />
       </Row>
-      <Row>
-        <Col><ChartTerminal coinSymbol="BTC" /></Col>
-        <Col>
-          <CoinSelection changePageView={props.changePageView} />
-        </Col>
-      </Row>
+      <MultiCoinGroup changePageView={props.changePageView} />
     </Display>
     <Footer>
       <Row>
@@ -76,7 +70,7 @@ export const LandingPage = props => (
 
 LandingPage.propTypes = {
   changePageView: PropTypes.func.isRequired,
-};
+}; // end propTypes
 
 
 export default LandingPage;

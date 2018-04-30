@@ -7,9 +7,8 @@ export const globalvars = {
   userTimeStamp: null,
   userCoinList: [],
   userCoinListPromise: null,
-  coinList: null,
+  coinList: [],
   coinListPromise: null,
-  currentView: 'LandingPage',
   isLoggedIn: () => {
     if (globalvars.userId === null
       || ((new Date()).getTime() - HOUR > globalvars.userTimeStamp.getTime())) {
