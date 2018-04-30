@@ -1,9 +1,17 @@
 /**
  * LandingPage.js
+ *
+ * This is the main page view of the application. The main content component,
+ * display has a search bar, chart, and buttons for finding and displaying
+ * information about different currencies. If a user no user is logged in,
+ * random currencies are selected for the display.
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Col, Row } from 'reactstrap';
+import {
+  Col,
+  Row } from 'reactstrap';
+
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faDollarSign from '@fortawesome/fontawesome-free-solid/faDollarSign';
 import faCheckCircle from '@fortawesome/fontawesome-free-solid/faCheckCircle';
@@ -15,6 +23,7 @@ import { Display } from './Display';
 import { Footer } from './Footer';
 import { SearchBar } from '../components/SearchBar';
 import { MultiCoinGroup } from '../components/MultiCoinGroup';
+
 import './Containers.css';
 
 
@@ -34,7 +43,9 @@ export const LandingPage = props => (
         </Col>
         <Col />
       </Row>
-      <MultiCoinGroup changePageView={props.changePageView} />
+      <Row>
+        <MultiCoinGroup changePageView={props.changePageView} />
+      </Row>
     </Display>
     <Footer>
       <Row>
@@ -65,9 +76,15 @@ export const LandingPage = props => (
       </Row>
     </Footer>
   </div>
-);
+); // end LandingPage
 
 
+/**
+ * props:
+ *
+ * Required:
+ * changePageView - function to change App state currentView
+ */
 LandingPage.propTypes = {
   changePageView: PropTypes.func.isRequired,
 }; // end propTypes

@@ -22,9 +22,11 @@ import { globalvars } from './globalvars';
 export class App extends React.Component {
   /**
    * @constructor
-   * App constructor:
+   * -iniitializes state for the currentView to the landing page and falsey
+   *  values for coinSymbol, coinListLoaded, and errorMessage states
+   * -binds method changePageView to 'this' component
    *
-   * @param
+   * @param props: to pass any props to React components
    */
   constructor(props) {
     super(props);
@@ -41,12 +43,12 @@ export class App extends React.Component {
 
 
   /**
-   * componentWillMount:
+   * componentDidMount:
    * This method is called when the component is mounted. This component uses it
    * to load the master coin list from the backend server.
    */
   componentDidMount() {
-    globalvars.coinListPromise = this.getCoinList();
+    this.getCoinList();
   } // end componentDidMount()
 
 
@@ -61,6 +63,7 @@ export class App extends React.Component {
         globalvars.coinList = response.data;
         this.setState({
           coinListLoaded: true,
+          currentView: viewEnum.LANDINGPAGE,
         }); // end setState()
       }) // end then()
       .catch((error) => {
@@ -79,7 +82,7 @@ export class App extends React.Component {
         this.setState({
           errorMessage: message,
           currentView: viewEnum.ERRORPAGE,
-        }); // end then()
+        }); // end setState()
       }); // end catch()
   } // end getCoinList
 

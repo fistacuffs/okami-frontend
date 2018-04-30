@@ -18,7 +18,7 @@ export const LoadingPage = props => (
     <NavBar changePageView={props.changePageView} />
     <Header changePageView={props.changePageView} />
     <Display>
-      <h1>...loading currencies</h1>
+      <h1>loading currencies...</h1>
     </Display>
     <Footer />
   </div>

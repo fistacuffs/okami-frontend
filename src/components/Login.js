@@ -25,12 +25,12 @@ import { globalvars } from '../globalvars';
 
 export class Login extends React.Component {
   /**
-   * formatMessage:
+   * formatErrorMessage:
    * method to format error messages into JSX objects
    *
    * @param message: string containing error message
    */
-  static formatMessage(message) {
+  static formatErrorMessage(message) {
     return (
       <Container>
         <Row>
@@ -40,17 +40,18 @@ export class Login extends React.Component {
         </Row>
         <Row>
           <Col>
-            <h6>Enter a new username and password to login.</h6>
+            <h6>Enter username and password to login.</h6>
           </Col>
         </Row>
       </Container>); // end return()
-  } // end formatMessage
+  } // end formatErrorMessage
 
 
   /**
    * @constructor
    * Login constructor
-   * -iniitializes state properties for username, password, and message
+   * -iniitializes state properties for username, password, errorMessage, and
+   *  userCoinListLoaded to falsey values
    * -binds methods changeUsername, changePassword, and sendLogin to 'this'
    *  component
    *
@@ -62,7 +63,8 @@ export class Login extends React.Component {
     this.state = {
       username: '',
       password: '',
-      message: '',
+      errorMessage: '',
+      userCoinListLoaded: false,
     }; // end state
 
     this.changeUsername = this.changeUsername.bind(this);
@@ -108,7 +110,7 @@ export class Login extends React.Component {
     // test for empty, null, or undefined fields
     if (!this.state.username || !this.state.password) {
       this.setState({
-        message: Login.formatMessage('empty field(s)'),
+        errorMessage: Login.formatErrorMessage('empty field(s)'),
       }); // end setState()
       return;
     } // end if
@@ -125,15 +127,33 @@ export class Login extends React.Component {
         globalvars.username = this.state.username;
         globalvars.userTimeStamp = new Date();
 
-        // load users coin list
+        // load users coin list after successful login
         globalvars.userCoinListPromise =
           axios.get(backendUrl + userCoinsRoute, { withCredentials: true })
-            .then((newResponse) => {
-              globalvars.userCoinList = newResponse.data;
+            .then((coinsResponse) => {
+              globalvars.userCoinList = coinsResponse.data;
+              globalvars.userTimeStamp = new Date();
+              this.setState({
+                userCoinListLoaded: true,
+              }); // end setState
             }) // end then()
             .catch((error) => {
+              let message = '';
+              if (error.response) {
+                message += 'A server error occured with response: \n';
+                message += `Status: ${error.response.status}. \n`;
+                message += `Message: ${error.response.data}. \n`;
+                message += error.response.data.error;
+              } else if (error.request) {
+                message += 'A server error occured with no response. \n';
+                message += `Request: ${error.request}. \n`;
+              } else {
+                message += 'An error occured generating the server request. \n';
+                message += `Message: ${error.message}`;
+              } // end if/else
               this.setState({
-                message: Login.formatMessage(error.response.data.error),
+                errorMessage: Login
+                  .formatErrorMessage(`user currencies not loaded: ${message}`),
               }); // end setState()
             }); // end catch()
 
@@ -141,8 +161,19 @@ export class Login extends React.Component {
         this.props.changePageView(viewEnum.LANDINGPAGE);
       }) // end then()
       .catch((error) => {
+        let message = '';
+        if (error.response) {
+          // expected errors from bad login credentials handled in this case
+          message += error.response.data.error;
+        } else if (error.request) {
+          message += 'A server error occured with no response. \n';
+          message += `Request: ${error.request}. \n`;
+        } else {
+          message += 'An error occured generating the server request. \n';
+          message += `Message: ${error.message}`;
+        } // end if/else
         this.setState({
-          message: Login.formatMessage(error.response.data.error),
+          errorMessage: Login.formatErrorMessage(message),
         }); // end setState()
       }); // end catch()
   } // end handleClick()
@@ -154,6 +185,11 @@ export class Login extends React.Component {
    * component is constructed or state is changed.
    */
   render() {
+    // message if waiting for users currencies to load
+    if (globalvars.isLoggedIn() && !this.state.userCoinListLoaded) {
+      return (<h1>loading currencies...</h1>);
+    } // end if
+
     return (
       <div className={this.props.className}>
         <UserForm
@@ -164,7 +200,7 @@ export class Login extends React.Component {
         >
           LOGIN
         </UserForm>
-        {this.state.message}
+        {this.state.errorMessage}
       </div>
     ); // end return()
   } // end render()

@@ -6,9 +6,7 @@ export const globalvars = {
   username: null,
   userTimeStamp: null,
   userCoinList: [],
-  userCoinListPromise: null,
   coinList: [],
-  coinListPromise: null,
   isLoggedIn: () => {
     if (globalvars.userId === null
       || ((new Date()).getTime() - HOUR > globalvars.userTimeStamp.getTime())) {
