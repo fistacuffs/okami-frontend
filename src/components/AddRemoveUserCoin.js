@@ -23,6 +23,7 @@ export class AddRemoveUserCoin extends React.Component {
       isLoggedIn: props.isLoggedIn,
       hasCoin: props.hasCoin,
       requestFinished: true,
+      errorMessage: '',
     }; // end state
 
     this.handleAddClick = this.handleAddClick.bind(this);
@@ -89,7 +90,22 @@ export class AddRemoveUserCoin extends React.Component {
         }); // end setState()
       }) // end then()
       .catch((error) => {
-        console.log(`AddRemoveUserCoin.sendAddUserCoin: error: ${JSON.stringify(error)}`);
+        let message = '';
+        if (error.response) {
+          message += 'A server error occured with response: \n';
+          message += `Status: ${error.response.status}. \n`;
+          message += `Message: ${error.response.data}. \n`;
+          message += error.response.data.error;
+        } else if (error.request) {
+          message += 'A server error occured with no response. \n';
+          message += `Request: ${error.request}. \n`;
+        } else {
+          message += 'An error occured generating the server request. \n';
+          message += `Message: ${error.message}`;
+        } // end if/else
+        this.setState({
+          errorMessage: message,
+        }); // end setState()
       }); // end catch()
   } // end sendCoinId()
 
@@ -115,7 +131,22 @@ export class AddRemoveUserCoin extends React.Component {
         }); // end setState()
       }) // end then()
       .catch((error) => {
-        console.log(JSON.stringify(error));
+        let message = '';
+        if (error.response) {
+          message += 'A server error occured with response: \n';
+          message += `Status: ${error.response.status}. \n`;
+          message += `Message: ${error.response.data}. \n`;
+          message += error.response.data.error;
+        } else if (error.request) {
+          message += 'A server error occured with no response. \n';
+          message += `Request: ${error.request}. \n`;
+        } else {
+          message += 'An error occured generating the server request. \n';
+          message += `Message: ${error.message}`;
+        } // end if/else
+        this.setState({
+          errorMessage: message,
+        }); // end setState()
       }); // end catch()
   } // end sendCoinId()
 
@@ -124,6 +155,11 @@ export class AddRemoveUserCoin extends React.Component {
     if (this.state.requestFinished) {
       return 'UPDATING LIST...';
     }
+
+    // message if there is a server request error
+    if (this.state.errorMessage) {
+      return <h4>{this.state.errorMessage}</h4>;
+    } // end if
 
     if (this.state.isLoggedIn) {
       if (this.state.hasCoin) {

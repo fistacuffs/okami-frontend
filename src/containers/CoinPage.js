@@ -64,7 +64,6 @@ export const CoinPage = props => (
         </Col>
         <Col /><Col />
       </Row>
-      {[props.coinSymbol]}
     </Display>
     <Footer>
       CMSC 495 (7982) Group 1
