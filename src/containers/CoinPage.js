@@ -22,10 +22,18 @@ export const hasCoin = (coinSymbol) => {
     return false;
   } // end if
 
-  if (globalvars.userCoinList
-    .find(coin => coinSymbol === coin.symbol)) {
+  // convert coin ids to symbols
+  const userCoinSymbolsList =
+    globalvars.userCoinList
+      .map(coinId => globalvars.coinList
+        .find(coin => coin.id === coinId).symbol);
+  console.log(`CoinPage.hasCoin: userCoinSymbolsList: ${userCoinSymbolsList}`);
+
+  // see if user has coin in their list
+  if (userCoinSymbolsList.find(listSymbol => listSymbol === coinSymbol)) {
     return true;
   } // end if
+
   return false;
 }; // end hasCoin()
 

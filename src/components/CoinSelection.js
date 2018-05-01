@@ -42,12 +42,15 @@ export class CoinSelection extends React.Component {
 
     // get names from master coin list
     for (let i = 0; i < this.props.coinSymbolsList.length; i += 1) {
-      newCoinData
-        .push({
-          symbol: this.props.coinSymbolsList[i],
-          name: globalvars.coinList
-            .find(coin => coin.symbol === this.props.coinSymbolsList[i]).name,
-        }); // end push
+      const newCoin = globalvars.coinList
+        .find(coin => coin.symbol === this.props.coinSymbolsList[i]);
+      if (newCoin) {
+        newCoinData
+          .push({
+            symbol: this.props.coinSymbolsList[i],
+            name: newCoin.name,
+          }); // end push
+      } // end if
     } // end for
 
     this.setState({
@@ -58,9 +61,17 @@ export class CoinSelection extends React.Component {
 
   getCoinPrices() {
     let fsymsParam = '';
+    console.log(`CoinSelection.getCoinPrices: coinSymbolsList: ${this.props.coinSymbolsList}`);
     for (let i = 0; i < this.props.coinSymbolsList.length; i += 1) {
       fsymsParam += `${this.props.coinSymbolsList[i]},`;
     } // end for
+    console.log(`CoinSeleection.getCoinPrices: fsymsParam: ${fsymsParam}`);
+    if (!fsymsParam) {
+      this.setState({
+        errorMessage: 'ADD SOME COINS!',
+      }); // end setState()
+      return;
+    } // end if
 
     axios.get(
       ccApiUrl + multiplePriceRoute,
@@ -73,6 +84,7 @@ export class CoinSelection extends React.Component {
       }, // end anonymous object
     ) // end get()
       .then((response) => {
+        console.log(`CoinSelection.getCoinPrices API response: ${JSON.stringify(response)}`);
         // API response for invalid data symbol request
         if (response.data.Response) {
           throw new Error(response.data.Message);

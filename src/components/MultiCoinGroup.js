@@ -79,7 +79,11 @@ export class MultiCoinGroup extends React.Component {
     let list = [];
 
     if (globalvars.isLoggedIn()) {
-      list = globalvars.userCoinList.map(coin => coin.symbol);
+      for (let i = 0; i < globalvars.userCoinList.length; i += 1) {
+        list.push(globalvars.coinList
+          .find(coin => coin.id === globalvars.userCoinList[i]).symbol);
+      } // end for
+      console.log(`MultiCoinGroup.generateSymbolsList: loggedIn: list: ${list}`);
     } else {
       const indices = getRandomIndices(5, globalvars.coinList.length);
       list = indices.map(index => globalvars.coinList[index].symbol);

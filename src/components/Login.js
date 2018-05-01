@@ -128,42 +128,25 @@ export class Login extends React.Component {
         globalvars.userTimeStamp = new Date();
 
         // load users coin list after successful login
-        globalvars.userCoinListPromise =
-          axios.get(backendUrl + userCoinsRoute, { withCredentials: true })
-            .then((coinsResponse) => {
-              globalvars.userCoinList = coinsResponse.data;
-              globalvars.userTimeStamp = new Date();
-              this.setState({
-                userCoinListLoaded: true,
-              }); // end setState
-            }) // end then()
-            .catch((error) => {
-              let message = '';
-              if (error.response) {
-                message += 'A server error occured with response: \n';
-                message += `Status: ${error.response.status}. \n`;
-                message += `Message: ${error.response.data}. \n`;
-                message += error.response.data.error;
-              } else if (error.request) {
-                message += 'A server error occured with no response. \n';
-                message += `Request: ${error.request}. \n`;
-              } else {
-                message += 'An error occured generating the server request. \n';
-                message += `Message: ${error.message}`;
-              } // end if/else
-              this.setState({
-                errorMessage: Login
-                  .formatErrorMessage(`user currencies not loaded: ${message}`),
-              }); // end setState()
-            }); // end catch()
-
+        return axios
+          .get(backendUrl + userCoinsRoute, { withCredentials: true });
+      })
+      .then((response) => {
+        globalvars.userCoinList = response.data;
+        globalvars.userTimeStamp = new Date();
+        console.log(`Login.sendLogin.post.get: userCoinList: ${globalvars.userCoinList}`);
+        this.setState({
+          userCoinListLoaded: true,
+        }); // end setState
         // change view to landing page after successful login
         this.props.changePageView(viewEnum.LANDINGPAGE);
       }) // end then()
       .catch((error) => {
         let message = '';
         if (error.response) {
-          // expected errors from bad login credentials handled in this case
+          message += 'A server error occured with response: \n';
+          message += `Status: ${error.response.status}. \n`;
+          message += `Message: ${error.response.data}. \n`;
           message += error.response.data.error;
         } else if (error.request) {
           message += 'A server error occured with no response. \n';
@@ -173,7 +156,8 @@ export class Login extends React.Component {
           message += `Message: ${error.message}`;
         } // end if/else
         this.setState({
-          errorMessage: Login.formatErrorMessage(message),
+          errorMessage: Login
+            .formatErrorMessage(`user currencies not loaded: ${message}`),
         }); // end setState()
       }); // end catch()
   } // end handleClick()
@@ -185,9 +169,14 @@ export class Login extends React.Component {
    * component is constructed or state is changed.
    */
   render() {
-    // message if waiting for users currencies to load
+    // message if user is logged in
+    if (globalvars.isLoggedIn()) {
+      return <h1>{`${globalvars.username} is logged in`}</h1>;
+    } // end if
+
+    // message if user coin list is loading
     if (globalvars.isLoggedIn() && !this.state.userCoinListLoaded) {
-      return (<h1>loading currencies...</h1>);
+      return <h1>{`loading ${globalvars.username}'s currrencies...`}</h1>;
     } // end if
 
     return (

@@ -9,6 +9,7 @@ import { Button } from 'reactstrap';
 import { globalvars } from '../globalvars';
 import {
   backendUrl,
+  userCoinsRoute,
   addUserCoinRoute,
   removeUserCoinRoute,
   viewEnum } from '../constants';
@@ -21,13 +22,25 @@ export class AddRemoveUserCoin extends React.Component {
     this.state = {
       isLoggedIn: props.isLoggedIn,
       hasCoin: props.hasCoin,
-      // requestFinished: false,
+      requestFinished: true,
     }; // end state
 
     this.handleAddClick = this.handleAddClick.bind(this);
     this.handleRemoveClick = this.handleRemoveClick.bind(this);
     this.handleLoginClick = this.handleLoginClick.bind(this);
   } // end constructor
+
+
+  componentWillMount() {
+    this.resetRequestFlag();
+  } // componentDidUpdate
+
+
+  resetRequestFlag() {
+    this.setState({
+      requestFinished: false,
+    }); // end setState()
+  } // end resetRequestFlag()
 
 
   handleAddClick() {
@@ -57,14 +70,26 @@ export class AddRemoveUserCoin extends React.Component {
     // find the id value using the coin symbol
     const coinId = globalvars.coinList
       .find(coin => coin.symbol === this.props.coinSymbol).id;
+    console.log(`AddRemoveUserCoin.sendAddUserCoin: coinSymbol: ${this.props.coinSymbol}`);
+    console.log(`AddRemoveUserCoin.sendAddUserCoin: coinId: ${coinId}`);
 
     axios.get(backendUrl + addUserCoinRoute + coinId, { withCredentials: true })
       .then((response) => {
-        console.log(JSON.stringify(response));
+        console.log(`AddRemoveUserCoin.sendAddUserCoin: response: ${JSON.stringify(response)}`);
+        // reload users coin list after adding coin
+        return axios
+          .get(backendUrl + userCoinsRoute, { withCredentials: true });
+      })
+      .then((response) => {
+        globalvars.userCoinList = response.data;
         globalvars.userTimeStamp = new Date();
+        // reset flag
+        this.setState({
+          requestFinished: false,
+        }); // end setState()
       }) // end then()
       .catch((error) => {
-        console.log(JSON.stringify(error));
+        console.log(`AddRemoveUserCoin.sendAddUserCoin: error: ${JSON.stringify(error)}`);
       }); // end catch()
   } // end sendCoinId()
 
@@ -77,8 +102,17 @@ export class AddRemoveUserCoin extends React.Component {
 
     axios.get(backendUrl + removeUserCoinRoute + coinId, { withCredentials: true })
       .then((response) => {
-        console.log(JSON.stringify(response));
+        console.log(`AddRemoveUserCoin.sendRemoveUserCoin: response: ${JSON.stringify(response)}`);
+        return axios
+          .get(backendUrl + userCoinsRoute, { withCredentials: true });
+      }) // end then()
+      .then((response) => {
+        globalvars.userCoinList = response.data;
         globalvars.userTimeStamp = new Date();
+        // reset flag
+        this.setState({
+          requestFinished: false,
+        }); // end setState()
       }) // end then()
       .catch((error) => {
         console.log(JSON.stringify(error));
@@ -87,6 +121,10 @@ export class AddRemoveUserCoin extends React.Component {
 
 
   renderButton() {
+    if (this.state.requestFinished) {
+      return 'UPDATING LIST...';
+    }
+
     if (this.state.isLoggedIn) {
       if (this.state.hasCoin) {
         return (
