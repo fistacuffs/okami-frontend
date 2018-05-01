@@ -5,11 +5,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Button, Col, Container, Row } from 'reactstrap';
+import {
+  Button,
+  Col,
+  Row } from 'reactstrap';
 
 import { Chart } from './Chart';
-import { ccApiUrl, dailyHistoryRoute, WEEK, MONTH, YEAR } from '../constants';
-// import { globalvars } from '../globalvars';
+import {
+  ccApiUrl,
+  dailyHistoryRoute,
+  WEEK,
+  MONTH,
+  YEAR } from '../constants';
 
 
 export class ChartTerminal extends React.Component {
@@ -29,6 +36,7 @@ export class ChartTerminal extends React.Component {
       timeFrame: MONTH,
       chartData: [],
       coinDataLoaded: false,
+      errorMessage: '',
     };
 
     this.changeTimeFrameToWeek = this.changeTimeFrameToWeek.bind(this);
@@ -38,12 +46,12 @@ export class ChartTerminal extends React.Component {
 
 
   /**
-   * componentWillMount:
+   * componentDidMount:
    *
    */
-  componentWillMount() {
+  componentDidMount() {
     this.getCoinData();
-  } //  end componentWillMount()
+  } //  end componentDidMount()
 
 
   /**
@@ -51,32 +59,61 @@ export class ChartTerminal extends React.Component {
    *
    */
   getCoinData() {
-    for (let i = 0; i < this.props.coinData)
-    axios.get(
-      ccApiUrl + dailyHistoryRoute,
-      {
-        params: {
-          fsym: this.props.coinSymbolsList[0],
-          tsym: 'USD',
-          limit: YEAR,
-        },
-      },
-    )
-      .then((response) => {
-        // adds property for Date object
-        for (let i = 0; i < response.data.Data.length; i += 1) {
-          response.data.Data[i].date =
-              (new Date(response.data.Data[i].time * 1000)).toString();
-        } // end for
+    // combine all requests into one promise
+    const requests = [];
+    for (let i = 0; i < this.props.coinSymbolsList.length; i += 1) {
+      requests.push(axios.get(
+        ccApiUrl + dailyHistoryRoute,
+        {
+          params: {
+            fsym: this.props.coinSymbolsList[i],
+            tsym: 'USD',
+            limit: YEAR,
+          }, // end params
+        }, // end anonymous object
+      )); // end get()
+    } // end for
+
+    Promise.all(requests).then((response) => {
+      const newCoinData = [];
+
+      for (let i = 0; i < response.length; i += 1) {
+        if (response[i].data.Data) {
+          // only add date once
+          if (!newCoinData[0]) {
+            for (let j = 0; j < response[i].data.Data.length; j += 1) {
+              newCoinData.push({
+                date: new Date(response[i].data.Data[j].time * 1000)
+                  .toDateString(),
+              }); // end push()
+            } // end for
+          } // end if
+
+          // add price data
+          for (let j = 0; j < response[i].data.Data.length; j += 1) {
+            newCoinData[j][this.props.coinSymbolsList[i]] =
+              response[i].data.Data[j].close;
+          } // end for
+        } // end if
+      } // end for
+
+      this.setState({
+        chartData: newCoinData,
+        coinDataLoaded: true,
+      }); // end setState()
+    }) // end then()
+      .catch((error) => {
+        let message = '';
+        if (error.response) {
+          message += 'A server error occured with response: \n';
+          message += `Status: ${error.response.status}. \n`;
+          message += `Message: ${error.response.data}. \n`;
+        } // end if
 
         this.setState({
-          coinData: response.data.Data,
+          errorMessage: message,
         }); // end setState()
-      })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(`Error with get from Crypto Compare: ${error}`);
-      });
+      }); // end catch()
   } // end getCoinData
 
 
@@ -121,19 +158,27 @@ export class ChartTerminal extends React.Component {
    * Required method of React components to create JSX element.
    */
   render() {
+    // message if waiting for users currencies to load
+    if (!this.state.coinDataLoaded && !this.state.errorMessage) {
+      return <h1>loading currencies...</h1>;
+    } // end if
+
+    // message if crypto compare request error
+    if (this.state.errorMessage) {
+      return <h4>{this.state.errorMessage}</h4>;
+    } // end if
+
     return (
-      <Container>
+      <div className="chart-terminal">
         <Row>
-          <Col />
           <Col>
             <Chart
-              data={this.state.coinData.slice(YEAR - this.state.timeFrame, YEAR)}
+              data={this.state.chartData
+                .slice(YEAR - this.state.timeFrame, YEAR)}
             />
           </Col>
-          <Col />
         </Row>
         <Row>
-          <Col /> <Col /> <Col />
           <Col>
             <Button
               className="chart-button"
@@ -158,12 +203,11 @@ export class ChartTerminal extends React.Component {
               YEAR
             </Button>
           </Col>
-          <Col /> <Col /> <Col />
         </Row>
-      </Container>
-    );
+      </div>
+    ); // end return();
   } // end render()
-} // end class ChartDisplayer
+} // end class ChartTerminal
 
 
 ChartTerminal.propTypes = {

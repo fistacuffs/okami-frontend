@@ -8,10 +8,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Col,
-  Container,
   Row } from 'reactstrap';
 
-// import { ChartTerminal } from './ChartTerminal';
+import { ChartTerminal } from './ChartTerminal';
 import { CoinSelection } from './CoinSelection';
 
 import { globalvars } from '../globalvars';
@@ -99,11 +98,11 @@ export class MultiCoinGroup extends React.Component {
    */
   render() {
     return (
-      <Container>
+      <div className="multi-coin-group">
         <Row>
-          {/* <Col>
-            <ChartTerminal coinSymbol={this.state.coinSymbolsList[0]} />
-          </Col> */}
+          <Col>
+            <ChartTerminal coinSymbolsList={this.state.coinSymbolsList} />
+          </Col>
           <Col>
             <CoinSelection
               coinSymbolsList={this.state.coinSymbolsList}
@@ -111,7 +110,7 @@ export class MultiCoinGroup extends React.Component {
             />
           </Col>
         </Row>
-      </Container>
+      </div>
     ); // end return()
   } // end render()
 } // end class MultiCoinGroup

@@ -10,6 +10,14 @@
 .chart-button {
   background-color: #52658F;
   color: #F7F5E6;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.chart-terminal {
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
 }
 
 .coin-button {
@@ -17,11 +25,27 @@
   color: #F7F5E6;
   height: 50px;
   margin: 5px;
-  width: 300px;
+  width: 500px;
 }
 
 .coin-selection {
   color: #52658F;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 40%;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  justify-content: center;
+  width: 500px;
+}
+
+.multi-coin-group {
+    width: 100%;
 }
 
 .react-autosuggest__container {
@@ -64,6 +88,8 @@
   font-size: 16px;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
+  max-height: 300px;
+  overflow-y: auto;
   z-index: 2;
 }
 
@@ -88,14 +114,6 @@
   height: 50px;
   margin: 5px;
   width: 150px;
-}
-
-.login {
-  display: flex;
-  flex-direction: column;
-  height: 300px;
-  justify-content: center;
-  width: 500px;
 }
 
 .user-form-button {

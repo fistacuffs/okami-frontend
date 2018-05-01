@@ -22,14 +22,10 @@ export const hasCoin = (coinSymbol) => {
     return false;
   } // end if
 
-  globalvars.userCoinListPromise.then(() => {
-    if (globalvars.userCoinList
-      .find(coin => coinSymbol === coin.symbol)) {
-      return true;
-    } // end if
-    return false;
-  }); // end then()
-
+  if (globalvars.userCoinList
+    .find(coin => coinSymbol === coin.symbol)) {
+    return true;
+  } // end if
   return false;
 }; // end hasCoin()
 
@@ -45,7 +41,7 @@ export const CoinPage = props => (
     <Display>
       <Row><Col /><Col><h1>{props.coinSymbol}</h1></Col><Col /></Row>
       <Row>
-        <Col><ChartTerminal coinSymbol={props.coinSymbol} /></Col>
+        <Col><ChartTerminal coinSymbolsList={[props.coinSymbol]} /></Col>
       </Row>
       <Row />
       <Row>
@@ -60,9 +56,10 @@ export const CoinPage = props => (
         </Col>
         <Col /><Col />
       </Row>
+      {[props.coinSymbol]}
     </Display>
     <Footer>
-      empty footer
+      CMSC 495 (7982) Group 1
     </Footer>
   </div>
 );
@@ -71,7 +68,7 @@ export const CoinPage = props => (
 CoinPage.propTypes = {
   coinSymbol: PropTypes.string.isRequired,
   changePageView: PropTypes.func.isRequired,
-};
+}; // end propTypes
 
 
 export default CoinPage;

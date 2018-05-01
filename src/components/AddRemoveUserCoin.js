@@ -21,12 +21,14 @@ export class AddRemoveUserCoin extends React.Component {
     this.state = {
       isLoggedIn: props.isLoggedIn,
       hasCoin: props.hasCoin,
+      // requestFinished: false,
     }; // end state
 
     this.handleAddClick = this.handleAddClick.bind(this);
     this.handleRemoveClick = this.handleRemoveClick.bind(this);
     this.handleLoginClick = this.handleLoginClick.bind(this);
   } // end constructor
+
 
   handleAddClick() {
     this.sendAddUserCoin();
@@ -53,9 +55,8 @@ export class AddRemoveUserCoin extends React.Component {
 
   sendAddUserCoin() {
     // find the id value using the coin symbol
-    const coinId =
-      globalvars.coinList
-        .find(coin => coin.symbol === this.props.coinSymbol).id;
+    const coinId = globalvars.coinList
+      .find(coin => coin.symbol === this.props.coinSymbol).id;
 
     axios.get(backendUrl + addUserCoinRoute + coinId, { withCredentials: true })
       .then((response) => {
@@ -124,7 +125,7 @@ export class AddRemoveUserCoin extends React.Component {
       <div>
         {this.renderButton()}
       </div>
-    );
+    ); // end return()
   } // end render()
 } // end class AddUserCoin
 

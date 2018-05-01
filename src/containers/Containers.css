@@ -50,6 +50,8 @@
 .navbar {
   background-color: #333A56 !important;
   color: #F7F5E6 !important;
+  height: 80px;
+  width: 100%;
 }
 
 .navbar-button {

@@ -121,13 +121,9 @@ export class SearchBar extends React.Component {
    * @param value: the value to test against possible suggestions
    */
   onSuggestionsFetchRequested({ value }) {
-    // use promise to make sure coin list has loaded
-    globalvars.coinListPromise
-      .then(() => {
-        this.setState({
-          suggestions: getSuggestions(value),
-        }); // end setState()
-      }); // end then()
+    this.setState({
+      suggestions: getSuggestions(value),
+    }); // end setState()
   } // end onSuggestionsFetchRequested()
 
 
@@ -148,26 +144,23 @@ export class SearchBar extends React.Component {
    * button is clicked or to notify them it was not found
    */
   findCoin() {
-    // use promise to make sure coin list has loaded
-    globalvars.coinListPromise.then(() => {
-      const foundCoin =
-        globalvars.coinList.find(coin => coin.name === this.state.value);
-      // test if coin was found
-      if (foundCoin === undefined) {
-        // test if any input was entered
-        if (!this.state.value) {
-          this.setState({
-            message: <h4>search field is empty</h4>,
-          }); // end setState()
-        } else {
-          this.setState({
-            message: <h4><b><em>{this.state.value}</em></b> was not found</h4>,
-          }); // end this.setState()
-        } // end if/else
+    const foundCoin =
+      globalvars.coinList.find(coin => coin.name === this.state.value);
+    // test if coin was found
+    if (foundCoin === undefined) {
+      // test if any input was entered
+      if (!this.state.value) {
+        this.setState({
+          message: <h4>search field is empty</h4>,
+        }); // end setState()
       } else {
-        this.props.changePageView(viewEnum.COINPAGE, foundCoin.symbol);
+        this.setState({
+          message: <h4><b><em>{this.state.value}</em></b> was not found</h4>,
+        }); // end this.setState()
       } // end if/else
-    }); // end then()
+    } else {
+      this.props.changePageView(viewEnum.COINPAGE, foundCoin.symbol);
+    } // end if/else
   } // end findCoin()
 
 

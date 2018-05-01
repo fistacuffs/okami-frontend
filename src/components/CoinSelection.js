@@ -4,10 +4,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Button, Row } from 'reactstrap';
+import {
+  Button,
+  Row } from 'reactstrap';
 
 import { globalvars } from '../globalvars';
-import { ccApiUrl, multiplePriceRoute, viewEnum } from '../constants';
+import {
+  ccApiUrl,
+  multiplePriceRoute,
+  viewEnum } from '../constants';
 
 
 export class CoinSelection extends React.Component {
@@ -56,7 +61,6 @@ export class CoinSelection extends React.Component {
     for (let i = 0; i < this.props.coinSymbolsList.length; i += 1) {
       fsymsParam += `${this.props.coinSymbolsList[i]},`;
     } // end for
-    console.log(`fsyms params sent: ${fsymsParam}`);
 
     axios.get(
       ccApiUrl + multiplePriceRoute,
@@ -69,7 +73,6 @@ export class CoinSelection extends React.Component {
       }, // end anonymous object
     ) // end get()
       .then((response) => {
-        console.log(`${JSON.stringify(response)}`);
         // API response for invalid data symbol request
         if (response.data.Response) {
           throw new Error(response.data.Message);
@@ -145,7 +148,6 @@ export class CoinSelection extends React.Component {
 
 
   render() {
-    console.log(`INSIDE CoinSelection.render: coinData: ${JSON.stringify(this.state.coinData)}`);
     // message if waiting for users currencies to load
     if (!this.state.coinPricesLoaded && !this.state.errorMessage) {
       return <h1>loading currencies...</h1>;

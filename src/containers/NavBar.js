@@ -138,28 +138,28 @@ export class NavBar extends React.Component {
    */
   render() {
     return (
-      <Row className="navbar">
-        <Col>
-          <Dropdown
-            size="lg"
-            isOpen={this.state.dropdownOpen}
-            toggle={this.toggle}
-          >
-            <DropdownToggle>
-              <FontAwesomeIcon icon={faBars} />
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem onClick={() => this.props.changePageView(viewEnum.LANDINGPAGE)}>
-                HOME
-              </DropdownItem>
-              <DropdownItem>link 2</DropdownItem>
-              <DropdownItem>link 3</DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </Col>
-        <Col />
-        {this.buttons()}
-      </Row>
+      <div className="navbar">
+        <Row className="navbar">
+          <Col>
+            <Dropdown
+              size="lg"
+              isOpen={this.state.dropdownOpen}
+              toggle={this.toggle}
+            >
+              <DropdownToggle>
+                <FontAwesomeIcon icon={faBars} />
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem onClick={() => this.props.changePageView(viewEnum.LANDINGPAGE)}>
+                  HOME
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </Col>
+          <Col />
+          {this.buttons()}
+        </Row>
+      </div>
     ); // end return()
   } // end render()
 } // end class NavBar
