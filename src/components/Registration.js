@@ -25,7 +25,7 @@ export class Registration extends React.Component {
    *
    * @param message: string containing error message
    */
-  static formatMessage(message) {
+  static formatErrorMessage(message) {
     return (
       <Container>
         <Row>
