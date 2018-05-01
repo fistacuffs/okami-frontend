@@ -28,26 +28,35 @@ export class CoinSelection extends React.Component {
 
 
   componentWillMount() {
-    this.getCoinNames();
+    this.getCoinNames(this.props.coinSymbolsList);
   } // componentWillMount()
 
 
   componentDidMount() {
-    this.getCoinPrices();
+    this.getCoinPrices(this.props.coinSymbolsList);
   } // componentDidMount();
 
 
-  getCoinNames() {
+  componentWillReceiveProps(nextProps) {
+    if (this.props.coinSymbolsList !== nextProps.coinSymbolsList) {
+      // console.log(`CoinSelection.`)
+      this.getCoinNames(nextProps.coinSymbolsList);
+      this.getCoinPrices(nextProps.coinSymbolsList);
+    } // end if
+  } // end componentWillRecieveProps()
+
+
+  getCoinNames(coinSymbolsList) {
     const newCoinData = [];
 
     // get names from master coin list
-    for (let i = 0; i < this.props.coinSymbolsList.length; i += 1) {
+    for (let i = 0; i < coinSymbolsList.length; i += 1) {
       const newCoin = globalvars.coinList
-        .find(coin => coin.symbol === this.props.coinSymbolsList[i]);
+        .find(coin => coin.symbol === coinSymbolsList[i]);
       if (newCoin) {
         newCoinData
           .push({
-            symbol: this.props.coinSymbolsList[i],
+            symbol: coinSymbolsList[i],
             name: newCoin.name,
           }); // end push
       } // end if
@@ -59,13 +68,13 @@ export class CoinSelection extends React.Component {
   } // end getCoinNames()
 
 
-  getCoinPrices() {
+  getCoinPrices(coinSymbolsList) {
     let fsymsParam = '';
-    console.log(`CoinSelection.getCoinPrices: coinSymbolsList: ${this.props.coinSymbolsList}`);
-    for (let i = 0; i < this.props.coinSymbolsList.length; i += 1) {
-      fsymsParam += `${this.props.coinSymbolsList[i]},`;
+    console.log(`CoinSelection.getCoinPrices: coinSymbolsList: ${coinSymbolsList}`);
+    for (let i = 0; i < coinSymbolsList.length; i += 1) {
+      fsymsParam += `${coinSymbolsList[i]},`;
     } // end for
-    console.log(`CoinSeleection.getCoinPrices: fsymsParam: ${fsymsParam}`);
+    console.log(`CoinSelection.getCoinPrices: fsymsParam: ${fsymsParam}`);
     if (!fsymsParam) {
       this.setState({
         errorMessage: 'ADD SOME COINS!',
@@ -160,6 +169,7 @@ export class CoinSelection extends React.Component {
 
 
   render() {
+    console.log(`CoinSelection.render triggered: coinData: ${JSON.stringify(this.state.coinData)}`);
     // message if waiting for users currencies to load
     if (!this.state.coinPricesLoaded && !this.state.errorMessage) {
       return <h1>loading currencies...</h1>;

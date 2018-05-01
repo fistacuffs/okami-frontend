@@ -65,10 +65,13 @@ export class NavBar extends React.Component {
    * landing page.
    */
   logout() {
+    console.log(`NavBar.logout: isLoggedIn: ${globalvars.isLoggedIn()}`);
     globalvars.userId = null;
     globalvars.username = null;
     globalvars.timeStamp = null;
+    globalvars.userCoinList = [];
 
+    console.log(`NavBar.logout: isLoggedIn: ${globalvars.isLoggedIn()}`);
     this.props.changePageView(viewEnum.LANDINGPAGE);
   } // end logout()
 

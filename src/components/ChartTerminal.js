@@ -50,23 +50,30 @@ export class ChartTerminal extends React.Component {
    *
    */
   componentDidMount() {
-    this.getCoinData();
+    this.getCoinData(this.props.coinSymbolsList);
   } //  end componentDidMount()
+
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.coinSymbolsList !== nextProps.coinSymbolsList) {
+      this.getCoinData(nextProps.coinSymbolsList);
+    } // end if
+  } // end componentWillRecieveProps()
 
 
   /**
    * getCoinData:
    *
    */
-  getCoinData() {
+  getCoinData(coinSymbolsList) {
     // combine all requests into one promise
     const requests = [];
-    for (let i = 0; i < this.props.coinSymbolsList.length; i += 1) {
+    for (let i = 0; i < coinSymbolsList.length; i += 1) {
       requests.push(axios.get(
         ccApiUrl + dailyHistoryRoute,
         {
           params: {
-            fsym: this.props.coinSymbolsList[i],
+            fsym: coinSymbolsList[i],
             tsym: 'USD',
             limit: YEAR,
           }, // end params
@@ -91,7 +98,7 @@ export class ChartTerminal extends React.Component {
 
           // add price data
           for (let j = 0; j < response[i].data.Data.length; j += 1) {
-            newCoinData[j][this.props.coinSymbolsList[i]] =
+            newCoinData[j][coinSymbolsList[i]] =
               response[i].data.Data[j].close;
           } // end for
         } // end if
@@ -158,6 +165,8 @@ export class ChartTerminal extends React.Component {
    * Required method of React components to create JSX element.
    */
   render() {
+    console.log('ChartTerminal.render triggered');
+    // console.log(`ChartTerminal.render triggered: chartData: ${this.state.chartData}`);
     // message if waiting for users currencies to load
     if (!this.state.coinDataLoaded && !this.state.errorMessage) {
       return <h1>loading currencies...</h1>;
