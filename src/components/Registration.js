@@ -56,7 +56,7 @@ export class Registration extends React.Component {
     this.state = {
       username: '',
       password: '',
-      message: '',
+      errorMessage: '',
     }; // end state
 
     this.changeUsername = this.changeUsername.bind(this);
@@ -101,7 +101,7 @@ export class Registration extends React.Component {
     // test for empty, null, or undefined fields
     if (!this.state.username || !this.state.password) {
       this.setState({
-        message: Registration.formatMessage('empty field(s)'),
+        errorMessage: Registration.formatMessage('empty field(s)'),
       }); // end setState
       return;
     } // end if
@@ -116,13 +116,27 @@ export class Registration extends React.Component {
           this.props.changePageView(viewEnum.LOGINPAGE);
         } else {
           this.setState({
-            message: Registration.formatMessage(response.statusText),
+            errorMessage: Registration.formatMessage(response.statusText),
           }); // end setState()
         } // end if/else
       }) // end then()
       .catch((error) => {
+        let message = '';
+        if (error.response) {
+          message += 'A server error occured with response: \n';
+          message += `Status: ${error.response.status}. \n`;
+          message += `Message: ${error.response.data}. \n`;
+          message += error.response.data.error;
+        } else if (error.request) {
+          message += 'A server error occured with no response. \n';
+          message += `Request: ${error.request}. \n`;
+        } else {
+          message += 'An error occured generating the server request. \n';
+          message += `Message: ${error.message}`;
+        } // end if/else
         this.setState({
-          message: Registration.formatMessage(error.response.data.error),
+          errorMessage: Registration
+            .formatErrorMessage(`user currencies not loaded: ${message}`),
         }); // end setState()
       }); // end catch()
   } // end sendRegistration()
@@ -144,7 +158,7 @@ export class Registration extends React.Component {
         >
           SIGN UP
         </UserForm>
-        {this.state.message}
+        {this.state.errorMessage}
       </div>
     ); // end Login
   } // end render()
