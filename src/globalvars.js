@@ -8,8 +8,15 @@ export const globalvars = {
   userCoinList: [],
   coinList: [],
   isLoggedIn: () => {
-    if (globalvars.userId === null
-      || ((new Date()).getTime() - HOUR > globalvars.userTimeStamp.getTime())) {
+    const now = new Date();
+    if (globalvars.userTimeStamp
+      && now.getTime() - HOUR > globalvars.userTimeStamp) {
+      globalvars.userId = null;
+      globalvars.username = null;
+      globalvars.userTimeStamp = null;
+      globalvars.userCoinList = [];
+    } // end if
+    if (globalvars.userId === null) {
       return false;
     } // end if
     return true;
