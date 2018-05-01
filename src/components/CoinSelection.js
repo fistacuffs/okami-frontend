@@ -17,15 +17,26 @@ export class CoinSelection extends React.Component {
     this.state = {
       coinData: [],
       coinPricesLoaded: false,
+      errorMessage: '',
     }; // end state
   } // end constructor
+
+
+  componentWillMount() {
+    this.getCoinNames();
+  } // componentWillMount()
+
+
+  componentDidMount() {
+    this.getCoinPrices();
+  } // componentDidMount();
 
 
   getCoinNames() {
     const newCoinData = [];
 
     // get names from master coin list
-    for (let i = 0; i < this.props.coinSymbolsList; i += 1) {
+    for (let i = 0; i < this.props.coinSymbolsList.length; i += 1) {
       newCoinData
         .push({
           symbol: this.props.coinSymbolsList[i],
@@ -41,18 +52,62 @@ export class CoinSelection extends React.Component {
 
 
   getCoinPrices() {
+    let fsymsParam = '';
+    for (let i = 0; i < this.props.coinSymbolsList.length; i += 1) {
+      fsymsParam += `${this.props.coinSymbolsList[i]},`;
+    } // end for
+    console.log(`fsyms params sent: ${fsymsParam}`);
+
     axios.get(
       ccApiUrl + multiplePriceRoute,
       {
         params:
         {
-          fsyms: JSON.stringify(this.props.coinSymbolsList),
+          fsyms: fsymsParam,
           tsyms: 'USD',
         }, // end params
       }, // end anonymous object
     ) // end get()
-      .then()
-      .catch();
+      .then((response) => {
+        console.log(`${JSON.stringify(response)}`);
+        // API response for invalid data symbol request
+        if (response.data.Response) {
+          throw new Error(response.data.Message);
+        } // end if
+
+        // add prices to coin data
+        const newCoinData = this.state.coinData;
+        for (let i = 0; i < newCoinData.length; i += 1) {
+          if (response.data[newCoinData[i].symbol]) {
+            newCoinData[i].price = response.data[newCoinData[i].symbol].USD;
+          } else {
+            newCoinData[i].price = null;
+          } // end if/else
+        } // end for
+
+        this.setState({
+          coinData: newCoinData,
+          coinPricesLoaded: true,
+          errorMessage: '',
+        }); // end setState()
+      }) // then()
+      .catch((error) => {
+        let message = '';
+        if (error.response) {
+          message += 'A server error occured with response: \n';
+          message += `Status: ${error.response.status}. \n`;
+          message += `Message: ${error.response.data}. \n`;
+        } else if (error.request) {
+          message += 'A server error occured with no response. \n';
+          message += `Request: ${error.request}. \n`;
+        } else {
+          message += 'An error occured generating the server request. \n';
+          message += `Message: ${error.message}`;
+        } // end if/else
+        this.setState({
+          errorMessage: message,
+        }); // end setState()
+      }); // end catch()
   } // end getCoinPrices()
 
 
@@ -60,10 +115,14 @@ export class CoinSelection extends React.Component {
     const buttons = [];
 
     for (let i = 0; i < this.state.coinData.length; i += 1) {
-      const buttonText =
-        `${this.state.coinData[i].symbol}:` +
-        `${this.state.coinData[i].name}     `;
-        // `$${this.state.coinData[i].price}`;
+      let buttonText = '';
+      buttonText += `${this.state.coinData[i].symbol}: `;
+      buttonText += `${this.state.coinData[i].name}     `;
+      if (this.state.coinData[i].price) {
+        buttonText += `$${this.state.coinData[i].price}`;
+      } else {
+        buttonText += 'NO PRICE DATA';
+      } // end if/else
 
       buttons.push((
         <Row key={i}>
@@ -86,21 +145,29 @@ export class CoinSelection extends React.Component {
 
 
   render() {
+    console.log(`INSIDE CoinSelection.render: coinData: ${JSON.stringify(this.state.coinData)}`);
     // message if waiting for users currencies to load
-    if (!this.state.coinPricesLoaded) {
-      return (<h1>loading currencies...</h1>);
+    if (!this.state.coinPricesLoaded && !this.state.errorMessage) {
+      return <h1>loading currencies...</h1>;
     } // end if
 
+    // message if crypto compare request error
+    if (this.state.errorMessage) {
+      return <h4>{this.state.errorMessage}</h4>;
+    } // end if
+
+    // different heading for logged in user
     const heading = () => {
       if (globalvars.isLoggedIn()) {
         return <h3>YOUR CURRENCIES</h3>;
       }
-      return <h3>CURRENCIES</h3>;
+      return <h3>CURRENCY PICKS</h3>;
     }; // end heading()
 
     return (
       <div className="coin-selection">
         {heading()}
+        {this.renderButtons()}
       </div>
     ); // end return
   } // end render()

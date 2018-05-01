@@ -98,15 +98,12 @@ export class MultiCoinGroup extends React.Component {
    * component is constructed or state is changed.
    */
   render() {
-    console.log('INSIDE MultiCoinGroup.render');
-    console.log(`coindata: ${JSON.stringify(this.state.coinSymbolsList)}`);
-
     return (
       <Container>
         <Row>
-          <Col>
-            {this.state.coinSymbolsList}
-          </Col>
+          {/* <Col>
+            <ChartTerminal coinSymbol={this.state.coinSymbolsList[0]} />
+          </Col> */}
           <Col>
             <CoinSelection
               coinSymbolsList={this.state.coinSymbolsList}

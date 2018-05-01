@@ -9,7 +9,7 @@ import { Button, Col, Container, Row } from 'reactstrap';
 
 import { Chart } from './Chart';
 import { ccApiUrl, dailyHistoryRoute, WEEK, MONTH, YEAR } from '../constants';
-import { globalvars } from '../globalvars';
+// import { globalvars } from '../globalvars';
 
 
 export class ChartTerminal extends React.Component {
@@ -27,7 +27,8 @@ export class ChartTerminal extends React.Component {
 
     this.state = {
       timeFrame: MONTH,
-      data: [],
+      chartData: [],
+      coinDataLoaded: false,
     };
 
     this.changeTimeFrameToWeek = this.changeTimeFrameToWeek.bind(this);
@@ -41,9 +42,7 @@ export class ChartTerminal extends React.Component {
    *
    */
   componentWillMount() {
-    const promise = this.getCoinData();
-    // eslint-disable-next-line no-console
-    promise.catch(error => console.log(`Error with Crypto Compare: ${error}`));
+    this.getCoinData();
   } //  end componentWillMount()
 
 
@@ -52,37 +51,32 @@ export class ChartTerminal extends React.Component {
    *
    */
   getCoinData() {
-    return globalvars.coinListPromise.then(
-      () => axios.get(
-        ccApiUrl + dailyHistoryRoute,
-        {
-          params: {
-            fsym: this.props.coinSymbol,
-            tsym: 'USD',
-            limit: YEAR,
-          },
+    for (let i = 0; i < this.props.coinData)
+    axios.get(
+      ccApiUrl + dailyHistoryRoute,
+      {
+        params: {
+          fsym: this.props.coinSymbolsList[0],
+          tsym: 'USD',
+          limit: YEAR,
         },
-      )
-        .then((response) => {
-          // adds property for Date object
-          for (let i = 0; i < response.data.Data.length; i += 1) {
-            response.data.Data[i].date =
+      },
+    )
+      .then((response) => {
+        // adds property for Date object
+        for (let i = 0; i < response.data.Data.length; i += 1) {
+          response.data.Data[i].date =
               (new Date(response.data.Data[i].time * 1000)).toString();
-          } // end for
+        } // end for
 
-          this.setState({
-            data: response.data.Data,
-          }); // end setState()
-        })
-        .catch((error) => {
-          // eslint-disable-next-line no-console
-          console.log(`Error with get from Crypto Compare: ${error}`);
-        }), // end axios.get()
-      // end promise.onSuccessful()
-      // eslint-disable-next-line no-console
-      () => console.log('Error with coin list'),
-      // end promise.onRejected()
-    );
+        this.setState({
+          coinData: response.data.Data,
+        }); // end setState()
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(`Error with get from Crypto Compare: ${error}`);
+      });
   } // end getCoinData
 
 
@@ -124,7 +118,7 @@ export class ChartTerminal extends React.Component {
 
   /**
    * render:
-   * Required method of React components to create JFX element.
+   * Required method of React components to create JSX element.
    */
   render() {
     return (
@@ -133,7 +127,7 @@ export class ChartTerminal extends React.Component {
           <Col />
           <Col>
             <Chart
-              data={this.state.data.slice(YEAR - this.state.timeFrame, YEAR)}
+              data={this.state.coinData.slice(YEAR - this.state.timeFrame, YEAR)}
             />
           </Col>
           <Col />
@@ -173,7 +167,8 @@ export class ChartTerminal extends React.Component {
 
 
 ChartTerminal.propTypes = {
-  coinSymbol: PropTypes.string.isRequired,
-};
+  coinSymbolsList: PropTypes.arrayOf(PropTypes.string).isRequired,
+}; // end propTypes
+
 
 export default ChartTerminal;
