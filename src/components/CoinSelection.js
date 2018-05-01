@@ -70,11 +70,9 @@ export class CoinSelection extends React.Component {
 
   getCoinPrices(coinSymbolsList) {
     let fsymsParam = '';
-    console.log(`CoinSelection.getCoinPrices: coinSymbolsList: ${coinSymbolsList}`);
     for (let i = 0; i < coinSymbolsList.length; i += 1) {
       fsymsParam += `${coinSymbolsList[i]},`;
     } // end for
-    console.log(`CoinSelection.getCoinPrices: fsymsParam: ${fsymsParam}`);
     if (!fsymsParam) {
       this.setState({
         errorMessage: 'ADD SOME COINS!',
@@ -93,7 +91,6 @@ export class CoinSelection extends React.Component {
       }, // end anonymous object
     ) // end get()
       .then((response) => {
-        console.log(`CoinSelection.getCoinPrices API response: ${JSON.stringify(response)}`);
         // API response for invalid data symbol request
         if (response.data.Response) {
           throw new Error(response.data.Message);
@@ -169,7 +166,6 @@ export class CoinSelection extends React.Component {
 
 
   render() {
-    console.log(`CoinSelection.render triggered: coinData: ${JSON.stringify(this.state.coinData)}`);
     // message if waiting for users currencies to load
     if (!this.state.coinPricesLoaded && !this.state.errorMessage) {
       return <h1>loading currencies...</h1>;

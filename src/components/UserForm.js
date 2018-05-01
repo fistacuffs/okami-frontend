@@ -30,6 +30,7 @@ export class UserForm extends React.Component {
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   } // end constructor
 
 
@@ -63,6 +64,13 @@ export class UserForm extends React.Component {
   } // end handleButtonClick()
 
 
+  handleKeyPress(e) {
+    if (e.key === 'Enter') {
+      this.props.onEnterPress();
+    } // end if
+  } // end handlePressEnter()
+
+
   /**
    * render:
    * Required method of React components to display components called when
@@ -77,6 +85,7 @@ export class UserForm extends React.Component {
             className="user-form-field"
             type="text"
             onChange={this.handleUsernameChange}
+            onKeyPress={this.handleKeyPress}
           />
         </Row>
         <Row>
@@ -85,6 +94,7 @@ export class UserForm extends React.Component {
             className="user-form-field"
             type="password"
             onChange={this.handlePasswordChange}
+            onKeyPress={this.handleKeyPress}
           />
         </Row>
         <Row>
@@ -125,6 +135,7 @@ UserForm.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
+  onEnterPress: PropTypes.func.isRequired,
   onUsernameChange: PropTypes.func.isRequired,
   onPasswordChange: PropTypes.func.isRequired,
 }; // end propTypes

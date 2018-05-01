@@ -165,8 +165,6 @@ export class ChartTerminal extends React.Component {
    * Required method of React components to create JSX element.
    */
   render() {
-    console.log('ChartTerminal.render triggered');
-    // console.log(`ChartTerminal.render triggered: chartData: ${this.state.chartData}`);
     // message if waiting for users currencies to load
     if (!this.state.coinDataLoaded && !this.state.errorMessage) {
       return <h1>loading currencies...</h1>;

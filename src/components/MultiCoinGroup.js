@@ -45,91 +45,46 @@ const getRandomIndices = (numIndices, arraySize) => {
 }; // end getRandomIndices
 
 
-export class MultiCoinGroup extends React.Component {
-  /**
-   * generateSymbolsList:
-   * This method generates the symbols list for the coinSybolsList state. If no
-   * user is logged in, random symbols from the master coin list are selected.
-   */
-  static generateSymbolsList() {
-    let list = [];
+/**
+ * generateSymbolsList:
+ * This method generates the symbols list for the coinSybolsList state. If no
+ * user is logged in, random symbols from the master coin list are selected.
+ */
+const generateSymbolsList = () => {
+  let list = [];
 
-    if (globalvars.isLoggedIn()) {
-      for (let i = 0; i < globalvars.userCoinList.length; i += 1) {
-        list.push(globalvars.coinList
-          .find(coin => coin.id === globalvars.userCoinList[i]).symbol);
-      } // end for
-      console.log(`MultiCoinGroup.generateSymbolsList: loggedIn: list: ${list}`);
-    } else {
-      const indices = getRandomIndices(5, globalvars.coinList.length);
-      list = indices.map(index => globalvars.coinList[index].symbol);
-    } // end if/else
+  if (globalvars.isLoggedIn()) {
+    for (let i = 0; i < globalvars.userCoinList.length; i += 1) {
+      list.push(globalvars.coinList
+        .find(coin => coin.id === globalvars.userCoinList[i]).symbol);
+    } // end for
+  } else {
+    const indices = getRandomIndices(5, globalvars.coinList.length);
+    list = indices.map(index => globalvars.coinList[index].symbol);
+  } // end if/else
 
-    return list;
-    /* this.setState({
-      coinSymbolsList: list,
-    }); // end setState() */
-  } // end generateSymbolsList()
+  return list;
+}; // end generateSymbolsList()
 
 
-  /**
-   * @constructor
-   *
-   */
-  /* constructor(props) {
-    super(props);
-
-    this.state = {
-      coinSymbolsList: [],
-    }; // end state
-  } // end constructor */
-
-
-  /**
-   * componentDidMount:
-   * This method is called when the component is mounted. This component uses it
-   * to create the list of coin symbols to pass to the chart terminal and coin
-   * selection components.
-   */
-  /* componentWillMount() {
-    console
-      .log(`MultiCoinGroup.componentWillMount: coinSymbolsList: ${this.state.coinSymbolsList}`);
-    this.generateSymbolsList();
-  } // end componentDidMount() */
-
-
-  /* componentDidUpdate() {
-    console
-      .log(`MultiCoinGroup.componentDidUpdate: coinSymbolsList: ${this.state.coinSymbolsList}`);
-    this.generateSymbolsList();
-  } // end componentDidMount() */
-
-
-  /**
-   * render:
-   * Required method of React components to display components called when
-   * component is constructed or state is changed.
-   */
-  render() {
-    const coinSymbolsList = MultiCoinGroup.generateSymbolsList();
-    console.log(`MultiCoinGroup.render triggered: coinSymbolsList: ${coinSymbolsList}`);
-    return (
-      <div className="multi-coin-group">
-        <Row>
-          <Col>
-            <ChartTerminal coinSymbolsList={coinSymbolsList} />
-          </Col>
-          <Col>
-            <CoinSelection
-              coinSymbolsList={coinSymbolsList}
-              changePageView={this.props.changePageView}
-            />
-          </Col>
-        </Row>
-      </div>
-    ); // end return()
-  } // end render()
-} // end class MultiCoinGroup
+export const MultiCoinGroup = (props) => {
+  const coinSymbolsList = generateSymbolsList();
+  return (
+    <div className="multi-coin-group">
+      <Row>
+        <Col>
+          <ChartTerminal coinSymbolsList={coinSymbolsList} />
+        </Col>
+        <Col>
+          <CoinSelection
+            coinSymbolsList={coinSymbolsList}
+            changePageView={props.changePageView}
+          />
+        </Col>
+      </Row>
+    </div>
+  ); // end return()
+}; // end MultiCoinGroup
 
 
 /**

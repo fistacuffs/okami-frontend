@@ -97,8 +97,6 @@ export class App extends React.Component {
    *                      coin page view
    */
   changePageView(newPageView, newCoinSymbol) {
-    console.log(`App.changePageView: currentView: ${this.state.currentView}`);
-    console.log(`App.changePageView: newPageView: ${newPageView}`);
     this.setState({
       currentView: newPageView,
       coinSymbol: newCoinSymbol,
@@ -112,7 +110,6 @@ export class App extends React.Component {
    * component is constructed or state is changed.
    */
   render() {
-    console.log(`App.render triggered: currentView: ${this.state.currentView}`);
     // check if master coin list is still loading from backend server
     if (!this.state.coinListLoaded) {
       return <LoadingPage changePageView={this.changePageView} />;

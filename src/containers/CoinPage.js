@@ -27,7 +27,6 @@ export const hasCoin = (coinSymbol) => {
     globalvars.userCoinList
       .map(coinId => globalvars.coinList
         .find(coin => coin.id === coinId).symbol);
-  console.log(`CoinPage.hasCoin: userCoinSymbolsList: ${userCoinSymbolsList}`);
 
   // see if user has coin in their list
   if (userCoinSymbolsList.find(listSymbol => listSymbol === coinSymbol)) {

@@ -91,6 +91,7 @@ export class SearchBar extends React.Component {
     }; // end state
 
     this.onChange = this.onChange.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
     this.onSuggestionsFetchRequested
       = this.onSuggestionsFetchRequested.bind(this);
     this.onSuggestionsClearRequested
@@ -138,6 +139,16 @@ export class SearchBar extends React.Component {
   } // end onSuggestionsClearRequested()
 
 
+  onKeyDown(e) {
+    if (e.keyCode === 13) {
+      // stop propagation
+      e.preventDefault();
+      e.stopPropagation();
+      this.findCoin();
+    } // end if
+  } // end onKeyDown()
+
+
   /**
    * findCoin:
    * method to redirect user to the page view for the coin searched when the
@@ -175,6 +186,7 @@ export class SearchBar extends React.Component {
       placeholder: 'currency name',
       value,
       onChange: this.onChange,
+      onKeyDown: this.onKeyDown,
     };
 
     return (

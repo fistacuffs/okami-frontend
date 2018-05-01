@@ -134,7 +134,6 @@ export class Login extends React.Component {
       .then((response) => {
         globalvars.userCoinList = response.data;
         globalvars.userTimeStamp = new Date();
-        console.log(`Login.sendLogin.post.get: userCoinList: ${globalvars.userCoinList}`);
         this.setState({
           userCoinListLoaded: true,
         }); // end setState
@@ -186,6 +185,7 @@ export class Login extends React.Component {
           onUsernameChange={this.changeUsername}
           onPasswordChange={this.changePassword}
           onClick={this.sendLogin}
+          onEnterPress={this.sendLogin}
         >
           LOGIN
         </UserForm>

@@ -71,15 +71,14 @@ export class AddRemoveUserCoin extends React.Component {
     // find the id value using the coin symbol
     const coinId = globalvars.coinList
       .find(coin => coin.symbol === this.props.coinSymbol).id;
-    console.log(`AddRemoveUserCoin.sendAddUserCoin: coinSymbol: ${this.props.coinSymbol}`);
-    console.log(`AddRemoveUserCoin.sendAddUserCoin: coinId: ${coinId}`);
 
     axios.get(backendUrl + addUserCoinRoute + coinId, { withCredentials: true })
       .then((response) => {
-        console.log(`AddRemoveUserCoin.sendAddUserCoin: response: ${JSON.stringify(response)}`);
+        if (!response) {
+          throw new Error();
+        } // end if
         // reload users coin list after adding coin
-        return axios
-          .get(backendUrl + userCoinsRoute, { withCredentials: true });
+        return axios.get(backendUrl + userCoinsRoute, { withCredentials: true });
       })
       .then((response) => {
         globalvars.userCoinList = response.data;
@@ -118,7 +117,10 @@ export class AddRemoveUserCoin extends React.Component {
 
     axios.get(backendUrl + removeUserCoinRoute + coinId, { withCredentials: true })
       .then((response) => {
-        console.log(`AddRemoveUserCoin.sendRemoveUserCoin: response: ${JSON.stringify(response)}`);
+        if (!response) {
+          throw new Error();
+        } // end if
+        // reload users coin list after adding coin
         return axios
           .get(backendUrl + userCoinsRoute, { withCredentials: true });
       }) // end then()

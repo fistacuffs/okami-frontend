@@ -155,6 +155,7 @@ export class Registration extends React.Component {
           onUsernameChange={this.changeUsername}
           onPasswordChange={this.changePassword}
           onClick={this.sendRegistration}
+          onEnterPress={this.sendRegistration}
         >
           SIGN UP
         </UserForm>
