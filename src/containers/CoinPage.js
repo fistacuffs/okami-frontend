@@ -7,9 +7,6 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Col,
-  Row } from 'reactstrap';
 
 import { NavBar } from './NavBar';
 import { Header } from './Header';
@@ -17,7 +14,11 @@ import { Display } from './Display';
 import { Footer } from './Footer';
 import { ChartTerminal } from '../components/ChartTerminal';
 import { AddRemoveUserCoin } from '../components/AddRemoveUserCoin';
+import { CoinDetails } from '../components/CoinDetails';
+
 import { globalvars } from '../globalvars';
+
+import './Containers.css';
 
 
 /**
@@ -49,18 +50,6 @@ export const hasCoin = (coinSymbol) => {
 }; // end hasCoin()
 
 
-/**
- * getCoinName:
- * This method uses the coin symbol to retrieve the string name from the master
- * coin list.
- *
- * @param symbol symbol string of a currency
- * @returns name string of currency with that symbol
- */
-const getCoinName = symbol =>
-  globalvars.coinList.find(coin => coin.symbol === symbol).name;
-
-
 export const CoinPage = props => (
   <div>
     <NavBar
@@ -70,23 +59,22 @@ export const CoinPage = props => (
       changePageView={props.changePageView}
     />
     <Display>
-      <Row><Col /><Col><h1>{getCoinName(props.coinSymbol)}</h1></Col><Col /></Row>
-      <Row>
-        <Col><ChartTerminal coinSymbolsList={[props.coinSymbol]} /></Col>
-      </Row>
-      <Row />
-      <Row>
-        <Col /><Col />
-        <Col>
-          <AddRemoveUserCoin
-            coinSymbol={props.coinSymbol}
-            changePageView={props.changePageView}
-            isLoggedIn={globalvars.isLoggedIn()}
-            hasCoin={hasCoin(props.coinSymbol)}
-          />
-        </Col>
-        <Col /><Col />
-      </Row>
+      <div className="flex-box">
+        <div className="coin-page-details-div">
+          <CoinDetails coinSymbol={props.coinSymbol} />
+        </div>
+        <div className="coin-page-chart-div">
+          <ChartTerminal coinSymbolsList={[props.coinSymbol]} />
+        </div>
+      </div>
+      <div className="coin-page-add-remove-button-div">
+        <AddRemoveUserCoin
+          coinSymbol={props.coinSymbol}
+          changePageView={props.changePageView}
+          isLoggedIn={globalvars.isLoggedIn()}
+          hasCoin={hasCoin(props.coinSymbol)}
+        />
+      </div>
     </Display>
     <Footer>
       <h3>CMSC 495 (7982) Group 1</h3>

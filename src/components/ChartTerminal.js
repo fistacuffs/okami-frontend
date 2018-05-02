@@ -8,10 +8,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import {
-  Button,
-  Col,
-  Row } from 'reactstrap';
+import { Button } from 'reactstrap';
 
 import { Chart } from './Chart';
 import {
@@ -99,36 +96,37 @@ export class ChartTerminal extends React.Component {
     } // end for
 
     // combine all promises into one
-    Promise.all(requests).then((response) => {
-      const newCoinData = [];
+    Promise.all(requests)
+      .then((response) => {
+        const newCoinData = [];
 
-      // format data from all requests into one data array for use by the chart
-      // component.
-      for (let i = 0; i < response.length; i += 1) {
-        if (response[i].data.Data) {
+        // format data from all requests into one data array for use by the chart
+        // component.
+        for (let i = 0; i < response.length; i += 1) {
+          if (response[i].data.Data) {
           // only add date once
-          if (!newCoinData[0]) {
+            if (!newCoinData[0]) {
+              for (let j = 0; j < response[i].data.Data.length; j += 1) {
+                newCoinData.push({
+                  date: new Date(response[i].data.Data[j].time * 1000)
+                    .toDateString(),
+                }); // end push()
+              } // end for
+            } // end if
+
+            // add price data
             for (let j = 0; j < response[i].data.Data.length; j += 1) {
-              newCoinData.push({
-                date: new Date(response[i].data.Data[j].time * 1000)
-                  .toDateString(),
-              }); // end push()
+              newCoinData[j][coinSymbolsList[i]] =
+                response[i].data.Data[j].close;
             } // end for
           } // end if
+        } // end for
 
-          // add price data
-          for (let j = 0; j < response[i].data.Data.length; j += 1) {
-            newCoinData[j][coinSymbolsList[i]] =
-              response[i].data.Data[j].close;
-          } // end for
-        } // end if
-      } // end for
-
-      this.setState({
-        chartData: newCoinData,
-        coinDataLoaded: true,
-      }); // end setState()
-    }) // end then()
+        this.setState({
+          chartData: newCoinData,
+          coinDataLoaded: true,
+        }); // end setState()
+      }) // end then()
       .catch((error) => {
         let message = '';
         if (error.response) {
@@ -198,40 +196,34 @@ export class ChartTerminal extends React.Component {
 
     return (
       <div className="chart-terminal">
-        <Row>
-          <Col>
-            <Chart
-              data={this.state.chartData
-                .slice(YEAR - this.state.timeFrame, YEAR)}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
+        <div className="chart-terminal-chart-container">
+          <Chart
+            data={this.state.chartData
+              .slice(YEAR - this.state.timeFrame, YEAR)}
+          />
+        </div>
+        <div>
+          <div className="chart-terminal-button-container">
             <Button
-              className="chart-button"
+              className="chart-terminal-button"
               onClick={this.changeTimeFrameToWeek}
             >
               WEEK
             </Button>
-          </Col>
-          <Col>
             <Button
-              className="chart-button"
+              className="chart-terminal-button"
               onClick={this.changeTimeFrameToMonth}
             >
               MONTH
             </Button>
-          </Col>
-          <Col>
             <Button
-              className="chart-button"
+              className="chart-terminal-button"
               onClick={this.changeTimeFrameToYear}
             >
               YEAR
             </Button>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </div>
     ); // end return();
   } // end render()

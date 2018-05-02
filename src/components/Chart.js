@@ -10,6 +10,7 @@ import { Legend,
   LineChart,
   Line,
   CartesianGrid,
+  ResponsiveContainer,
   XAxis,
   YAxis,
   Tooltip } from 'recharts';
@@ -77,22 +78,24 @@ export class Chart extends React.Component {
    */
   render() {
     return (
-      <LineChart
-        width={800}
-        height={300}
-        data={this.props.data}
-        margin={{ top: 5, right: 20, bottom: 5 }}
-      >
-        <XAxis dataKey="date" />
-        <YAxis />
-        <CartesianGrid
-          stroke="#ccc"
-          strokeDasharray="5 5"
-        />
-        <Tooltip />
-        <Legend />
-        {this.renderLines()}
-      </LineChart>
+      <ResponsiveContainer width="100%" height={300}>
+        <LineChart
+          width={800}
+          height={300}
+          data={this.props.data}
+          margin={{ top: 5, right: 20, bottom: 5 }}
+        >
+          <XAxis dataKey="date" />
+          <YAxis />
+          <CartesianGrid
+            stroke="#ccc"
+            strokeDasharray="5 5"
+          />
+          <Tooltip />
+          <Legend />
+          {this.renderLines()}
+        </LineChart>
+      </ResponsiveContainer>
     ); // end return()
   } // end render()
 } // end class Chart
