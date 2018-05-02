@@ -12,6 +12,10 @@ import Autosuggest from 'react-autosuggest';
 import {
   Button,
   Col,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
   Row } from 'reactstrap';
 
 import { globalvars } from '../globalvars';
@@ -80,9 +84,10 @@ export class SearchBar extends React.Component {
   /**
    * @constructor
    * SearchBar constructor
-   * -initializes state properties for value, suggestion array and message
-   * -binds methods onChange, onKeyDown, onSuggestionsClearRequested and
-   *  onSuggestionsFetchRequested to 'this' component
+   * -initializes state properties for value, suggestion array, modal, and
+   *  message
+   * -binds methods onChange, onKeyDown, onSuggestionsClearRequested
+   *  onSuggestionsFetchRequested and toggle to 'this' component
    *
    * @param props: to pass any props to React components
    */
@@ -93,6 +98,7 @@ export class SearchBar extends React.Component {
       value: '',
       suggestions: [],
       message: '',
+      modal: false,
     }; // end state
 
     this.onChange = this.onChange.bind(this);
@@ -102,6 +108,7 @@ export class SearchBar extends React.Component {
     this.onSuggestionsClearRequested
       = this.onSuggestionsClearRequested.bind(this);
     this.findCoin = this.findCoin.bind(this);
+    this.toggle = this.toggle.bind(this);
   } // end constructor
 
 
@@ -160,6 +167,17 @@ export class SearchBar extends React.Component {
 
 
   /**
+   * toggle:
+   * This method will toggle the modal between view and hidden.
+   */
+  toggle() {
+    this.setState({
+      modal: !this.state.modal,
+    }); // end setState()
+  } // end toggle
+
+
+  /**
    * findCoin:
    * This method redirects the user to the page view for the coin searched when
    * the button is clicked or notifies them it was not found.
@@ -172,11 +190,14 @@ export class SearchBar extends React.Component {
       // test if any input was entered
       if (!this.state.value) {
         this.setState({
-          message: <h4>search field is empty</h4>,
+          message: 'please enter a search term',
+          modal: true,
         }); // end setState()
       } else {
         this.setState({
-          message: <h4><b><em>{this.state.value}</em></b> was not found</h4>,
+          message: `${this.state.value}`
+            + ' was not found. try another currency name',
+          modal: true,
         }); // end this.setState()
       } // end if/else
     } else {
@@ -222,9 +243,18 @@ export class SearchBar extends React.Component {
             </Button>
           </Col>
         </Row>
-        <Row>
-          {this.state.message}
-        </Row>
+        <Modal
+          isOpen={this.state.modal}
+          toggle={this.toggle}
+        >
+          <ModalHeader toggle={this.toggle}>no search results...</ModalHeader>
+          <ModalBody>
+            {this.state.message}
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={this.toggle}>OK</Button>
+          </ModalFooter>
+        </Modal>
       </div>
     ); // end return()
   } // end render()

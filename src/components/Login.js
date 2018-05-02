@@ -10,9 +10,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import {
-  Col,
-  Container,
-  Row } from 'reactstrap';
+  Button,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader } from 'reactstrap';
 
 import { UserForm } from './UserForm';
 import {
@@ -25,35 +27,12 @@ import { globalvars } from '../globalvars';
 
 export class Login extends React.Component {
   /**
-   * formatErrorMessage:
-   * method to format error messages into JSX objects
-   *
-   * @param message: string containing error message
-   */
-  static formatErrorMessage(message) {
-    return (
-      <Container>
-        <Row>
-          <Col>
-            <h4>Unsuccessful Login: {message}</h4>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <h6>Enter username and password to login.</h6>
-          </Col>
-        </Row>
-      </Container>); // end return()
-  } // end formatErrorMessage
-
-
-  /**
    * @constructor
    * Login constructor
-   * -iniitializes state properties for username, password, errorMessage, and
-   *  userCoinListLoaded flag to falsey values
-   * -binds methods changeUsername, changePassword, and sendLogin to 'this'
-   *  component
+   * -iniitializes state properties for username, password, errorMessage,
+   *  userCoinListLoaded flag and modal to falsey values
+   * -binds methods changeUsername, changePassword, sendLogin and toggle to
+   * 'this' component
    *
    * @param props: to pass any props to React components
    */
@@ -65,11 +44,13 @@ export class Login extends React.Component {
       password: '',
       userCoinListLoaded: false,
       errorMessage: '',
+      modal: false,
     }; // end state
 
     this.changeUsername = this.changeUsername.bind(this);
     this.changePassword = this.changePassword.bind(this);
     this.sendLogin = this.sendLogin.bind(this);
+    this.toggle = this.toggle.bind(this);
   } // end constructor
 
 
@@ -110,7 +91,8 @@ export class Login extends React.Component {
     // test for empty, null, or undefined fields
     if (!this.state.username || !this.state.password) {
       this.setState({
-        errorMessage: Login.formatErrorMessage('empty field(s)'),
+        errorMessage: 'empty field(s)',
+        modal: true,
       }); // end setState()
       return;
     } // end if
@@ -148,9 +130,7 @@ export class Login extends React.Component {
       .catch((error) => {
         let message = '';
         if (error.response) {
-          message += 'A server error occured with response: \n';
-          message += `Status: ${error.response.status}. \n`;
-          message += `Message: ${error.response.data}. \n`;
+          // a server error occured with response;
           message += error.response.data.error;
         } else if (error.request) {
           message += 'A server error occured with no response. \n';
@@ -160,11 +140,22 @@ export class Login extends React.Component {
           message += `Message: ${error.message}`;
         } // end if/else
         this.setState({
-          errorMessage: Login
-            .formatErrorMessage(`user currencies not loaded: ${message}`),
+          errorMessage: message,
+          modal: true,
         }); // end setState()
       }); // end catch()
   } // end handleClick()
+
+
+  /**
+   * toggle:
+   * This method will toggle the modal between view and hidden.
+   */
+  toggle() {
+    this.setState({
+      modal: !this.state.modal,
+    }); // end setState()
+  } // end toggle
 
 
   /**
@@ -194,7 +185,18 @@ export class Login extends React.Component {
         >
           LOGIN
         </UserForm>
-        {this.state.errorMessage}
+        <Modal
+          isOpen={this.state.modal}
+          toggle={this.toggle}
+        >
+          <ModalHeader toggle={this.toggle}>unsuccessful login...</ModalHeader>
+          <ModalBody>
+            {this.state.errorMessage}
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={this.toggle}>OK</Button>
+          </ModalFooter>
+        </Modal>
       </div>
     ); // end return()
   } // end render()

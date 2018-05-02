@@ -25,6 +25,9 @@ import { globalvars } from '../globalvars';
  * This is a utility method used to test if a logged in user has this coin in
  * their list already. The page view will use it initialize the add/remove
  * button.
+ *
+ * @returns true if a user is logged in and the coin is in their list
+ *          false otherwise
  */
 export const hasCoin = (coinSymbol) => {
   if (!globalvars.isLoggedIn()) {
@@ -46,6 +49,18 @@ export const hasCoin = (coinSymbol) => {
 }; // end hasCoin()
 
 
+/**
+ * getCoinName:
+ * This method uses the coin symbol to retrieve the string name from the master
+ * coin list.
+ *
+ * @param symbol symbol string of a currency
+ * @returns name string of currency with that symbol
+ */
+const getCoinName = symbol =>
+  globalvars.coinList.find(coin => coin.symbol === symbol).name;
+
+
 export const CoinPage = props => (
   <div>
     <NavBar
@@ -55,7 +70,7 @@ export const CoinPage = props => (
       changePageView={props.changePageView}
     />
     <Display>
-      <Row><Col /><Col><h1>{props.coinSymbol}</h1></Col><Col /></Row>
+      <Row><Col /><Col><h1>{getCoinName(props.coinSymbol)}</h1></Col><Col /></Row>
       <Row>
         <Col><ChartTerminal coinSymbolsList={[props.coinSymbol]} /></Col>
       </Row>

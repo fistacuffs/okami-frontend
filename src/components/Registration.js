@@ -9,9 +9,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import {
-  Col,
-  Container,
-  Row } from 'reactstrap';
+  Button,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader } from 'reactstrap';
 
 import { UserForm } from './UserForm';
 import {
@@ -22,34 +24,11 @@ import {
 
 export class Registration extends React.Component {
   /**
-   * formatMessage:
-   * method to format error messages into JSX objects
-   *
-   * @param message: string containing error message
-   */
-  static formatErrorMessage(message) {
-    return (
-      <Container>
-        <Row>
-          <Col>
-            <h4>Unsuccessful Registration: {message}</h4>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <h6>Enter a new username and password to register.</h6>
-          </Col>
-        </Row>
-      </Container>); // end return()
-  } // end formatMessage
-
-
-  /**
    * Registration constructor
-   * -iniitializes state properties for username, password, and errorMessage to
-   *  falsey values
-   * -binds methods changeUsername, changePassword, and sendRegistration to
-   * 'this' component
+   * -iniitializes state properties for username, password, errorMessage and
+   *  modal to falsey values
+   * -binds methods changeUsername, changePassword, sendRegistration and toggle
+   *  to 'this' component
    *
    * @param props: to pass any props to React components
    */
@@ -60,11 +39,13 @@ export class Registration extends React.Component {
       username: '',
       password: '',
       errorMessage: '',
+      modal: false,
     }; // end state
 
     this.changeUsername = this.changeUsername.bind(this);
     this.changePassword = this.changePassword.bind(this);
     this.sendRegistration = this.sendRegistration.bind(this);
+    this.toggle = this.toggle.bind(this);
   } // end constructor
 
 
@@ -95,6 +76,17 @@ export class Registration extends React.Component {
 
 
   /**
+   * toggle:
+   * This method will toggle the modal between view and hidden.
+   */
+  toggle() {
+    this.setState({
+      modal: !this.state.modal,
+    }); // end setState()
+  } // end toggle
+
+
+  /**
    * sendRegistration:
    * This method uses the state properties username and password to send a post
    * request to the backend to create login credentials. If successful, they
@@ -104,7 +96,8 @@ export class Registration extends React.Component {
     // test for empty, null, or undefined fields
     if (!this.state.username || !this.state.password) {
       this.setState({
-        errorMessage: Registration.formatMessage('empty field(s)'),
+        errorMessage: 'empty field(s)',
+        modal: true,
       }); // end setState
       return;
     } // end if
@@ -121,16 +114,15 @@ export class Registration extends React.Component {
         // successful response could still result in unsuccessful registration
         } else {
           this.setState({
-            errorMessage: Registration.formatMessage(response.statusText),
+            errorMessage: response.statusText,
+            modal: true,
           }); // end setState()
         } // end if/else
       }) // end then()
       .catch((error) => {
         let message = '';
         if (error.response) {
-          message += 'A server error occured with response: \n';
-          message += `Status: ${error.response.status}. \n`;
-          message += `Message: ${error.response.data}. \n`;
+          // a server error occured with response:
           message += error.response.data.error;
         } else if (error.request) {
           message += 'A server error occured with no response. \n';
@@ -140,8 +132,8 @@ export class Registration extends React.Component {
           message += `Message: ${error.message}`;
         } // end if/else
         this.setState({
-          errorMessage: Registration
-            .formatErrorMessage(`user currencies not loaded: ${message}`),
+          errorMessage: message,
+          modal: true,
         }); // end setState()
       }); // end catch()
   } // end sendRegistration()
@@ -164,7 +156,18 @@ export class Registration extends React.Component {
         >
           SIGN UP
         </UserForm>
-        {this.state.errorMessage}
+        <Modal
+          isOpen={this.state.modal}
+          toggle={this.toggle}
+        >
+          <ModalHeader toggle={this.toggle}>unsuccessful login...</ModalHeader>
+          <ModalBody>
+            {this.state.errorMessage}
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={this.toggle}>OK</Button>
+          </ModalFooter>
+        </Modal>
       </div>
     ); // end Login
   } // end render()
