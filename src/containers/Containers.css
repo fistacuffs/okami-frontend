@@ -1,3 +1,8 @@
+.api-link {
+  text-align: center;
+  color: #F7F5E6;
+}
+
 .display {
   background-color: #E8E8E8;
   color: #52658F;
@@ -25,8 +30,11 @@
   padding-left:10px;
 }
 
-.header-logo {
+.header-link {
   cursor: pointer;
+}
+
+.header-logo {
   height: 125px;
   width: 125px;
 }

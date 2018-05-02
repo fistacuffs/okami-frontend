@@ -10,6 +10,14 @@ import './Containers.css';
 export const Footer = props => (
   <footer className="footer">
     {props.children}
+    <a
+      className="api-link"
+      href="https://min-api.cryptocompare.com/"
+    >
+      <h6>
+        {'Data provided for free use by the CrypoCompare API'}
+      </h6>
+    </a>
   </footer>
 );
 

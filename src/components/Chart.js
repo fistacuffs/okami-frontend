@@ -1,7 +1,8 @@
 /**
  * Chart.js
  *
- * This is the chart output component.
+ * This is the chart output component. It displays lines for one or more
+ * currencies depending on the data array prop.
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -14,26 +15,45 @@ import { Legend,
   Tooltip } from 'recharts';
 
 
+/**
+ * getRandomColor:
+ * This method generates random css-style hex strings for colors.
+ *
+ * @returns string representing a css hex color
+ */
 const getRandomColor = () => {
   const letters = '0123456789ABCDEF';
   let color = '#';
   for (let i = 0; i < 6; i += 1) {
     color += letters[Math.floor(Math.random() * 16)];
-  }
+  } // end for
   return color;
 }; // end getRandomColor()
 
 
 export class Chart extends React.Component {
+  /**
+   * renderLines:
+   * This method generates one or more JSX line objects for each currency key
+   * represented in the data object.
+   *
+   * @returns array of one or more Line components to be inserted as child
+   *          components of the LineChart component
+   */
   renderLines() {
+    // check for empty data array
     if (!this.props.data[0]) {
       return [];
     } // end if
 
+    // initialize line array and get the keys for each currency with pricing
+    // data
     const lines = [];
     const keys = Object.keys(this.props.data[0]);
 
+    // push a JSX line object to the array for each currency key
     for (let i = 0; i < keys.length; i += 1) {
+      // ignore the date key here
       if (keys[i] !== 'date') {
         lines.push((
           <Line
@@ -50,6 +70,11 @@ export class Chart extends React.Component {
   } // end renderLines()
 
 
+  /**
+   * render:
+   * Required method of React components to display components called when
+   * component is constructed or state is changed.
+   */
   render() {
     return (
       <LineChart
@@ -75,7 +100,8 @@ export class Chart extends React.Component {
 
 /**
  * props:
- * data - array of objects with the data for chart
+ * data - array of objects with the data for chart, objects will have one date
+ *        key and one or more keys for a currency closing price on that date
  */
 Chart.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,

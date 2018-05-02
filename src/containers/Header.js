@@ -12,19 +12,23 @@ export const Header = props => (
     <Row className="header-container">
       <Col xs="4">
         <div
+          className="header-link"
           onClick={() => props.changePageView(viewEnum.LANDINGPAGE)}
           onKeyDown={() => props.changePageView(viewEnum.LANDINGPAGE)}
           role="button"
           tabIndex={0}
         >
-          <img
-            src={logo}
-            alt="Logo"
-            className="header-logo"
-          />
-        </div>
-        <div className="header-text">
-          <h2>okami</h2>cryptocurrency tracker<br />simple, fast, accurate
+          <div>
+            <img
+              className="header-logo"
+              src={logo}
+              alt="Logo"
+            />
+          </div>
+          <div className="header-text">
+            <h2>okami</h2>
+            cryptocurrency tracker<br />simple, fast, accurate
+          </div>
         </div>
       </Col>
       <Col

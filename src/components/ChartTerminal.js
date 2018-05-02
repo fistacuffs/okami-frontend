@@ -1,6 +1,9 @@
 /**
  * ChartTerminal.js
  *
+ * This component handles loading and formatting the pricing data necessary for
+ * the chart component. It also handles the range of data in the chart with
+ * buttons to display data from the last week, month, or year.
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -21,11 +24,12 @@ import {
 
 export class ChartTerminal extends React.Component {
   /**
+   * @constructor
    * ChartTerminal constructor
-   * -iniitializes state properties for timeFrame and data array
+   * -iniitializes state properties for timeFrame, chartData array,
+   *  coinDataLoaded flag and error message
    * -binds methods changeTimeFrameToYearToWeek, changeTimeFrameToMonth, and
-   *  changeTimeFrameToYear to this
-   *  component
+   *  changeTimeFrameToYear to 'this' component
    *
    * @param: to pass any props to React components
    */
@@ -37,7 +41,7 @@ export class ChartTerminal extends React.Component {
       chartData: [],
       coinDataLoaded: false,
       errorMessage: '',
-    };
+    }; // end state
 
     this.changeTimeFrameToWeek = this.changeTimeFrameToWeek.bind(this);
     this.changeTimeFrameToMonth = this.changeTimeFrameToMonth.bind(this);
@@ -47,13 +51,21 @@ export class ChartTerminal extends React.Component {
 
   /**
    * componentDidMount:
-   *
+   * This is a lifecycle method of React components. It is called after the
+   * component mounts. This component loads the currency data from the crypto
+   * compare API in this method.
    */
   componentDidMount() {
     this.getCoinData(this.props.coinSymbolsList);
   } //  end componentDidMount()
 
 
+  /**
+   * componentWillReceiveProps:
+   * This is a lifecycle method of React components. It is called on rerenders
+   * and handles possible changes to props. This component reloads the currency
+   * data from the crypto compare API if the list of coin symbols prop changes.
+   */
   componentWillReceiveProps(nextProps) {
     if (this.props.coinSymbolsList !== nextProps.coinSymbolsList) {
       this.getCoinData(nextProps.coinSymbolsList);
@@ -63,10 +75,11 @@ export class ChartTerminal extends React.Component {
 
   /**
    * getCoinData:
-   *
+   * This method executes the API requests for the currency data and formats it
+   * as it loads for use by the chart component.
    */
   getCoinData(coinSymbolsList) {
-    // combine all requests into one promise
+    // get promises for each of the coins for which a call to the API is made
     const requests = [];
     for (let i = 0; i < coinSymbolsList.length; i += 1) {
       requests.push(axios.get(
@@ -81,9 +94,12 @@ export class ChartTerminal extends React.Component {
       )); // end get()
     } // end for
 
+    // combine all promises into one
     Promise.all(requests).then((response) => {
       const newCoinData = [];
 
+      // format data from all requests into one data array for use by the chart
+      // component.
       for (let i = 0; i < response.length; i += 1) {
         if (response[i].data.Data) {
           // only add date once
@@ -132,7 +148,7 @@ export class ChartTerminal extends React.Component {
   changeTimeFrameToWeek() {
     this.setState({
       timeFrame: WEEK,
-    });
+    }); // end setState()
   } // end changeTimeFrameToWeek()
 
 
@@ -144,7 +160,7 @@ export class ChartTerminal extends React.Component {
   changeTimeFrameToMonth() {
     this.setState({
       timeFrame: MONTH,
-    });
+    }); // end setState()
   } // end changeTimeFrameToMonth()
 
 
@@ -156,13 +172,14 @@ export class ChartTerminal extends React.Component {
   changeTimeFrameToYear() {
     this.setState({
       timeFrame: YEAR,
-    });
+    }); // end setState()
   } // end changeTimeFrameToYear()
 
 
   /**
    * render:
-   * Required method of React components to create JSX element.
+   * Required method of React components to display components called when
+   * component is constructed or state is changed.
    */
   render() {
     // message if waiting for users currencies to load
@@ -217,6 +234,13 @@ export class ChartTerminal extends React.Component {
 } // end class ChartTerminal
 
 
+/**
+ * props:
+ *
+ * Required:
+ * coinSymbolsList - array of strings that are the symbols of the currencies
+ *                   that will be charted
+ */
 ChartTerminal.propTypes = {
   coinSymbolsList: PropTypes.arrayOf(PropTypes.string).isRequired,
 }; // end propTypes
