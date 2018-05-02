@@ -4,7 +4,8 @@
  * This is the main page view of the application. The main content component,
  * display has a search bar, chart, and buttons for finding and displaying
  * information about different currencies. If a user no user is logged in,
- * random currencies are selected for the display.
+ * random currencies are selected for the display. There is also some marketing
+ * type information shown in the footer.
  */
 import React from 'react';
 import PropTypes from 'prop-types';

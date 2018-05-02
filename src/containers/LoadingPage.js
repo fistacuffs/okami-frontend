@@ -22,7 +22,7 @@ export const LoadingPage = props => (
     </Display>
     <Footer />
   </div>
-);
+); // end LoadingPage
 
 
 /**

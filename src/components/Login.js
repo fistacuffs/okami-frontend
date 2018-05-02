@@ -1,7 +1,7 @@
 /**
  * Login.js
  *
- * This is the login component of the application. It incorporates a form form
+ * This is the login component of the application. It incorporates a form for
  * username and password information. A function is included that sends the
  * information to the backend for validation and if acceptible a one hour user
  * session begins with the backend server.
@@ -51,7 +51,7 @@ export class Login extends React.Component {
    * @constructor
    * Login constructor
    * -iniitializes state properties for username, password, errorMessage, and
-   *  userCoinListLoaded to falsey values
+   *  userCoinListLoaded flag to falsey values
    * -binds methods changeUsername, changePassword, and sendLogin to 'this'
    *  component
    *
@@ -63,8 +63,8 @@ export class Login extends React.Component {
     this.state = {
       username: '',
       password: '',
-      errorMessage: '',
       userCoinListLoaded: false,
+      errorMessage: '',
     }; // end state
 
     this.changeUsername = this.changeUsername.bind(this);
@@ -75,7 +75,7 @@ export class Login extends React.Component {
 
   /**
    * changeUsername:
-   * method changes the state property username of 'this' component
+   * This method changes the state property username of 'this' component.
    *
    * @param newUsername: the new string value for username
    */
@@ -88,7 +88,7 @@ export class Login extends React.Component {
 
   /**
    * changePassword:
-   * method changes the state property password of 'this' component
+   * This method changes the state property password of 'this' component.
    *
    * @param newPassword: the new string value for password
    */
@@ -101,8 +101,8 @@ export class Login extends React.Component {
 
   /**
    * sendLogin:
-   * method uses the state properties username and password to send a POST
-   * request to the backend to attempt to get a userId and begin a user session
+   * This method uses the state properties username and password to send a post
+   * request to the backend server to get a userId and begin a user session
    * with the backend server. If successful, they will be routed to the landing
    * page. Otherwise an error message is displayed.
    */
@@ -123,6 +123,7 @@ export class Login extends React.Component {
       withCredentials: true,
     }) // end post()
       .then((response) => {
+        // save returned userId, username, and set timestamp
         globalvars.userId = response.data.userId;
         globalvars.username = this.state.username;
         globalvars.userTimeStamp = new Date();
@@ -132,11 +133,15 @@ export class Login extends React.Component {
           .get(backendUrl + userCoinsRoute, { withCredentials: true });
       })
       .then((response) => {
+        // save returned coin list and reset timestamp
         globalvars.userCoinList = response.data;
         globalvars.userTimeStamp = new Date();
+
+        // set userCoinListLoaded flage to trigger rerender
         this.setState({
           userCoinListLoaded: true,
         }); // end setState
+
         // change view to landing page after successful login
         this.props.changePageView(viewEnum.LANDINGPAGE);
       }) // end then()

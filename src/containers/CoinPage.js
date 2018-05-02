@@ -1,6 +1,9 @@
 /**
  * CoinPage.js
  *
+ * This is page view displays more detailed information about a single currency.
+ * In this view, the user can add or remove the currency from their list if they
+ * are logged in.
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -17,6 +20,12 @@ import { AddRemoveUserCoin } from '../components/AddRemoveUserCoin';
 import { globalvars } from '../globalvars';
 
 
+/**
+ * hasCoin:
+ * This is a utility method used to test if a logged in user has this coin in
+ * their list already. The page view will use it initialize the add/remove
+ * button.
+ */
 export const hasCoin = (coinSymbol) => {
   if (!globalvars.isLoggedIn()) {
     return false;
@@ -65,12 +74,19 @@ export const CoinPage = props => (
       </Row>
     </Display>
     <Footer>
-      CMSC 495 (7982) Group 1
+      <h3>CMSC 495 (7982) Group 1</h3>
     </Footer>
   </div>
-);
+); // end CoinPage
 
 
+/**
+ * props:
+ *
+ * Required:
+ * coinSymbol - symbol string for currency
+ * changePageView - function to change App state currentView
+ */
 CoinPage.propTypes = {
   coinSymbol: PropTypes.string.isRequired,
   changePageView: PropTypes.func.isRequired,

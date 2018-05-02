@@ -1,5 +1,9 @@
 /**
  * Footer.js
+ *
+ * The footer component is used differently from page view to page view. It will
+ * always contain a link to the crypto compare API at their request by allowing
+ * the free use of their API.
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -19,17 +23,25 @@ export const Footer = props => (
       </h6>
     </a>
   </footer>
-);
+); // end Footer
 
 
+/**
+ * defaults:
+ * children - undefined if no children are passed
+ */
 Footer.defaultProps = {
   children: undefined,
-};
+}; // end defaultProps
 
 
+/**
+ * props:
+ * children - child React nodes
+ */
 Footer.propTypes = {
   children: PropTypes.node,
-};
+}; // end propTypes
 
 
 export default Footer;

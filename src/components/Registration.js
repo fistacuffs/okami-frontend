@@ -1,7 +1,9 @@
 /**
  * Registration.js
  *
- * This is the parent component of the registration module.
+ * This is the registration component of the application. It incorporates a form
+ * for username and password information. A function is included that sends the
+ * information to the backend for validation.
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -44,7 +46,8 @@ export class Registration extends React.Component {
 
   /**
    * Registration constructor
-   * -iniitializes state properties for username, password, and message
+   * -iniitializes state properties for username, password, and errorMessage to
+   *  falsey values
    * -binds methods changeUsername, changePassword, and sendRegistration to
    * 'this' component
    *
@@ -67,7 +70,7 @@ export class Registration extends React.Component {
 
   /**
    * changeUsername:
-   * method changes the state property username of this component
+   * This method changes the state property username of this component.
    *
    * @param newUsername: the new string value for username
    */
@@ -80,7 +83,7 @@ export class Registration extends React.Component {
 
   /**
    * changePassword:
-   * method changes the state property password of this component
+   * This method changes the state property password of this component.
    *
    * @param newPassword: the new string value for password
    */
@@ -93,7 +96,7 @@ export class Registration extends React.Component {
 
   /**
    * sendRegistration:
-   * method uses the state properties username and password to send a POST
+   * This method uses the state properties username and password to send a post
    * request to the backend to create login credentials. If successful, they
    * will be routed to the login page. Otherwise an error message is displayed.
    */
@@ -112,8 +115,10 @@ export class Registration extends React.Component {
       password: this.state.password,
     }) // end post()
       .then((response) => {
+        // test for successful response 'Created'
         if (response.statusText === 'Created') {
           this.props.changePageView(viewEnum.LOGINPAGE);
+        // successful response could still result in unsuccessful registration
         } else {
           this.setState({
             errorMessage: Registration.formatMessage(response.statusText),

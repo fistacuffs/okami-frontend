@@ -60,6 +60,7 @@ export class App extends React.Component {
   getCoinList() {
     axios.get(backendUrl + coinListRoute) // end get()
       .then((response) => {
+        // save coinList and trigger render with state change
         globalvars.coinList = response.data;
         this.setState({
           coinListLoaded: true,

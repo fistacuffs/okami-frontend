@@ -21,7 +21,8 @@ import './Components.css';
 
 /**
  * escapeRegexCharacters:
- * function used by Autosuggest component to handle regex escape characters.
+ * This function is used by Autosuggest component to handle regex escape
+ * characters.
  *
  * @param str: the string to be parsed
  */
@@ -32,7 +33,7 @@ function escapeRegexCharacters(str) {
 
 /**
  * getSuggestions:
- * function used by Autosuggest component to get search suggestions
+ * This function is used by Autosuggest component to get search suggestions.
  *
  * @param value: a string on which suggestions are based
  */
@@ -51,7 +52,8 @@ function getSuggestions(value) {
 
 /**
  * getSuggestionValue:
- * function used by Autosuggest component to get name string from suggestion
+ * This function is used by Autosuggest component to get a name string from
+ * suggestion.
  *
  * @param suggestion: object containing name string
  */
@@ -62,7 +64,8 @@ function getSuggestionValue(suggestion) {
 
 /**
  * renderSuggestion:
- * function used by Autosuggest component to make JSX object of string data
+ * This function is used by Autosuggest component to make a JSX object of string
+ * data.
  *
  * @param suggestion: object to be rendered
  */
@@ -78,6 +81,8 @@ export class SearchBar extends React.Component {
    * @constructor
    * SearchBar constructor
    * -initializes state properties for value, suggestion array and message
+   * -binds methods onChange, onKeyDown, onSuggestionsClearRequested and
+   *  onSuggestionsFetchRequested to 'this' component
    *
    * @param props: to pass any props to React components
    */
@@ -102,7 +107,7 @@ export class SearchBar extends React.Component {
 
   /**
    * onChange:
-   * method changes the state property value of 'this' component
+   * This method changes the state property value of 'this' component.
    *
    * @param event: event that triggers change
    * @param newValue: the new string value for value
@@ -117,7 +122,7 @@ export class SearchBar extends React.Component {
 
   /**
    * onSuggestionsFetchRequested:
-   * method required by Autosuggest component
+   * This method is required by Autosuggest component.
    *
    * @param value: the value to test against possible suggestions
    */
@@ -130,7 +135,7 @@ export class SearchBar extends React.Component {
 
   /**
    * onSuggestionsClearRequested:
-   * method required by Autosuggest component
+   * This method is required by Autosuggest component.
    */
   onSuggestionsClearRequested() {
     this.setState({
@@ -139,6 +144,11 @@ export class SearchBar extends React.Component {
   } // end onSuggestionsClearRequested()
 
 
+  /**
+   * onKeyDown:
+   * This method will trigger the search to execute when the enter key is
+   * pressed during while typing in the search bar.
+   */
   onKeyDown(e) {
     if (e.keyCode === 13) {
       // stop propagation
@@ -151,8 +161,8 @@ export class SearchBar extends React.Component {
 
   /**
    * findCoin:
-   * method to redirect user to the page view for the coin searched when the
-   * button is clicked or to notify them it was not found
+   * This method redirects the user to the page view for the coin searched when
+   * the button is clicked or notifies them it was not found.
    */
   findCoin() {
     const foundCoin =
@@ -187,7 +197,7 @@ export class SearchBar extends React.Component {
       value,
       onChange: this.onChange,
       onKeyDown: this.onKeyDown,
-    };
+    }; // end inputProps
 
     return (
       <div>

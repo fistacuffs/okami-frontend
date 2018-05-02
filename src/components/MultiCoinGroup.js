@@ -53,11 +53,13 @@ const getRandomIndices = (numIndices, arraySize) => {
 const generateSymbolsList = () => {
   let list = [];
 
+  // use all coins from user list if a user is logged in
   if (globalvars.isLoggedIn()) {
     for (let i = 0; i < globalvars.userCoinList.length; i += 1) {
       list.push(globalvars.coinList
         .find(coin => coin.id === globalvars.userCoinList[i]).symbol);
     } // end for
+  // otherwise use five randomly selected coins from the master list
   } else {
     const indices = getRandomIndices(5, globalvars.coinList.length);
     list = indices.map(index => globalvars.coinList[index].symbol);
@@ -69,6 +71,7 @@ const generateSymbolsList = () => {
 
 export const MultiCoinGroup = (props) => {
   const coinSymbolsList = generateSymbolsList();
+
   return (
     <div className="multi-coin-group">
       <Row>

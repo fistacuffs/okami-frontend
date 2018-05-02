@@ -1,12 +1,24 @@
-/* Variables required by all components */
+/**
+ * Global variables used throughout all components of the application
+ */
 import { HOUR } from './constants';
 
 export const globalvars = {
+  // master coin list
+  coinList: [],
+
+  // information for logged in user
   userId: null,
   username: null,
   userTimeStamp: null,
   userCoinList: [],
-  coinList: [],
+
+  /**
+   * isLoggedIn:
+   * This function will check if the user's timestamp and userId is valid. If
+   * the timestamp has expired, all user information is overwritten with falsey
+   * values.
+   */
   isLoggedIn: () => {
     const now = new Date();
     if (globalvars.userTimeStamp

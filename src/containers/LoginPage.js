@@ -29,7 +29,7 @@ export const LoginPage = props => (
       />
     </Display>
     <Footer>
-      CMSC 495 (7982) Group 1
+      <h3>CMSC 495 (7982) Group 1</h3>
     </Footer>
   </div>
 ); // end LoginPage

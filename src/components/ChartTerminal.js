@@ -65,6 +65,8 @@ export class ChartTerminal extends React.Component {
    * This is a lifecycle method of React components. It is called on rerenders
    * and handles possible changes to props. This component reloads the currency
    * data from the crypto compare API if the list of coin symbols prop changes.
+   *
+   * @param nextProps object that will replace this.props after method
    */
   componentWillReceiveProps(nextProps) {
     if (this.props.coinSymbolsList !== nextProps.coinSymbolsList) {
@@ -77,6 +79,8 @@ export class ChartTerminal extends React.Component {
    * getCoinData:
    * This method executes the API requests for the currency data and formats it
    * as it loads for use by the chart component.
+   *
+   * @param coinSymbolsList array of string that are currency symbols
    */
   getCoinData(coinSymbolsList) {
     // get promises for each of the coins for which a call to the API is made
