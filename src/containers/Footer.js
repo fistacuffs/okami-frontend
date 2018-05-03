@@ -9,6 +9,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './Containers.css';
+import ccLogo from '../assets/imgs/cryptocomparelogo.svg';
 
 
 export const Footer = props => (
@@ -18,9 +19,10 @@ export const Footer = props => (
       className="api-link"
       href="https://min-api.cryptocompare.com/"
     >
-      <h6>
-        {'Data provided for free use by the CrypoCompare API'}
-      </h6>
+      <h5>
+        {'Data provided for free use by '}
+        <img className="footer-cclogo" src={ccLogo} alt="CryptoCompare API" />
+      </h5>
     </a>
   </footer>
 ); // end Footer
