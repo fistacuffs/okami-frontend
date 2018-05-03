@@ -11,13 +11,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
-  Col,
   Dropdown,
   DropdownItem,
   DropdownMenu,
-  DropdownToggle,
-  Row,
-} from 'reactstrap';
+  DropdownToggle } from 'reactstrap';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faBars from '@fortawesome/fontawesome-free-solid/faBars';
 
@@ -82,52 +79,38 @@ export class NavBar extends React.Component {
    * @returns registration and login buttons if a user is not logged in
    *          display username and logout button if a user is logged in
    */
-  buttons() {
+  renderButtons() {
     if (globalvars.isLoggedIn()) {
       // display username and logout button
       return (
-        <Col>
-          <Row>
-            <Col />
-            <Col>
-              <h3>{globalvars.username}</h3>
-            </Col>
-            <Col>
-              <Button
-                className="navbar-button"
-                onClick={this.logout}
-              >
-                LOGOUT
-              </Button>
-            </Col>
-          </Row>
-        </Col>
+        <div className="navbar-button-container">
+          <h3 className="navbar-username">{globalvars.username}</h3>
+          <Button
+            className="navbar-button"
+            onClick={this.logout}
+          >
+            LOGOUT
+          </Button>
+        </div>
       ); // end return()
     } // end if
 
     // display registration and login button
     return (
-      <Col>
-        <Row>
-          <Col />
-          <Col>
-            <Button
-              className="navbar-button"
-              onClick={() => this.props.changePageView(viewEnum.REGISTRATIONPAGE)}
-            >
-              SIGN UP
-            </Button>
-          </Col>
-          <Col>
-            <Button
-              className="navbar-button"
-              onClick={() => this.props.changePageView(viewEnum.LOGINPAGE)}
-            >
-              LOGIN
-            </Button>
-          </Col>
-        </Row>
-      </Col>
+      <div className="navbar-button-container">
+        <Button
+          className="navbar-button"
+          onClick={() => this.props.changePageView(viewEnum.REGISTRATIONPAGE)}
+        >
+          SIGN UP
+        </Button>
+        <Button
+          className="navbar-button"
+          onClick={() => this.props.changePageView(viewEnum.LOGINPAGE)}
+        >
+          LOGIN
+        </Button>
+      </div>
     ); // end return()
   } // end buttons()
 
@@ -140,26 +123,27 @@ export class NavBar extends React.Component {
   render() {
     return (
       <div className="navbar">
-        <Row className="navbar">
-          <Col>
-            <Dropdown
-              size="lg"
-              isOpen={this.state.dropdownOpen}
-              toggle={this.toggle}
-            >
-              <DropdownToggle>
-                <FontAwesomeIcon icon={faBars} />
-              </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem onClick={() => this.props.changePageView(viewEnum.LANDINGPAGE)}>
-                  HOME
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </Col>
-          <Col />
-          {this.buttons()}
-        </Row>
+        <div className="navbar-menu-container">
+          <Dropdown
+            size="lg"
+            isOpen={this.state.dropdownOpen}
+            toggle={this.toggle}
+          >
+            <DropdownToggle>
+              <FontAwesomeIcon icon={faBars} />
+            </DropdownToggle>
+            <DropdownMenu className="navbar-menu">
+              <DropdownItem
+                onClick={() => this.props.changePageView(viewEnum.LANDINGPAGE)}
+              >
+                HOME
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </div>
+        <div>
+          {this.renderButtons()}
+        </div>
       </div>
     ); // end return()
   } // end render()

@@ -11,12 +11,10 @@ import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
 import {
   Button,
-  Col,
   Modal,
   ModalBody,
   ModalFooter,
-  ModalHeader,
-  Row } from 'reactstrap';
+  ModalHeader } from 'reactstrap';
 
 import { globalvars } from '../globalvars';
 import { viewEnum } from '../constants';
@@ -221,28 +219,24 @@ export class SearchBar extends React.Component {
     }; // end inputProps
 
     return (
-      <div>
-        <Row>
-          <Col>
-            <Autosuggest
-              className="search-bar"
-              suggestions={suggestions}
-              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-              getSuggestionValue={getSuggestionValue}
-              renderSuggestion={renderSuggestion}
-              inputProps={inputProps}
-            />
-          </Col>
-          <Col>
-            <Button
-              className="search-button"
-              onClick={this.findCoin}
-            >
-              FIND COIN
-            </Button>
-          </Col>
-        </Row>
+      <div className="search-bar-container">
+        <div className="search-bar-box-container">
+          <Autosuggest
+            className="search-bar-box"
+            suggestions={suggestions}
+            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+            getSuggestionValue={getSuggestionValue}
+            renderSuggestion={renderSuggestion}
+            inputProps={inputProps}
+          />
+        </div>
+        <Button
+          className="search-bar-button"
+          onClick={this.findCoin}
+        >
+          FIND COIN
+        </Button>
         <Modal
           isOpen={this.state.modal}
           toggle={this.toggle}

@@ -59,7 +59,7 @@ export const CoinPage = props => (
       changePageView={props.changePageView}
     />
     <Display>
-      <div className="flex-box">
+      <div className="coin-page-display-flex-box">
         <div className="coin-page-details-div">
           <CoinDetails coinSymbol={props.coinSymbol} />
         </div>

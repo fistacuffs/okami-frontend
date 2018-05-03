@@ -31,6 +31,15 @@ const getCoinName = symbol =>
 
 
 export class CoinDetails extends React.Component {
+  /**
+   * @constructor
+   * CoinSelection constructor
+   * -iniitializes state properties for coinData object, dataLoaded flag,
+   *  imageLoaded flag and error message.
+   * -binds onLoad method to 'this' component
+   *
+   * @param props: to pass any props to React components
+   */
   constructor(props) {
     super(props);
 
@@ -54,11 +63,22 @@ export class CoinDetails extends React.Component {
   } // end constructor
 
 
+  /**
+   * componentDidMount:
+   * This is a lifecycle method of React components. It is called after the
+   * component mounts. This component loads the currency details data from the
+   * crypto compare API in this method.
+   */
   componentDidMount() {
     this.getCoinData();
   } // end componentDidMount()
 
 
+  /**
+   * onLoad:
+   * This method triggers a rerender intended for use with an image component
+   * when it finishes loading.
+   */
   onLoad() {
     this.setState({
       imageLoaded: true,
@@ -66,6 +86,12 @@ export class CoinDetails extends React.Component {
   } // end onLoad
 
 
+  /**
+   * getCoinData:
+   * This method retrieves a variety of data details for the corresponding
+   * symbol in the prop list and adds it to the coinData object. It also loads
+   * the logo of the currency from the API.
+   */
   getCoinData() {
     const promises = [];
 
@@ -81,7 +107,6 @@ export class CoinDetails extends React.Component {
 
     Promise.all(promises)
       .then((response) => {
-        console.log(`CoinDetails.response: ${JSON.stringify(response)}`);
         // check for response error in successful request
         if (response[0].data.Response === 'Error') {
           throw new Error(`price request: ${response[0].data.Message}`);
@@ -122,8 +147,15 @@ export class CoinDetails extends React.Component {
   } // end getCoinData
 
 
+  /**
+   * renderImage:
+   * This method builds the image JSX object including checks to ensure the
+   * url for the image and consequently the image itself has loaded.
+   */
   renderImage() {
+    // makes sure url has loaded
     if (this.state.dataLoaded) {
+      // hides image until loaded
       const style = this.state.imageLoaded ? {} : { visibility: 'hidden ' };
       return (
         <img
@@ -139,11 +171,20 @@ export class CoinDetails extends React.Component {
     return <h3>loading currency...</h3>;
   } // end renderImage()
 
+
+  /**
+   * renderDataList:
+   * This method builds the JSX object for the list of data points about the
+   * currency including checks to ensure the data has finished loading without
+   * errors.
+   */
   renderDataList() {
+    // check for load error
     if (this.state.errorMessage) {
       return <h3>{this.state.errorMessage}</h3>;
     } // end if
 
+    // check that data has loaded
     if (!this.state.dataLoaded) {
       return <h3>loading currency...</h3>;
     } // end if
@@ -165,7 +206,7 @@ export class CoinDetails extends React.Component {
           </tr>
           <tr>
             <td>price (euro):</td>
-            <td>&euro{this.state.coinData.euro}</td>
+            <td>{'\u20ac'}{this.state.coinData.euro}</td>
           </tr>
           <tr>
             <td>net hashes per second:</td>
@@ -193,6 +234,11 @@ export class CoinDetails extends React.Component {
   } // end renderDataList()
 
 
+  /**
+   * renderButton:
+   * This method renders a button for each of the currencies. The button will
+   * have the symbol, name and price of the currency.
+   */
   render() {
     return (
       <div className="coin-details">

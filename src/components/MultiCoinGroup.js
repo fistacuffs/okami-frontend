@@ -6,9 +6,6 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Col,
-  Row } from 'reactstrap';
 
 import { ChartTerminal } from './ChartTerminal';
 import { CoinSelection } from './CoinSelection';
@@ -73,18 +70,16 @@ export const MultiCoinGroup = (props) => {
   const coinSymbolsList = generateSymbolsList();
 
   return (
-    <div className="multi-coin-group">
-      <Row>
-        <Col>
-          <ChartTerminal coinSymbolsList={coinSymbolsList} />
-        </Col>
-        <Col>
-          <CoinSelection
-            coinSymbolsList={coinSymbolsList}
-            changePageView={props.changePageView}
-          />
-        </Col>
-      </Row>
+    <div className="mcg-container">
+      <div className="mcg-chart-container">
+        <ChartTerminal coinSymbolsList={coinSymbolsList} />
+      </div>
+      <div className="mcg-coin-sel-container">
+        <CoinSelection
+          coinSymbolsList={coinSymbolsList}
+          changePageView={props.changePageView}
+        />
+      </div>
     </div>
   ); // end return()
 }; // end MultiCoinGroup

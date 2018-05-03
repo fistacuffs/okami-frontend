@@ -1,6 +1,7 @@
 .add-remove-coin-button {
   background-color: #333A56;
   color: #F7F5E6;
+  font-family: "Arial Black", Gadget, sans-serif;
   font-size: 24px;
   height: 70px;
   margin-left: auto;
@@ -10,7 +11,6 @@
   width: 400px;
 }
 
-
 .coin-details {
   background-color: #F7F5E6;
   border-style: solid;
@@ -19,23 +19,29 @@
   color: #52658F;
   margin-left: 50px;
   margin-right: 50px;
+  min-width: 500px;
 }
 
 .coin-details-data-list {
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   font-size: 18px;
   font-weight: bold;
-  width: 60%;
+  width: 80%;
 }
 
 .coin-details-data-list-col1 {
-  width: 50%;
+  width: 60%;
 }
 
 .coin-details-data-list-col2 {
-  width: 50%
+  width: 40%
+}
+
+.coin-details-header-text {
+  font-family: Verdana, Geneva, sans-serif;
+  width: 80%;
 }
 
 .coin-details-header {
@@ -63,6 +69,54 @@
   width: 80px;
 }
 
+.coin-sel-button {
+  background-color: #52658F;
+  color: #F7F5E6;
+  display: block;
+  font-family: "Arial Black", Gadget, sans-serif;
+  height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  width: 500px;
+}
+
+.coin-sel-button-left {
+  flex: 1;
+  text-align: left;
+}
+
+.coin-sel-button-right {
+  flex: 1;
+  text-align: right;
+}
+
+.coin-sel-button-text {
+    display: flex;
+    font-family: "Arial Black", Gadget, sans-serif;
+}
+
+.coin-sel-container {
+  background-color: #F7F5E6;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #52658F;
+  color: #52658F;
+  height: 400px;
+  margin-left: 50px;
+  margin-right: 50px;
+  min-width: 500px;
+  overflow: auto;
+}
+
+.coin-sel-header {
+  font-family: Verdana, Geneva, sans-serif;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 .chart-terminal {
   margin-left: 50px;
   margin-right: 50px;
@@ -72,6 +126,7 @@
   background-color: #52658F;
   color: #F7F5E6;
   flex: 1;
+  font-family: "Arial Black", Gadget, sans-serif;
   margin: 5px;
 }
 
@@ -91,22 +146,6 @@
   padding-right: 25px;
 }
 
-.coin-button {
-  background-color: #52658F;
-  color: #F7F5E6;
-  height: 50px;
-  margin: 5px;
-  width: 500px;
-}
-
-.coin-selection {
-  color: #52658F;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  width: 40%;
-}
-
 .login {
   display: flex;
   flex-direction: column;
@@ -119,8 +158,18 @@
   text-align: center;
 }
 
-.multi-coin-group {
-    width: 100%;
+.mcg-chart-container {
+  flex: 3;
+}
+
+.mcg-coin-sel-container {
+  flex: 2;
+}
+
+.mcg-container {
+  align-items: center;
+  display: flex;
+  height: 500px;
 }
 
 .react-autosuggest__container {
@@ -128,13 +177,15 @@
 }
 
 .react-autosuggest__input {
+  background-color: #F7F5E6;
+  color: #333A56;
   width: 400px;
   height: 50px;
   padding: 10px 20px;
-  font-family: Helvetica, sans-serif;
+  font-family: Verdana, Geneva, sans-serif;
   font-weight: 300;
   font-size: 18px;
-  border: 1px solid #aaa;
+  border: 1px solid #333A56;
   border-radius: 4px;
 }
 
@@ -156,9 +207,9 @@
   position: absolute;
   top: 51px;
   width: 280px;
-  border: 1px solid #aaa;
-  background-color: #fff;
-  font-family: Helvetica, sans-serif;
+  border: 1px solid #333A56;
+  background-color: #F7F5E6;
+  font-family: Verdana, Geneva, sans-serif;
   font-weight: 300;
   font-size: 16px;
   border-bottom-left-radius: 4px;
@@ -183,18 +234,41 @@
   background-color: #ddd;
 }
 
-.search-button {
+.search-bar-box {
+  width: 100%;
+}
+
+.search-bar-box-container {
+  flex: 3;
+}
+
+.search-bar-button {
   background-color: #52658F;
   color: #F7F5E6;
+  flex: 1;
+  font-family: "Arial Black", Gadget, sans-serif;
   height: 50px;
   margin: 5px;
   width: 150px;
+}
+
+.search-bar-container {
+  align-content: space-between;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 600px;
 }
 
 .user-form-button {
   background-color: #333A56;
   color: #F7F5E6;
   font-size: 24px;
+  font-family: "Arial Black", Gadget, sans-serif;
   height: 50px;
   margin: auto;
   width: 300px;

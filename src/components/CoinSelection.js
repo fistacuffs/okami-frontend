@@ -7,9 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import {
-  Button,
-  Row } from 'reactstrap';
+import { Button } from 'reactstrap';
 
 import { globalvars } from '../globalvars';
 import {
@@ -189,28 +187,33 @@ export class CoinSelection extends React.Component {
 
     for (let i = 0; i < this.state.coinData.length; i += 1) {
       // build the text string for the button
-      let buttonText = '';
-      buttonText += `${this.state.coinData[i].symbol}: `;
-      buttonText += `${this.state.coinData[i].name}     `;
+      let buttonTextLeft = '';
+      let buttonTextRight = '';
+      buttonTextLeft += `${this.state.coinData[i].symbol}: `;
+      buttonTextLeft += `${this.state.coinData[i].name}`;
+
       if (this.state.coinData[i].price) {
-        buttonText += `$${this.state.coinData[i].price}`;
+        buttonTextRight += `$${this.state.coinData[i].price}`;
       } else {
-        buttonText += 'NO PRICE DATA';
+        buttonTextRight += 'NO PRICE DATA';
       } // end if/else
 
       buttons.push((
-        <Row key={i}>
+        <div key={i}>
           <Button
-            className="coin-button"
+            className="coin-sel-button"
             onClick={
               () => this.props
               .changePageView(viewEnum.COINPAGE, this.state.coinData[i].symbol)
             } // end onClick function
             key={i}
           >
-            {buttonText}
+            <div className="coin-sel-button-text">
+              <div className="coin-sel-button-left">{buttonTextLeft}</div>
+              <div className="coin-sel-button-right">{buttonTextRight}</div>
+            </div>
           </Button>
-        </Row>
+        </div>
       )); // end push()
     } // end for
 
@@ -231,7 +234,7 @@ export class CoinSelection extends React.Component {
 
     // message if crypto compare request error
     if (this.state.errorMessage) {
-      return <h4>{this.state.errorMessage}</h4>;
+      return <h1 className="coin-sel-header">{this.state.errorMessage}</h1>;
     } // end if
 
     // different heading for logged in user
@@ -243,8 +246,8 @@ export class CoinSelection extends React.Component {
     }; // end heading()
 
     return (
-      <div className="coin-selection">
-        {heading()}
+      <div className="coin-sel-container">
+        <div className="coin-sel-header">{heading()}</div>
         {this.renderButtons()}
       </div>
     ); // end return

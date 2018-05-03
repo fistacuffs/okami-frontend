@@ -9,9 +9,6 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Col,
-  Row } from 'reactstrap';
 
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faDollarSign from '@fortawesome/fontawesome-free-solid/faDollarSign';
@@ -37,44 +34,42 @@ export const LandingPage = props => (
       changePageView={props.changePageView}
     />
     <Display>
-      <Row>
-        <Col />
-        <Col>
+      <div className="landing-page-display-container">
+        <div className="landing-page-search-bar-container">
           <SearchBar changePageView={props.changePageView} />
-        </Col>
-        <Col />
-      </Row>
-      <Row>
-        <MultiCoinGroup changePageView={props.changePageView} />
-      </Row>
+        </div>
+        <div className="landing-page-mcg-container">
+          <MultiCoinGroup changePageView={props.changePageView} />
+        </div>
+      </div>
     </Display>
     <Footer>
-      <Row>
-        <Col>
+      <div className="footer-icons-container">
+        <div className="footer-icon-container">
           <FontAwesomeIcon
             className="footer-icon"
             size="10x"
             icon={faDollarSign}
           />
-          {'see currency values'}
-        </Col>
-        <Col>
+          <h3>see currency values</h3>
+        </div>
+        <div className="footer-icon-container">
           <FontAwesomeIcon
             className="footer-icon"
             size="10x"
             icon={faCheckCircle}
           />
-          {'updated in real time'}
-        </Col>
-        <Col>
+          <h3>updated in real time</h3>
+        </div>
+        <div className="footer-icon-container">
           <FontAwesomeIcon
             className="footer-icon"
             size="10x"
             icon={faBan}
           />
-          {'no need to sign up'}
-        </Col>
-      </Row>
+          <h3>no need to sign up</h3>
+        </div>
+      </div>
     </Footer>
   </div>
 ); // end LandingPage
