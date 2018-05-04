@@ -1,4 +1,14 @@
 /**
+ * @file
+ * constants.js
+ * This file contains global constants for the application.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
+ */
+
+
+/**
  * Backend server URL and routes
  */
 export const backendUrl = 'http://localhost:8080/';

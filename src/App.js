@@ -1,9 +1,12 @@
 /**
+ * @file
  * App.js
- *
  * This is the top level container of the application. The logic and state of
  * switching between different page views is handled here. The initialization
  * of the master coin list loaded from the backend server is done here as well.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import axios from 'axios';

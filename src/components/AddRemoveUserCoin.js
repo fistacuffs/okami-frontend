@@ -1,11 +1,14 @@
 /**
+ * @file
  * AddRemoveUserCoin.js
- *
  * This component handles adding and removing coins to the backend server
  * database. It includes a button that changes depending on whether there is
  * a user logged in and if there is, whether the coin is in their list. The
  * users timestamp to track their session time is updated with each request made
  * to the backend server.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';

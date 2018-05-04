@@ -1,8 +1,11 @@
 /**
+ * @file
  * CoinDetails.js
- *
  * This component will be used by the coin page view to display more details
  * about the coin. It will handle loading the data from the API as well.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -241,11 +244,9 @@ export class CoinDetails extends React.Component {
    */
   render() {
     return (
-      <div className="coin-details">
-        <div className="coin-details-header">
-          <div className="coin-details-logo">
-            {this.renderImage()}
-          </div>
+      <div className="coin-details-container">
+        <div className="coin-details-header-container">
+          {this.renderImage()}
           <h1 className="coin-details-header-text">
             <b>{getCoinName(this.props.coinSymbol)}</b>
           </h1>

@@ -1,9 +1,12 @@
 /**
+ * @file
  * Registration.js
- *
  * This is the registration component of the application. It incorporates a form
  * for username and password information. A function is included that sends the
  * information to the backend for validation.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -146,9 +149,8 @@ export class Registration extends React.Component {
    */
   render() {
     return (
-      <div className={this.props.className}>
+      <div className="registration-container">
         <UserForm
-          className="user-form"
           onUsernameChange={this.changeUsername}
           onPasswordChange={this.changePassword}
           onClick={this.sendRegistration}
@@ -178,11 +180,9 @@ export class Registration extends React.Component {
  * props:
  *
  * Required:
- * className - string name used for css styling
  * changePageView - function to change App state currentView
  */
 Registration.propTypes = {
-  className: PropTypes.string.isRequired,
   changePageView: PropTypes.func.isRequired,
 }; // end propTypes
 

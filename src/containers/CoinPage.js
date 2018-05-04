@@ -1,9 +1,12 @@
 /**
+ * @file
  * CoinPage.js
- *
  * This is page view displays more detailed information about a single currency.
  * In this view, the user can add or remove the currency from their list if they
  * are logged in.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -51,7 +54,7 @@ export const hasCoin = (coinSymbol) => {
 
 
 export const CoinPage = props => (
-  <div>
+  <div className="page-width">
     <NavBar
       changePageView={props.changePageView}
     />
@@ -60,12 +63,8 @@ export const CoinPage = props => (
     />
     <Display>
       <div className="coin-page-display-flex-box">
-        <div className="coin-page-details-div">
-          <CoinDetails coinSymbol={props.coinSymbol} />
-        </div>
-        <div className="coin-page-chart-div">
-          <ChartTerminal coinSymbolsList={[props.coinSymbol]} />
-        </div>
+        <CoinDetails coinSymbol={props.coinSymbol} />
+        <ChartTerminal coinSymbolsList={[props.coinSymbol]} />
       </div>
       <div className="coin-page-add-remove-button-div">
         <AddRemoveUserCoin
@@ -76,9 +75,7 @@ export const CoinPage = props => (
         />
       </div>
     </Display>
-    <Footer>
-      <h3>CMSC 495 (7982) Group 1</h3>
-    </Footer>
+    <Footer />
   </div>
 ); // end CoinPage
 

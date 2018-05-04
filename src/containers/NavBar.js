@@ -1,11 +1,14 @@
 /**
+ * @file
  * NavBar.js
- *
  * This is the navigation bar component for the application. There is a
  * hamburger menu with links on the left side of the menu. If no user is logged
  * in, then there are buttons for login in and registration in the navigation
  * bar. If a user is logged in, then their is a logout button and their username
  * is displayed.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -141,9 +144,7 @@ export class NavBar extends React.Component {
             </DropdownMenu>
           </Dropdown>
         </div>
-        <div>
-          {this.renderButtons()}
-        </div>
+        {this.renderButtons()}
       </div>
     ); // end return()
   } // end render()
