@@ -23,8 +23,9 @@
 }
 
 .coin-page-display-flex-box {
-  padding-top: 50px;
+  align-items: center;
   display: flex;
+  height: 450px;
 }
 
 .display {
@@ -50,7 +51,6 @@
 .footer-icon-container {
   flex: 1;
   font-family: Verdana, Geneva, sans-serif;
-  min-width: 200px;
   text-align: center;
 }
 
@@ -96,18 +96,14 @@
 .header-text {
   flex: 3;
   font-family: Verdana, Geneva, sans-serif;
+  min-width: 250px;
   text-align: center;
-}
-
-.landing-page-display-flex-box {
-
 }
 
 .navbar {
   background-color: #333A56;
   color: #F7F5E6;
   height: 80px;
-  min-width: 600px;
 }
 
 .navbar-button {
@@ -119,17 +115,17 @@
   font-size: 18px;
   margin-left: 10px;
   margin-right: 10px;
-  width: 200px;
+  min-width: 100px;
 }
 
 .navbar-button-container {
   display: flex;
-  float: right;
-  min-width: 500px;
+  margin-right: 1%;
+  width: 30%;
 }
 
 .navbar-menu-container {
-  float: left;
+  margin-left: 1%;
 }
 
 .navbar-menu {
@@ -145,4 +141,8 @@
   padding-top: 10px;
   padding-bottom: 10px;
   width: 200px;
+}
+
+.page-width {
+  min-width: 900px;
 }

@@ -1,8 +1,11 @@
 /**
+ * @file
  * CoinSelection.js
- *
  * This component handles the buttons that are part of the landing page display
  * that show the current price and link to the page view for that coin.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';

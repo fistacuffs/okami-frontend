@@ -1,9 +1,12 @@
 /**
+ * @file
  * ChartTerminal.js
- *
  * This component handles loading and formatting the pricing data necessary for
  * the chart component. It also handles the range of data in the chart with
  * buttons to display data from the last week, month, or year.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -202,27 +205,25 @@ export class ChartTerminal extends React.Component {
               .slice(YEAR - this.state.timeFrame, YEAR)}
           />
         </div>
-        <div>
-          <div className="chart-terminal-button-container">
-            <Button
-              className="chart-terminal-button"
-              onClick={this.changeTimeFrameToWeek}
-            >
-              WEEK
-            </Button>
-            <Button
-              className="chart-terminal-button"
-              onClick={this.changeTimeFrameToMonth}
-            >
-              MONTH
-            </Button>
-            <Button
-              className="chart-terminal-button"
-              onClick={this.changeTimeFrameToYear}
-            >
-              YEAR
-            </Button>
-          </div>
+        <div className="chart-terminal-button-container">
+          <Button
+            className="chart-terminal-button"
+            onClick={this.changeTimeFrameToWeek}
+          >
+            WEEK
+          </Button>
+          <Button
+            className="chart-terminal-button"
+            onClick={this.changeTimeFrameToMonth}
+          >
+            MONTH
+          </Button>
+          <Button
+            className="chart-terminal-button"
+            onClick={this.changeTimeFrameToYear}
+          >
+            YEAR
+          </Button>
         </div>
       </div>
     ); // end return();

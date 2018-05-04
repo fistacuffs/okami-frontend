@@ -1,10 +1,13 @@
 /**
+ * @file
  * SearchBar.js
- *
  * This is the search bar component of the application. It allows users to
  * search for any currency in the master coin list and will offer suggestions
  * based on their input. When they click the button, they will be directed to
  * page view for that coin or alerted that it cannot be found.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -220,17 +223,14 @@ export class SearchBar extends React.Component {
 
     return (
       <div className="search-bar-container">
-        <div className="search-bar-box-container">
-          <Autosuggest
-            className="search-bar-box"
-            suggestions={suggestions}
-            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-            getSuggestionValue={getSuggestionValue}
-            renderSuggestion={renderSuggestion}
-            inputProps={inputProps}
-          />
-        </div>
+        <Autosuggest
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          getSuggestionValue={getSuggestionValue}
+          renderSuggestion={renderSuggestion}
+          inputProps={inputProps}
+        />
         <Button
           className="search-bar-button"
           onClick={this.findCoin}

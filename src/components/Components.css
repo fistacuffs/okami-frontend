@@ -11,115 +11,10 @@
   width: 400px;
 }
 
-.coin-details {
-  background-color: #F7F5E6;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #52658F;
-  color: #52658F;
-  margin-left: 50px;
-  margin-right: 50px;
-  min-width: 500px;
-}
-
-.coin-details-data-list {
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 30px;
-  font-size: 18px;
-  font-weight: bold;
-  width: 80%;
-}
-
-.coin-details-data-list-col1 {
-  width: 60%;
-}
-
-.coin-details-data-list-col2 {
-  width: 40%
-}
-
-.coin-details-header-text {
-  font-family: Verdana, Geneva, sans-serif;
-  width: 80%;
-}
-
-.coin-details-header {
-  margin-left: auto;
-  margin-right: auto;
-  width: 70%;
-  display: flex;
-}
-
-.coin-details-header-text {
-  flex: 5;
-  padding-left: 20px;
-  padding-top: 30px;
-}
-
-.coin-details-logo {
-  flex: 1;
-  padding: 20px;
-}
-
-.coin-logo {
-  height: 80px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 80px;
-}
-
-.coin-sel-button {
-  background-color: #52658F;
-  color: #F7F5E6;
-  display: block;
-  font-family: "Arial Black", Gadget, sans-serif;
-  height: 50px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  width: 500px;
-}
-
-.coin-sel-button-left {
-  flex: 1;
-  text-align: left;
-}
-
-.coin-sel-button-right {
-  flex: 1;
-  text-align: right;
-}
-
-.coin-sel-button-text {
-    display: flex;
-    font-family: "Arial Black", Gadget, sans-serif;
-}
-
-.coin-sel-container {
-  background-color: #F7F5E6;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #52658F;
-  color: #52658F;
-  height: 400px;
-  margin-left: 50px;
-  margin-right: 50px;
-  min-width: 500px;
-  overflow: auto;
-}
-
-.coin-sel-header {
-  font-family: Verdana, Geneva, sans-serif;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
 .chart-terminal {
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 2%;
+  margin-right: 2%;
+  width: 60%;
 }
 
 .chart-terminal-button {
@@ -146,24 +41,112 @@
   padding-right: 25px;
 }
 
-.login {
+.coin-details-container {
+  background-color: #F7F5E6;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #52658F;
+  color: #52658F;
+  margin-left: 2%;
+  margin-right: 2%;
+  width: 40%;
+}
+
+.coin-details-data-list {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  width: 80%;
+}
+
+.coin-details-data-list-col1 {
+  width: 60%;
+}
+
+.coin-details-data-list-col2 {
+  width: 40%
+}
+
+.coin-details-header-container {
+  align-items: center;
   display: flex;
-  flex-direction: column;
-  height: 300px;
+  height: 100px;
   justify-content: center;
-  width: 500px;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.coin-details-header-text {
+  font-family: Verdana, Geneva, sans-serif;
+}
+
+.coin-logo {
+  height: 80px;
+  margin-right: 10px;
+  width: 80px;
+}
+
+.coin-sel-button {
+  background-color: #52658F;
+  color: #F7F5E6;
+  display: block;
+  font-family: "Arial Black", Gadget, sans-serif;
+  height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  width: 90%;
+}
+
+.coin-sel-button-left {
+  flex: 1;
+  margin-right: 5px;
+  text-align: left;
+}
+
+.coin-sel-button-right {
+  flex: 1;
+  margin-left: 5px;
+  text-align: right;
+}
+
+.coin-sel-button-text {
+    display: flex;
+    font-family: "Arial Black", Gadget, sans-serif;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.coin-sel-container {
+  background-color: #F7F5E6;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #52658F;
+  color: #52658F;
+  height: 400px;
+  margin-left: 2%;
+  margin-right: 2%;
+  overflow: auto;
+  width: 40%;
+}
+
+.coin-sel-header {
+  font-family: Verdana, Geneva, sans-serif;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.login-container {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .message {
   text-align: center;
-}
-
-.mcg-chart-container {
-  flex: 3;
-}
-
-.mcg-coin-sel-container {
-  flex: 2;
 }
 
 .mcg-container {
@@ -173,13 +156,12 @@
 }
 
 .react-autosuggest__container {
-  position: relative;
+  flex: 5;
 }
 
 .react-autosuggest__input {
   background-color: #F7F5E6;
   color: #333A56;
-  width: 400px;
   height: 50px;
   padding: 10px 20px;
   font-family: Verdana, Geneva, sans-serif;
@@ -187,6 +169,7 @@
   font-size: 18px;
   border: 1px solid #333A56;
   border-radius: 4px;
+  width: 100%;
 }
 
 .react-autosuggest__input--focused {
@@ -234,26 +217,23 @@
   background-color: #ddd;
 }
 
-.search-bar-box {
-  width: 100%;
-}
-
-.search-bar-box-container {
-  flex: 3;
+.registration-container {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .search-bar-button {
   background-color: #52658F;
   color: #F7F5E6;
-  flex: 1;
+  flex: 3;
   font-family: "Arial Black", Gadget, sans-serif;
   height: 50px;
   margin: 5px;
-  width: 150px;
+  width: 90%;
 }
 
 .search-bar-container {
-  align-content: space-between;
+  align-content: space-evenly;
   align-items: center;
   display: flex;
   justify-content: center;
@@ -261,7 +241,7 @@
   margin-right: auto;
   padding-top: 20px;
   padding-bottom: 20px;
-  width: 600px;
+  width: 50%;
 }
 
 .user-form-button {
@@ -270,31 +250,41 @@
   font-size: 24px;
   font-family: "Arial Black", Gadget, sans-serif;
   height: 50px;
-  margin: auto;
-  width: 300px;
+  margin: 20px;
+  width: 20%;
 }
 
-.user-form-label {
+.user-form-input-line {
+  align-items: center;
+  display: flex;
+  min-width: 500px;
+  width: 30%;
+}
+
+.user-form-input-label {
   color: #52658F;
+  font-family: Verdana, Geneva, sans-serif;
   font-size: 32px;
+  flex: 1;
   height: 50px;
-  padding-right: 40px;
-  width: 150px;
+  min-width: 170px;
 }
 
-.user-form-field {
+.user-form-input-field {
   background-color: #F7F5E6;
-  border-color: #333A56;
+  border: 1px solid #333A56;
+  border-radius: 4px;
   color: #333A56;
   font-size: 32px;
+  flex: 2;
   height: 50px;
-  width: 300px;
 }
 
-.user-form {
+.user-form-container {
+  align-items: center;
   display: flex;
-  flex-wrap: wrap;
-  height: 200px;
-  justify-content: space-around;
-  margin: auto;
+  flex-direction: column;
+  justify-content: center;
+  height: 400px;
+  padding-top: 100px;
 }

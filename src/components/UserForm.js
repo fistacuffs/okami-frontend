@@ -1,16 +1,15 @@
 /**
+ * @file
  * UserForm.js
- *
  * This component has input fields for a username and password with a button
  * below. The password field is hidden when input is typed.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-  Col,
-  Container,
-  Row } from 'reactstrap';
+import { Button } from 'reactstrap';
 
 import './Components.css';
 
@@ -84,36 +83,44 @@ export class UserForm extends React.Component {
    */
   render() {
     return (
-      <Container className={this.props.className}>
-        <Row>
-          <span className="user-form-label">username</span>
+      <div className="user-form-container">
+        <div className="user-form-input-line">
+          <label
+            htmlFor="username"
+            className="user-form-input-label"
+          >
+          username
+          </label>
           <input
-            className="user-form-field"
+            id="username"
+            className="user-form-input-field"
             type="text"
             onChange={this.handleUsernameChange}
             onKeyPress={this.handleKeyPress}
           />
-        </Row>
-        <Row>
-          <span className="user-form-label">password</span>
+        </div>
+        <div className="user-form-input-line">
+          <label
+            htmlFor="password"
+            className="user-form-input-label"
+          >
+          password
+          </label>
           <input
-            className="user-form-field"
+            id="password"
+            className="user-form-input-field"
             type="password"
             onChange={this.handlePasswordChange}
             onKeyPress={this.handleKeyPress}
           />
-        </Row>
-        <Row>
-          <Col>
-            <Button
-              className="user-form-button"
-              onClick={this.handleButtonClick}
-            >
-              {this.props.children}
-            </Button>
-          </Col>
-        </Row>
-      </Container>
+        </div>
+        <Button
+          className="user-form-button"
+          onClick={this.handleButtonClick}
+        >
+          {this.props.children}
+        </Button>
+      </div>
     ); // end return()
   } // end render()
 } // end class UserForm
@@ -133,13 +140,11 @@ UserForm.defaultProps = {
  * children - children of the button component in the form (usually string)
  *
  * Required:
- * className - string name used for css styling
  * onUsernameChange - username state modifying method of the parent component
  * onPasswordChange - password state modifying method of the parent component
  */
 UserForm.propTypes = {
   children: PropTypes.node,
-  className: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   onEnterPress: PropTypes.func.isRequired,
   onUsernameChange: PropTypes.func.isRequired,

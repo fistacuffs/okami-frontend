@@ -1,8 +1,11 @@
 /**
+ * @file
  * Chart.js
- *
  * This is the chart output component. It displays lines for one or more
  * currencies depending on the data array prop.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';

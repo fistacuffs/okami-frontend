@@ -1,19 +1,17 @@
 /**
+ * @file
  * LandingPage.js
- *
  * This is the main page view of the application. The main content component,
  * display has a search bar, chart, and buttons for finding and displaying
  * information about different currencies. If a user no user is logged in,
  * random currencies are selected for the display. There is also some marketing
  * type information shown in the footer.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faDollarSign from '@fortawesome/fontawesome-free-solid/faDollarSign';
-import faCheckCircle from '@fortawesome/fontawesome-free-solid/faCheckCircle';
-import faBan from '@fortawesome/fontawesome-free-solid/faBan';
 
 import { NavBar } from './NavBar';
 import { Header } from './Header';
@@ -26,7 +24,7 @@ import './Containers.css';
 
 
 export const LandingPage = props => (
-  <div>
+  <div className="page-width">
     <NavBar
       changePageView={props.changePageView}
     />
@@ -34,43 +32,10 @@ export const LandingPage = props => (
       changePageView={props.changePageView}
     />
     <Display>
-      <div className="landing-page-display-container">
-        <div className="landing-page-search-bar-container">
-          <SearchBar changePageView={props.changePageView} />
-        </div>
-        <div className="landing-page-mcg-container">
-          <MultiCoinGroup changePageView={props.changePageView} />
-        </div>
-      </div>
+      <SearchBar changePageView={props.changePageView} />
+      <MultiCoinGroup changePageView={props.changePageView} />
     </Display>
-    <Footer>
-      <div className="footer-icons-container">
-        <div className="footer-icon-container">
-          <FontAwesomeIcon
-            className="footer-icon"
-            size="10x"
-            icon={faDollarSign}
-          />
-          <h3>see currency values</h3>
-        </div>
-        <div className="footer-icon-container">
-          <FontAwesomeIcon
-            className="footer-icon"
-            size="10x"
-            icon={faCheckCircle}
-          />
-          <h3>updated in real time</h3>
-        </div>
-        <div className="footer-icon-container">
-          <FontAwesomeIcon
-            className="footer-icon"
-            size="10x"
-            icon={faBan}
-          />
-          <h3>no need to sign up</h3>
-        </div>
-      </div>
-    </Footer>
+    <Footer />
   </div>
 ); // end LandingPage
 

@@ -1,9 +1,12 @@
 /**
+ * @file
  * Header.js
- *
  * This is the header component for the application. There is a logo, title, and
  * tagline displayed as well as some other graphics. The logo element is made
  * clickable to redirect the user to the landing page.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';

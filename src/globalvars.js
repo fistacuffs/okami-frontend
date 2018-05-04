@@ -1,5 +1,10 @@
 /**
- * Global variables used throughout all components of the application
+ * @file
+ * globalvars.js
+ * This file contains global variables for the application.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import { HOUR } from './constants';
 

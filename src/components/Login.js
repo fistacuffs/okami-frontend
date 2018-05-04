@@ -1,10 +1,13 @@
 /**
+ * @file
  * Login.js
- *
  * This is the login component of the application. It incorporates a form for
  * username and password information. A function is included that sends the
  * information to the backend for validation and if acceptible a one hour user
  * session begins with the backend server.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -175,9 +178,8 @@ export class Login extends React.Component {
     } // end if
 
     return (
-      <div className={this.props.className}>
+      <div className="login-container">
         <UserForm
-          className="user-form"
           onUsernameChange={this.changeUsername}
           onPasswordChange={this.changePassword}
           onClick={this.sendLogin}
@@ -207,11 +209,9 @@ export class Login extends React.Component {
  * props:
  *
  * Required:
- * className - string name used for css styling
  * changePageView - function to change App state currentView
  */
 Login.propTypes = {
-  className: PropTypes.string.isRequired,
   changePageView: PropTypes.func.isRequired,
 }; // end propTypes
 

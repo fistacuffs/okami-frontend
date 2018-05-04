@@ -1,8 +1,11 @@
 /**
+ * @file
  * LoadingPage.js
- *
  * This displays a pleasing page view while the master coin list is loading from
  * the backend server.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -14,7 +17,7 @@ import { Footer } from './Footer';
 
 
 export const LoadingPage = props => (
-  <div>
+  <div className="page-width">
     <NavBar changePageView={props.changePageView} />
     <Header changePageView={props.changePageView} />
     <Display>

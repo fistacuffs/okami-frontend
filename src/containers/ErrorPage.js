@@ -1,8 +1,12 @@
 /**
+ * @file
  * ErrorPage.js
  * This is a simple page view to display errors loading data from the backend
  * server on the startup of the application. If the user sees this page, then
  * the application has had a critical error and is not going to run.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';

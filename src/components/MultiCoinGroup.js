@@ -1,8 +1,11 @@
 /**
+ * @file
  * MultiCoinGroup.js
- *
  * This component coordinates the multiple currencies that will be displayed
  * between the chart terminal and coin selection components.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -71,15 +74,11 @@ export const MultiCoinGroup = (props) => {
 
   return (
     <div className="mcg-container">
-      <div className="mcg-chart-container">
-        <ChartTerminal coinSymbolsList={coinSymbolsList} />
-      </div>
-      <div className="mcg-coin-sel-container">
-        <CoinSelection
-          coinSymbolsList={coinSymbolsList}
-          changePageView={props.changePageView}
-        />
-      </div>
+      <ChartTerminal coinSymbolsList={coinSymbolsList} />
+      <CoinSelection
+        coinSymbolsList={coinSymbolsList}
+        changePageView={props.changePageView}
+      />
     </div>
   ); // end return()
 }; // end MultiCoinGroup
