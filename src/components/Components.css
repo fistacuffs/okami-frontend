@@ -157,6 +157,7 @@
 
 .react-autosuggest__container {
   flex: 5;
+  position: relative;
 }
 
 .react-autosuggest__input {
