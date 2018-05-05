@@ -1,18 +1,23 @@
 /**
+ * @file
  * SearchBar.js
- *
  * This is the search bar component of the application. It allows users to
  * search for any currency in the master coin list and will offer suggestions
  * based on their input. When they click the button, they will be directed to
  * page view for that coin or alerted that it cannot be found.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
 import {
   Button,
-  Col,
-  Row } from 'reactstrap';
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader } from 'reactstrap';
 
 import { globalvars } from '../globalvars';
 import { viewEnum } from '../constants';
@@ -21,7 +26,8 @@ import './Components.css';
 
 /**
  * escapeRegexCharacters:
- * function used by Autosuggest component to handle regex escape characters.
+ * This function is used by Autosuggest component to handle regex escape
+ * characters.
  *
  * @param str: the string to be parsed
  */
@@ -32,7 +38,7 @@ function escapeRegexCharacters(str) {
 
 /**
  * getSuggestions:
- * function used by Autosuggest component to get search suggestions
+ * This function is used by Autosuggest component to get search suggestions.
  *
  * @param value: a string on which suggestions are based
  */
@@ -51,7 +57,8 @@ function getSuggestions(value) {
 
 /**
  * getSuggestionValue:
- * function used by Autosuggest component to get name string from suggestion
+ * This function is used by Autosuggest component to get a name string from
+ * suggestion.
  *
  * @param suggestion: object containing name string
  */
@@ -62,7 +69,8 @@ function getSuggestionValue(suggestion) {
 
 /**
  * renderSuggestion:
- * function used by Autosuggest component to make JSX object of string data
+ * This function is used by Autosuggest component to make a JSX object of string
+ * data.
  *
  * @param suggestion: object to be rendered
  */
@@ -77,7 +85,10 @@ export class SearchBar extends React.Component {
   /**
    * @constructor
    * SearchBar constructor
-   * -initializes state properties for value, suggestion array and message
+   * -initializes state properties for value, suggestion array, modal, and
+   *  message
+   * -binds methods onChange, onKeyDown, onSuggestionsClearRequested
+   *  onSuggestionsFetchRequested and toggle to 'this' component
    *
    * @param props: to pass any props to React components
    */
@@ -88,20 +99,23 @@ export class SearchBar extends React.Component {
       value: '',
       suggestions: [],
       message: '',
+      modal: false,
     }; // end state
 
     this.onChange = this.onChange.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
     this.onSuggestionsFetchRequested
       = this.onSuggestionsFetchRequested.bind(this);
     this.onSuggestionsClearRequested
       = this.onSuggestionsClearRequested.bind(this);
     this.findCoin = this.findCoin.bind(this);
+    this.toggle = this.toggle.bind(this);
   } // end constructor
 
 
   /**
    * onChange:
-   * method changes the state property value of 'this' component
+   * This method changes the state property value of 'this' component.
    *
    * @param event: event that triggers change
    * @param newValue: the new string value for value
@@ -116,24 +130,20 @@ export class SearchBar extends React.Component {
 
   /**
    * onSuggestionsFetchRequested:
-   * method required by Autosuggest component
+   * This method is required by Autosuggest component.
    *
    * @param value: the value to test against possible suggestions
    */
   onSuggestionsFetchRequested({ value }) {
-    // use promise to make sure coin list has loaded
-    globalvars.coinListPromise
-      .then(() => {
-        this.setState({
-          suggestions: getSuggestions(value),
-        }); // end setState()
-      }); // end then()
+    this.setState({
+      suggestions: getSuggestions(value),
+    }); // end setState()
   } // end onSuggestionsFetchRequested()
 
 
   /**
    * onSuggestionsClearRequested:
-   * method required by Autosuggest component
+   * This method is required by Autosuggest component.
    */
   onSuggestionsClearRequested() {
     this.setState({
@@ -143,31 +153,57 @@ export class SearchBar extends React.Component {
 
 
   /**
+   * onKeyDown:
+   * This method will trigger the search to execute when the enter key is
+   * pressed during while typing in the search bar.
+   */
+  onKeyDown(e) {
+    if (e.keyCode === 13) {
+      // stop propagation
+      e.preventDefault();
+      e.stopPropagation();
+      this.findCoin();
+    } // end if
+  } // end onKeyDown()
+
+
+  /**
+   * toggle:
+   * This method will toggle the modal between view and hidden.
+   */
+  toggle() {
+    this.setState({
+      modal: !this.state.modal,
+    }); // end setState()
+  } // end toggle
+
+
+  /**
    * findCoin:
-   * method to redirect user to the page view for the coin searched when the
-   * button is clicked or to notify them it was not found
+   * This method redirects the user to the page view for the coin searched when
+   * the button is clicked or notifies them it was not found.
    */
   findCoin() {
-    // use promise to make sure coin list has loaded
-    globalvars.coinListPromise.then(() => {
-      const foundCoin =
-        globalvars.coinList.find(coin => coin.name === this.state.value);
-      // test if coin was found
-      if (foundCoin === undefined) {
-        // test if any input was entered
-        if (!this.state.value) {
-          this.setState({
-            message: <h4>search field is empty</h4>,
-          }); // end setState()
-        } else {
-          this.setState({
-            message: <h4><b><em>{this.state.value}</em></b> was not found</h4>,
-          }); // end this.setState()
-        } // end if/else
+    const foundCoin =
+      globalvars.coinList.find(coin => coin.name === this.state.value);
+    // test if coin was found
+    if (foundCoin === undefined) {
+      // test if any input was entered
+      if (!this.state.value) {
+        this.setState({
+          message: 'please enter a search term',
+          modal: true,
+        }); // end setState()
       } else {
-        this.props.changePageView(viewEnum.COINPAGE, foundCoin.symbol);
+        this.setState({
+          message: `${this.state.value}`
+            + ' was not found. try another currency name',
+          modal: true,
+        }); // end this.setState()
       } // end if/else
-    }); // end then()
+    } else {
+      this.props.changePageView(viewEnum.COINPAGE, foundCoin.symbol);
+    } // end if/else
   } // end findCoin()
 
 
@@ -182,34 +218,37 @@ export class SearchBar extends React.Component {
       placeholder: 'currency name',
       value,
       onChange: this.onChange,
-    };
+      onKeyDown: this.onKeyDown,
+    }; // end inputProps
 
     return (
-      <div>
-        <Row>
-          <Col>
-            <Autosuggest
-              className="search-bar"
-              suggestions={suggestions}
-              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-              getSuggestionValue={getSuggestionValue}
-              renderSuggestion={renderSuggestion}
-              inputProps={inputProps}
-            />
-          </Col>
-          <Col>
-            <Button
-              className="search-button"
-              onClick={this.findCoin}
-            >
-              FIND COIN
-            </Button>
-          </Col>
-        </Row>
-        <Row>
-          {this.state.message}
-        </Row>
+      <div className="search-bar-container">
+        <Autosuggest
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          getSuggestionValue={getSuggestionValue}
+          renderSuggestion={renderSuggestion}
+          inputProps={inputProps}
+        />
+        <Button
+          className="search-bar-button"
+          onClick={this.findCoin}
+        >
+          FIND COIN
+        </Button>
+        <Modal
+          isOpen={this.state.modal}
+          toggle={this.toggle}
+        >
+          <ModalHeader toggle={this.toggle}>no search results...</ModalHeader>
+          <ModalBody>
+            {this.state.message}
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={this.toggle}>OK</Button>
+          </ModalFooter>
+        </Modal>
       </div>
     ); // end return()
   } // end render()

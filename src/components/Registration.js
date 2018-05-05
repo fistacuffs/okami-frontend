@@ -1,15 +1,22 @@
 /**
+ * @file
  * Registration.js
+ * This is the registration component of the application. It incorporates a form
+ * for username and password information. A function is included that sends the
+ * information to the backend for validation.
  *
- * This is the parent component of the registration module.
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import {
-  Col,
-  Container,
-  Row } from 'reactstrap';
+  Button,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader } from 'reactstrap';
 
 import { UserForm } from './UserForm';
 import {
@@ -20,33 +27,11 @@ import {
 
 export class Registration extends React.Component {
   /**
-   * formatMessage:
-   * method to format error messages into JSX objects
-   *
-   * @param message: string containing error message
-   */
-  static formatMessage(message) {
-    return (
-      <Container>
-        <Row>
-          <Col>
-            <h4>Unsuccessful Registration: {message}</h4>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <h6>Enter a new username and password to register.</h6>
-          </Col>
-        </Row>
-      </Container>); // end return()
-  } // end formatMessage
-
-
-  /**
    * Registration constructor
-   * -iniitializes state properties for username, password, and message
-   * -binds methods changeUsername, changePassword, and sendRegistration to
-   * 'this' component
+   * -iniitializes state properties for username, password, errorMessage and
+   *  modal to falsey values
+   * -binds methods changeUsername, changePassword, sendRegistration and toggle
+   *  to 'this' component
    *
    * @param props: to pass any props to React components
    */
@@ -56,18 +41,20 @@ export class Registration extends React.Component {
     this.state = {
       username: '',
       password: '',
-      message: '',
+      errorMessage: '',
+      modal: false,
     }; // end state
 
     this.changeUsername = this.changeUsername.bind(this);
     this.changePassword = this.changePassword.bind(this);
     this.sendRegistration = this.sendRegistration.bind(this);
+    this.toggle = this.toggle.bind(this);
   } // end constructor
 
 
   /**
    * changeUsername:
-   * method changes the state property username of this component
+   * This method changes the state property username of this component.
    *
    * @param newUsername: the new string value for username
    */
@@ -80,7 +67,7 @@ export class Registration extends React.Component {
 
   /**
    * changePassword:
-   * method changes the state property password of this component
+   * This method changes the state property password of this component.
    *
    * @param newPassword: the new string value for password
    */
@@ -92,8 +79,19 @@ export class Registration extends React.Component {
 
 
   /**
+   * toggle:
+   * This method will toggle the modal between view and hidden.
+   */
+  toggle() {
+    this.setState({
+      modal: !this.state.modal,
+    }); // end setState()
+  } // end toggle
+
+
+  /**
    * sendRegistration:
-   * method uses the state properties username and password to send a POST
+   * This method uses the state properties username and password to send a post
    * request to the backend to create login credentials. If successful, they
    * will be routed to the login page. Otherwise an error message is displayed.
    */
@@ -101,7 +99,8 @@ export class Registration extends React.Component {
     // test for empty, null, or undefined fields
     if (!this.state.username || !this.state.password) {
       this.setState({
-        message: Registration.formatMessage('empty field(s)'),
+        errorMessage: 'empty field(s)',
+        modal: true,
       }); // end setState
       return;
     } // end if
@@ -112,17 +111,32 @@ export class Registration extends React.Component {
       password: this.state.password,
     }) // end post()
       .then((response) => {
+        // test for successful response 'Created'
         if (response.statusText === 'Created') {
           this.props.changePageView(viewEnum.LOGINPAGE);
+        // successful response could still result in unsuccessful registration
         } else {
           this.setState({
-            message: Registration.formatMessage(response.statusText),
+            errorMessage: response.statusText,
+            modal: true,
           }); // end setState()
         } // end if/else
       }) // end then()
       .catch((error) => {
+        let message = '';
+        if (error.response) {
+          // a server error occured with response:
+          message += error.response.data.error;
+        } else if (error.request) {
+          message += 'A server error occured with no response. \n';
+          message += `Request: ${error.request}. \n`;
+        } else {
+          message += 'An error occured generating the server request. \n';
+          message += `Message: ${error.message}`;
+        } // end if/else
         this.setState({
-          message: Registration.formatMessage(error.response.data.error),
+          errorMessage: message,
+          modal: true,
         }); // end setState()
       }); // end catch()
   } // end sendRegistration()
@@ -135,16 +149,27 @@ export class Registration extends React.Component {
    */
   render() {
     return (
-      <div className={this.props.className}>
+      <div className="registration-container">
         <UserForm
-          className="user-form"
           onUsernameChange={this.changeUsername}
           onPasswordChange={this.changePassword}
           onClick={this.sendRegistration}
+          onEnterPress={this.sendRegistration}
         >
           SIGN UP
         </UserForm>
-        {this.state.message}
+        <Modal
+          isOpen={this.state.modal}
+          toggle={this.toggle}
+        >
+          <ModalHeader toggle={this.toggle}>unsuccessful login...</ModalHeader>
+          <ModalBody>
+            {this.state.errorMessage}
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={this.toggle}>OK</Button>
+          </ModalFooter>
+        </Modal>
       </div>
     ); // end Login
   } // end render()
@@ -155,11 +180,9 @@ export class Registration extends React.Component {
  * props:
  *
  * Required:
- * className - string name used for css styling
  * changePageView - function to change App state currentView
  */
 Registration.propTypes = {
-  className: PropTypes.string.isRequired,
   changePageView: PropTypes.func.isRequired,
 }; // end propTypes
 

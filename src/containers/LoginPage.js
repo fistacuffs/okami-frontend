@@ -1,8 +1,11 @@
 /**
+ * @file
  * LoginPage.js
- *
  * This is the login page view container. The main function is to display the
  * login form for the user to login to the backend server.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -15,7 +18,7 @@ import { Login } from '../components/Login';
 
 
 export const LoginPage = props => (
-  <div>
+  <div className="page-width">
     <NavBar
       changePageView={props.changePageView}
     />
@@ -28,9 +31,7 @@ export const LoginPage = props => (
         changePageView={props.changePageView}
       />
     </Display>
-    <Footer>
-      CMSC 495 (7982) Group 1
-    </Footer>
+    <Footer />
   </div>
 ); // end LoginPage
 

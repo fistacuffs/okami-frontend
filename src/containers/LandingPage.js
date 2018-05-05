@@ -1,26 +1,30 @@
 /**
+ * @file
  * LandingPage.js
+ * This is the main page view of the application. The main content component,
+ * display has a search bar, chart, and buttons for finding and displaying
+ * information about different currencies. If a user no user is logged in,
+ * random currencies are selected for the display. There is also some marketing
+ * type information shown in the footer.
+ *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Col, Row } from 'reactstrap';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faDollarSign from '@fortawesome/fontawesome-free-solid/faDollarSign';
-import faCheckCircle from '@fortawesome/fontawesome-free-solid/faCheckCircle';
-import faBan from '@fortawesome/fontawesome-free-solid/faBan';
 
 import { NavBar } from './NavBar';
 import { Header } from './Header';
 import { Display } from './Display';
 import { Footer } from './Footer';
 import { SearchBar } from '../components/SearchBar';
-import { ChartTerminal } from '../components/ChartTerminal';
-import { CoinSelection } from '../components/CoinSelection';
+import { MultiCoinGroup } from '../components/MultiCoinGroup';
+
 import './Containers.css';
 
 
 export const LandingPage = props => (
-  <div>
+  <div className="page-width">
     <NavBar
       changePageView={props.changePageView}
     />
@@ -28,55 +32,23 @@ export const LandingPage = props => (
       changePageView={props.changePageView}
     />
     <Display>
-      <Row>
-        <Col />
-        <Col>
-          <SearchBar changePageView={props.changePageView} />
-        </Col>
-        <Col />
-      </Row>
-      <Row>
-        <Col><ChartTerminal coinSymbol="BTC" /></Col>
-        <Col>
-          <CoinSelection changePageView={props.changePageView} />
-        </Col>
-      </Row>
+      <SearchBar changePageView={props.changePageView} />
+      <MultiCoinGroup changePageView={props.changePageView} />
     </Display>
-    <Footer>
-      <Row>
-        <Col>
-          <FontAwesomeIcon
-            className="footer-icon"
-            size="10x"
-            icon={faDollarSign}
-          />
-          {'see currency values'}
-        </Col>
-        <Col>
-          <FontAwesomeIcon
-            className="footer-icon"
-            size="10x"
-            icon={faCheckCircle}
-          />
-          {'updated in real time'}
-        </Col>
-        <Col>
-          <FontAwesomeIcon
-            className="footer-icon"
-            size="10x"
-            icon={faBan}
-          />
-          {'no need to sign up'}
-        </Col>
-      </Row>
-    </Footer>
+    <Footer />
   </div>
-);
+); // end LandingPage
 
 
+/**
+ * props:
+ *
+ * Required:
+ * changePageView - function to change App state currentView
+ */
 LandingPage.propTypes = {
   changePageView: PropTypes.func.isRequired,
-};
+}; // end propTypes
 
 
 export default LandingPage;

@@ -1,24 +1,35 @@
 /**
+ * @file
  * ChartTerminal.js
+ * This component handles loading and formatting the pricing data necessary for
+ * the chart component. It also handles the range of data in the chart with
+ * buttons to display data from the last week, month, or year.
  *
+ * @author Nicholas Weitzel
+ * @since 1.0.0
  */
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Button, Col, Container, Row } from 'reactstrap';
+import { Button } from 'reactstrap';
 
 import { Chart } from './Chart';
-import { ccApiUrl, dailyHistoryRoute, WEEK, MONTH, YEAR } from '../constants';
-import { globalvars } from '../globalvars';
+import {
+  ccApiUrl,
+  dailyHistoryRoute,
+  WEEK,
+  MONTH,
+  YEAR } from '../constants';
 
 
 export class ChartTerminal extends React.Component {
   /**
+   * @constructor
    * ChartTerminal constructor
-   * -iniitializes state properties for timeFrame and data array
+   * -iniitializes state properties for timeFrame, chartData array,
+   *  coinDataLoaded flag and error message
    * -binds methods changeTimeFrameToYearToWeek, changeTimeFrameToMonth, and
-   *  changeTimeFrameToYear to this
-   *  component
+   *  changeTimeFrameToYear to 'this' component
    *
    * @param: to pass any props to React components
    */
@@ -27,8 +38,10 @@ export class ChartTerminal extends React.Component {
 
     this.state = {
       timeFrame: MONTH,
-      data: [],
-    };
+      chartData: [],
+      coinDataLoaded: false,
+      errorMessage: '',
+    }; // end state
 
     this.changeTimeFrameToWeek = this.changeTimeFrameToWeek.bind(this);
     this.changeTimeFrameToMonth = this.changeTimeFrameToMonth.bind(this);
@@ -37,52 +50,98 @@ export class ChartTerminal extends React.Component {
 
 
   /**
-   * componentWillMount:
-   *
+   * componentDidMount:
+   * This is a lifecycle method of React components. It is called after the
+   * component mounts. This component loads the currency data from the crypto
+   * compare API in this method.
    */
-  componentWillMount() {
-    const promise = this.getCoinData();
-    // eslint-disable-next-line no-console
-    promise.catch(error => console.log(`Error with Crypto Compare: ${error}`));
-  } //  end componentWillMount()
+  componentDidMount() {
+    this.getCoinData(this.props.coinSymbolsList);
+  } //  end componentDidMount()
+
+
+  /**
+   * componentWillReceiveProps:
+   * This is a lifecycle method of React components. It is called on rerenders
+   * and handles possible changes to props. This component reloads the currency
+   * data from the crypto compare API if the list of coin symbols prop changes.
+   *
+   * @param nextProps object that will replace this.props after method
+   */
+  componentWillReceiveProps(nextProps) {
+    if (this.props.coinSymbolsList !== nextProps.coinSymbolsList) {
+      this.getCoinData(nextProps.coinSymbolsList);
+    } // end if
+  } // end componentWillRecieveProps()
 
 
   /**
    * getCoinData:
+   * This method executes the API requests for the currency data and formats it
+   * as it loads for use by the chart component.
    *
+   * @param coinSymbolsList array of string that are currency symbols
    */
-  getCoinData() {
-    return globalvars.coinListPromise.then(
-      () => axios.get(
+  getCoinData(coinSymbolsList) {
+    // get promises for each of the coins for which a call to the API is made
+    const requests = [];
+    for (let i = 0; i < coinSymbolsList.length; i += 1) {
+      requests.push(axios.get(
         ccApiUrl + dailyHistoryRoute,
         {
           params: {
-            fsym: this.props.coinSymbol,
+            fsym: coinSymbolsList[i],
             tsym: 'USD',
             limit: YEAR,
-          },
-        },
-      )
-        .then((response) => {
-          // adds property for Date object
-          for (let i = 0; i < response.data.Data.length; i += 1) {
-            response.data.Data[i].date =
-              (new Date(response.data.Data[i].time * 1000)).toString();
-          } // end for
+          }, // end params
+        }, // end anonymous object
+      )); // end get()
+    } // end for
 
-          this.setState({
-            data: response.data.Data,
-          }); // end setState()
-        })
-        .catch((error) => {
-          // eslint-disable-next-line no-console
-          console.log(`Error with get from Crypto Compare: ${error}`);
-        }), // end axios.get()
-      // end promise.onSuccessful()
-      // eslint-disable-next-line no-console
-      () => console.log('Error with coin list'),
-      // end promise.onRejected()
-    );
+    // combine all promises into one
+    Promise.all(requests)
+      .then((response) => {
+        const newCoinData = [];
+
+        // format data from all requests into one data array for use by the chart
+        // component.
+        for (let i = 0; i < response.length; i += 1) {
+          if (response[i].data.Data) {
+          // only add date once
+            if (!newCoinData[0]) {
+              for (let j = 0; j < response[i].data.Data.length; j += 1) {
+                newCoinData.push({
+                  date: new Date(response[i].data.Data[j].time * 1000)
+                    .toDateString(),
+                }); // end push()
+              } // end for
+            } // end if
+
+            // add price data
+            for (let j = 0; j < response[i].data.Data.length; j += 1) {
+              newCoinData[j][coinSymbolsList[i]] =
+                response[i].data.Data[j].close;
+            } // end for
+          } // end if
+        } // end for
+
+        this.setState({
+          chartData: newCoinData,
+          coinDataLoaded: true,
+        }); // end setState()
+      }) // end then()
+      .catch((error) => {
+        let message = '';
+        if (error.response) {
+          message += 'A server error occured with response: \n';
+          message += `Status: ${error.response.status}. \n`;
+          message += `Message: ${error.response.data}. \n`;
+        } // end if
+
+        this.setState({
+          errorMessage: message,
+        }); // end setState()
+      }); // end catch()
   } // end getCoinData
 
 
@@ -94,7 +153,7 @@ export class ChartTerminal extends React.Component {
   changeTimeFrameToWeek() {
     this.setState({
       timeFrame: WEEK,
-    });
+    }); // end setState()
   } // end changeTimeFrameToWeek()
 
 
@@ -106,7 +165,7 @@ export class ChartTerminal extends React.Component {
   changeTimeFrameToMonth() {
     this.setState({
       timeFrame: MONTH,
-    });
+    }); // end setState()
   } // end changeTimeFrameToMonth()
 
 
@@ -118,62 +177,70 @@ export class ChartTerminal extends React.Component {
   changeTimeFrameToYear() {
     this.setState({
       timeFrame: YEAR,
-    });
+    }); // end setState()
   } // end changeTimeFrameToYear()
 
 
   /**
    * render:
-   * Required method of React components to create JFX element.
+   * Required method of React components to display components called when
+   * component is constructed or state is changed.
    */
   render() {
+    // message if waiting for users currencies to load
+    if (!this.state.coinDataLoaded && !this.state.errorMessage) {
+      return <h1>loading currencies...</h1>;
+    } // end if
+
+    // message if crypto compare request error
+    if (this.state.errorMessage) {
+      return <h4>{this.state.errorMessage}</h4>;
+    } // end if
+
     return (
-      <Container>
-        <Row>
-          <Col />
-          <Col>
-            <Chart
-              data={this.state.data.slice(YEAR - this.state.timeFrame, YEAR)}
-            />
-          </Col>
-          <Col />
-        </Row>
-        <Row>
-          <Col /> <Col /> <Col />
-          <Col>
-            <Button
-              className="chart-button"
-              onClick={this.changeTimeFrameToWeek}
-            >
-              WEEK
-            </Button>
-          </Col>
-          <Col>
-            <Button
-              className="chart-button"
-              onClick={this.changeTimeFrameToMonth}
-            >
-              MONTH
-            </Button>
-          </Col>
-          <Col>
-            <Button
-              className="chart-button"
-              onClick={this.changeTimeFrameToYear}
-            >
-              YEAR
-            </Button>
-          </Col>
-          <Col /> <Col /> <Col />
-        </Row>
-      </Container>
-    );
+      <div className="chart-terminal">
+        <div className="chart-terminal-chart-container">
+          <Chart
+            data={this.state.chartData
+              .slice(YEAR - this.state.timeFrame, YEAR)}
+          />
+        </div>
+        <div className="chart-terminal-button-container">
+          <Button
+            className="chart-terminal-button"
+            onClick={this.changeTimeFrameToWeek}
+          >
+            WEEK
+          </Button>
+          <Button
+            className="chart-terminal-button"
+            onClick={this.changeTimeFrameToMonth}
+          >
+            MONTH
+          </Button>
+          <Button
+            className="chart-terminal-button"
+            onClick={this.changeTimeFrameToYear}
+          >
+            YEAR
+          </Button>
+        </div>
+      </div>
+    ); // end return();
   } // end render()
-} // end class ChartDisplayer
+} // end class ChartTerminal
 
 
+/**
+ * props:
+ *
+ * Required:
+ * coinSymbolsList - array of strings that are the symbols of the currencies
+ *                   that will be charted
+ */
 ChartTerminal.propTypes = {
-  coinSymbol: PropTypes.string.isRequired,
-};
+  coinSymbolsList: PropTypes.arrayOf(PropTypes.string).isRequired,
+}; // end propTypes
+
 
 export default ChartTerminal;
