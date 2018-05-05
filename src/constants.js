@@ -11,8 +11,8 @@
 /**
  * Backend server URL and routes
  */
-export const backendUrl = 'http://localhost:8080/';
-// export const backendUrl = 'https://mighty-fortress-28903.herokuapp.com/';
+// export const backendUrl = 'http://localhost:8080/';
+export const backendUrl = 'https://mighty-fortress-28903.herokuapp.com/';
 export const coinListRoute = 'coinlist';
 export const loginRoute = 'login';
 export const registrationRoute = 'register';
